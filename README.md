@@ -1,6 +1,6 @@
 # IT 314 Software Engineering Group Project
 
-## Group 08 Members
+## *Group 08 Members*
 
 - 202001062 - Boricha Vinal
 - 202001089 - Priyank Pitliya
@@ -12,7 +12,7 @@
 - 202001110 - Vihar Shah
 - 202001116 - Gaurav Shah
 
-## Repository Structure
+## *Repository Structure*
 
 - The repository consists of two folders, *lab_assignments* and *project*.
 
@@ -20,7 +20,7 @@
 
 - *project* folder consists of the project code.
 
-## Project folder Structure
+## *Project folder Structure*
 
 - The project code is structured in two folders, namely, *public* and *src*.
 - The *public* folder consists of all the **images** and **html** file for the website.
@@ -32,4 +32,16 @@
 npm install -r package.json
 ```
 
-## Components implemented
+## **Components implemented*
+
+All the reuseable components created in React are present in the *components* folder inside *src*.
+
+The components implemented are described briefly as follows:
+
+### **Navbar**
+
+**Navbar.js** file consists of the navigation bar code of the website. The navbar component will be common in all the pages of the website.
+
+### **RecipeItem**
+
+The **RecipeItem.js** implements a card to display an recipe item in short. The *RecipeItem* component will be used to display the recipes when a user performs search operation or while displaying the daily specials recipe. One can redirect to the recipe page to view it in detail by clicking on the ***see recipe in detail*** button.
