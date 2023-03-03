@@ -1,14 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar(props) {
     return (
         <div>
             <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
                 <div className="container-fluid">
+
+                    {/* Loading the website name and logo in the navigation bar */}
                     <a className="navbar-brand" href="/">
                         <img src="logo.png" alt="Logo" width="50" height="50" className="d-inline block mx-1"/>
                         <div className="fs-6">NaiveBaker</div>
                     </a>
+
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -23,14 +27,14 @@ export default function Navbar(props) {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         
                         <div className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a className="nav-link active" href="/">Home</a>
-                            <a className="nav-link" href="/">Dashboard</a>
-                            <a className="nav-link" href="/">Search</a>
-                            <a className="nav-link" href="/">About Us</a>
-                            <a className="nav-link" href="/">Sign-in/Sign-up</a>
+                            <Link className="nav-link" to="/">Home</Link>
+                            <Link className="nav-link" to="/">Dashboard</Link>
+                            <Link className="nav-link" to="/">Search</Link>
+                            <Link className="nav-link" to="/about-us">About Us</Link>
+                            <Link className="nav-link" to="/">Sign-in/Sign-up</Link>
                         </div>
 
-                        <div className={`form-check form-switch mx-3 text-${props.mode==='light'?'dark':'light'}`}>
+                        <div className={`form-check form-switch mx-3 text-${props.mode==='dark'?'light':'dark'}`}>
                             <input className="form-check-input" type="checkbox" onClick={props.toggleMode} id="flexSwitchCheckDefault" />
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
                         </div>
