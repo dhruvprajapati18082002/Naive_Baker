@@ -5,15 +5,15 @@ export default function RecipeItem(props) {
         <div className=" card">
             <div className="card text-center">
                 <div className="card-header ">
-                    Daily Specials
+                    {props.header}
                 </div>
                 <div className="card-body">
-                    <h5 className="card-title">Recipe Title</h5>
-                    <p className="card-text">This is how you make the item step by step for an awesome experience.</p>
-                    <a href="#" className="btn btn-sm btn-primary">see recipe in detail</a>
+                    <h5 className="card-title">{props.title}</h5>
+                    <p className="card-text">{props.text}</p>
+                    <a href="#" className="btn btn-sm btn-primary">{props.btnText}</a>
                 </div>
             <div className="card-footer text-muted">
-                Note the recipe shown here is selected at random
+                {props.footer}
             </div>
             </div>
         </div>

@@ -32,7 +32,7 @@
 npm install -r package.json
 ```
 
-## **Components implemented*
+## *Components implemented*
 
 All the reuseable components created in React are present in the *components* folder inside *src*.
 
@@ -45,3 +45,14 @@ The components implemented are described briefly as follows:
 ### **RecipeItem**
 
 The **RecipeItem.js** implements a card to display an recipe item in short. The *RecipeItem* component will be used to display the recipes when a user performs search operation or while displaying the daily specials recipe. One can redirect to the recipe page to view it in detail by clicking on the ***see recipe in detail*** button.
+
+### **Footer**
+
+Contains the implementation of the site footer. (The semi-transparent black bar that is shown at the bottom of the site).
+
+### **AboutUs**
+
+Contains the about us page implementation. The page includes a small overview of the site alongwith a brief introduction of the team of developers involved in developing the site.
+
+- The page renders the developers' information from the developers.js file which contains a JSON array of all developers.
+- The array contains their *name*, *age*, *mail*, and an indicator for the group representative(s).

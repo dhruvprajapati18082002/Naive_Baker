@@ -29,7 +29,15 @@ export default function App() {
             {/* toggleMode is passed to the navbar because the switch to toggle between modes is created inside navbar */}
 			
             <Routes>
-                <Route path="/" element={<RecipeItem/>} />
+                <Route path="/" element={
+                    <RecipeItem 
+                        header="Daily Specials"
+                        title="Recipe Title"
+                        text="This is how you make the item step by step for an awesome experience."
+                        btnText="see recipe in detail"
+                        footer="Note the recipe shown here is selected at random"
+                    />
+                } />
                 <Route path="/about-us" element={<AboutUs/>} />
             </Routes>
             
