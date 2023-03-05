@@ -25,7 +25,7 @@ export default function AboutUs() {
                 <div className="card-body">
                     We are a team of 9 developers who came together to brainstorm on this fun project as way to create something pertaining to issues faced by people on a daily basis.
                     We hoped to create something simple and interactive which can reach as many people as possible.
-                    Below is a brief introduction of each of us and our contribution to the project!
+                    Below is a brief introduction of all of us and our contribution to the project!
                 </div>
 
                 <div className="container-fluid row justify-content-around">
