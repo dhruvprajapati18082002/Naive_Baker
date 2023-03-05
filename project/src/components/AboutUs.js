@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { developers } from '../developers'
+import { developers } from '../developer'
 
 export default function AboutUs() {
 
