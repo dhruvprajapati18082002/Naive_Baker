@@ -31,7 +31,7 @@ export default function Navbar(props) {
                             <Link className="nav-link" to="/">Dashboard</Link>
                             <Link className="nav-link" to="/">Search</Link>
                             <Link className="nav-link" to="/about-us">About Us</Link>
-                            <Link className="nav-link" to="/">Sign-in/Sign-up</Link>
+                            <Link className="nav-link" to="/login">Sign-in/Sign-up</Link>
                         </div>
 
                         <div className={`form-check form-switch mx-3 text-${props.mode==='dark'?'light':'dark'}`}>

@@ -4,6 +4,7 @@ import AboutUs from "./components/AboutUs";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import RecipeItem from "./components/RecipeItem";
+import Login from "./components/Login";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -39,6 +40,7 @@ export default function App() {
                     />
                 } />
                 <Route path="/about-us" element={<AboutUs/>} />
+                <Route path="/login" element={<Login/>}/>
             </Routes>
             
             <Footer/>
