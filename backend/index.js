@@ -18,3 +18,10 @@ app.listen(port, ()=>{
 app.get("/", (rep, res)=>{
     return res.json("NaiveBaker Backend Reached!!");
 })
+
+app.get("/easter_egg", (req, res) =>{ 
+    return res.json({
+        que: "Why do boomers make horrible cashiers?",
+        ans: "They’re afraid of change."
+    })
+})
