@@ -1,2 +1,4 @@
 # no need to store the node modules which can easily be installed later
 project/node_modules
+
+.DS_Store
