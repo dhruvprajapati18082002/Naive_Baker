@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { developers } from '../developer'
+import { developers } from '../developers.json'
 
 export default function AboutUs() {
 
@@ -37,9 +37,16 @@ export default function AboutUs() {
                                     <h5 className="card-title">{data.name}</h5>
                                     <p className="card-text">{data.description}</p>
                                 </div>
+
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">{data.GR ? "Group Representative" : " "}</li>
                                     <li className="list-group-item">Age: {data.age}</li>
+
+                                    {data.role.map((data, key) =>{
+                                        return (
+                                            <li className="list-group-item" key={key}>{data}</li>
+                                        )
+                                    })}
+
                                 </ul>
                             </div>
                         );

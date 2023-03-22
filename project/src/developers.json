@@ -1,0 +1,67 @@
+{
+    "developers": [
+        {
+            "name": "Vihar Shah",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001110@daiict.ac.in",
+            "role" : ["Group Representitve" , "Frontend Development", "Backend Development"]
+        },
+        {
+            "name": "Aditya Raj",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001099@daiict.ac.in",
+            "role" : [ "Frontend Development", "Backend Development"]
+        },
+        {
+            "name": "Nikhil Jethanandani",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001108@daiict.ac.in",
+            "role" : [ "Frontend Development"]
+        },
+        {
+            "name": "Gaurav Shah",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001116@daiict.ac.in",
+            "role" : [ "Frontend Development"]
+        },
+        {
+            "name": "Dhruv Prajapati",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001103@daiict.ac.in",
+            "role" : [ "Frontend Development", "Backend Development"]
+        },
+        {
+            "name": "Vinal Boricha",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001062@daiict.ac.in",
+            "role" : [ "Frontend Development"]
+        },
+        {
+            "name": "Deep Rakhasiya",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001094@daiict.ac.in",
+            "role" : [ "Frontend Development"]
+        },
+        {
+            "name": "Priyank Pitliya",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001089@daiict.ac.in",
+            "role" : []
+        },
+        {
+            "name": "Shobhit Verma",
+            "age": 20,
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
+            "mail": "202001100@daiict.ac.in",
+            "role" : []
+        }
+    ]
+}
