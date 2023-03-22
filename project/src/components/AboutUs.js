@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { developers } from '../developers.json'
+import developers from '../developers.json'
 
 export default function AboutUs() {
+
+
+    
 
     return (
         <div>
@@ -55,6 +58,35 @@ export default function AboutUs() {
                 </div>
 
             </div>
+
+            <div className="card">
+                <div className="card-header">
+                <h2> Contact us </h2>
+                </div>
+                <div className="card-body">
+                    To conatact the Developer team in case you want some help or want to gave some bug report 
+                    Contact us at Naivebaker@gmail.com
+                </div>
+            </div>
+                
+            <div className="card">
+    <div className="card-header">
+        <h2>Feedback Form</h2>
+    </div>
+    <div className="card-body">
+        <form>
+            <div className="form-group">
+                <label htmlFor="feedback">Please provide your feedback:</label>
+                <textarea className="form-control" id="feedback" rows="5"></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+            
+            
         </div>
     )
 }
