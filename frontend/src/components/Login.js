@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import '../login.css'
+import './login.css'
 
 export default function SignInPage() {
     return (
@@ -23,7 +23,7 @@ export default function SignInPage() {
                 </p>
             </form>
             <footer>
-                <p>First time to 'Naive Baker'? <Link to="/register">Let's get started</Link>.</p>
+                <p>First time to 'Naive Baker'? <Link to="/signup">Let's get started</Link>.</p>
                 <p><Link to="/">Back to Home</Link>.</p>
             </footer>
         </div>

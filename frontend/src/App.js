@@ -1,20 +1,52 @@
-import React, { useState } from 'react';
-import './styles.css';
-import SignupPage from './signup';
-import LoginPage from './login';
+import React from "react";
+import { useState } from "react";
+import AboutUs from "./components/AboutUs";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import RecipeItem from "./components/RecipeItem";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
-  const [myBool, setmyBool] = useState(true);
+export default function App() {
+	
+    // using hook method to create a variable to store current theme (Light / Dark)
+    const [mode, setMode] = useState('light');
 
-  function toggleBool() {
-    setmyBool(!myBool)
-  }
+    // handler to toggle between the themes
+    const toggleMode = () => {
+        if (mode === 'dark'){
+            setMode('light');
+        }
+        else{
+            setMode('dark');
+        }
+    }
 
-  return (
-    <SignupPage />
-    // myBool ? <LoginPage toggleBool={toggleBool} /> : <SignupPage/> 
-  );
+    return (
+        <Router className="App">
+            {/* Each component which will be modified with the current theme will have an attribute named mode to which the current theme will be provided */}
+            <Navbar toggleMode={toggleMode} mode={mode}/>
+            {/* toggleMode is passed to the navbar because the switch to toggle between modes is created inside navbar */}
+			
+            <Routes>
+                <Route path="/" element={
+                    <RecipeItem 
+                        header="Daily Specials"
+                        title="Recipe Title"
+                        text="This is how you make the item step by step for an awesome experience."
+                        btnText="see recipe in detail"
+                        footer="Note the recipe shown here is selected at random"
+                    />
+                } />
+                <Route path="/about-us" element={<AboutUs/>} />
+                <Route path="/login" element={<Login page={true}/>}/>
+                <Route path="/signup" element={<Signup/>}/>
+
+                </Routes>
+            
+            <Footer/>
+        </Router>
+    );
 }
-
-export default App;

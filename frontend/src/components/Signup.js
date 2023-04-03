@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './styles.css';
-import LoginPage from './login';
+import '../signup.css';
 
-function SignupPage() {
+
+function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -52,10 +52,10 @@ function SignupPage() {
           required
         />
         <button type="submit" className="submit-btn">Sign Up</button>
-        <p className="signup-link">Already have an account? <a href="#">Log in</a></p>
+        <p className="signup-link">Already have an account? <a href="/login">Log in</a></p>
       </form>
     </div>
   ); 
 }   
 
-export default SignupPage;
+export default Signup;
