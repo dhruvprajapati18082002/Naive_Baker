@@ -14,11 +14,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    mobile: {
-        type: String
-    },
     hasPremium: {
-        type: Boolean
+        type: Boolean,
+        required: true
     },
     watchHistory: {
         type: [String]

@@ -3,7 +3,7 @@ const express = require("express");
 
 connectToMongo();
 const app = express();
-const port = 5000; // port on which the backend API will be running
+const port = 7000; // port on which the backend API will be running
 
 app.use(express.json()) // enabling capacity to send json objects in response
 
