@@ -15,15 +15,16 @@ function Profile(props) {
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"/>
                     <div class="mt-3">
-                      <h4>Nikhil jethanandani</h4>
+                      <h4>Gaurav Shah</h4>
                       <p class="text-secondary mb-1">Full Stack Developer</p>
                       <p class="text-muted font-size-sm">DAIICT, Gandhinagar, Gujarat</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <button class="btn btn-primary mx-1">Follow</button>
+                      <button class="btn btn-outline-primary mx-1">Message</button>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -57,7 +58,7 @@ function Profile(props) {
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        Gaurav Shah
+                        Nikhil Jethanandani
                     </div>
                   </div>
                   <hr/>
@@ -104,12 +105,14 @@ function Profile(props) {
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
-                    
+                    <button type="button" class="btn btn-dark my-1">Upload Recipe</button>
+                    <button type="button" class="btn btn-dark my-1">View your Recipe</button>
                   </div>
                 </div>
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
-                    
+                  <button type="button" class="btn btn-dark my-1">Watch History</button>
+                  <button type="button" class="btn btn-dark my-1">Clear Watch History</button>
                   </div>
                 </div>
               </div>
