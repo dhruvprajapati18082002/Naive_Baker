@@ -7,8 +7,10 @@ import RecipeItem from "./components/RecipeItem";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Search from "./components/Search";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";      
 
 export default function App() {
 	
@@ -45,7 +47,7 @@ export default function App() {
                 <Route path="/login" element={<Login page={true}/>}/>
                 <Route path="/signup" element={<Signup/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
-
+                <Route path="/Search" element={<Search/>}/>
                 </Routes>
             
             <Footer/>
