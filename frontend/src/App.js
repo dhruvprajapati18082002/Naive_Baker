@@ -7,7 +7,6 @@ import RecipeItem from "./components/RecipeItem";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
-import Home from "./components/Home";
 
 import Search from "./components/Search";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";      
@@ -34,7 +33,15 @@ export default function App() {
             {/* toggleMode is passed to the navbar because the switch to toggle between modes is created inside navbar */}
 			
             <Routes>
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={
+                    <RecipeItem 
+                        header="Daily Specials"
+                        title="Recipe Title"
+                        text="This is how you make the item step by step for an awesome experience."
+                        btnText="see recipe in detail"
+                        footer="Note the recipe shown here is selected at random"
+                    />
+                } />
                 <Route path="/about-us" element={<AboutUs/>} />
                 <Route path="/login" element={<Login page={true}/>}/>
                 <Route path="/signup" element={<Signup/>}/>
