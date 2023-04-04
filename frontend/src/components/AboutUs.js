@@ -70,17 +70,16 @@ export default function AboutUs() {
             </div>
                 
             <div className="card">
+
     <div className="card-header">
         <h2>Feedback Form</h2>
     </div>
-    <div className="card-body">
-        <form>
-            <div className="form-group">
-                <label htmlFor="feedback">Please provide your feedback:</label>
-                <textarea className="form-control" id="feedback" rows="5"></textarea>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+    <div className="card-body text-center">
+        <div className="form-group my-3">
+            <label htmlFor="feedback">Please provide your feedback:</label>
+            <textarea className="form-control" id="feedback" rows="5"></textarea>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
     </div>
 </div>
 
