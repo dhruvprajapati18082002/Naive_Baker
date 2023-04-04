@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import RecipeItem from "./components/RecipeItem";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Dashboard from "./components/Dashboard";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -43,6 +44,7 @@ export default function App() {
                 <Route path="/about-us" element={<AboutUs/>} />
                 <Route path="/login" element={<Login page={true}/>}/>
                 <Route path="/signup" element={<Signup/>}/>
+                <Route path="/dashboard" element={<Dashboard/>}/>
 
                 </Routes>
             
