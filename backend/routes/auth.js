@@ -115,4 +115,24 @@ router.post(
 );
 
 
+// END-POINT 4: DELETE USER END-POINT: DELETE /api/auth/delete. LOGIN NEEDED
+router.delete(
+    '/delete',
+    fetchuser,
+    async (req, res) => {
+        try{
+            const userId = req.user.id;
+            const data = await User.findByIdAndDelete(userId);
+
+            if (!data)
+                res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+
+            res.send(data);
+        }
+        catch(error){
+            console.error(error);
+            return res.sendStatus(500).send("Internal Server Error!");
+        }
+});
+
 module.exports = router
