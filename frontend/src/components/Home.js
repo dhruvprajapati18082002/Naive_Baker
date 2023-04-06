@@ -7,7 +7,7 @@ const Home = (props) => {
             <br/>
             <h3><center> RECIPES</center></h3>
           
-            <div className="d-flex justify-content-around">
+            <div className="d-flex flex-wrap justify-content-around">
                 <RecipeItem
                     image="https://cookingwithbry.com/wp-content/uploads/Paneer-Tikka-Masala-Recipe-1-735x735.jpg?_t=1678593746"
                     title="Paneer Tikka Masala" 

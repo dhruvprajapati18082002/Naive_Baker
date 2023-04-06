@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 export default function RecipeItem(props) {
     return (
 
-        <div className="container mx-auto mt-4">
+        <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
             <div className="card" style={{ width: "17rem", height: "33rem" }}>
                 <img src={props.image} className="card-img-top" alt="..." style={{height: "12rem" }}/>
                 <div className="card-body" style={{height: "11rem" }}>
