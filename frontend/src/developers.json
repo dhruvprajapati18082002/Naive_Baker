@@ -1,65 +1,56 @@
 [
     {
         "name": "Vihar Shah",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001110@daiict.ac.in",
-        "role" : ["Group Representitve" , "Frontend Development", "Backend Development"]
-    },
-    {
-        "name": "Aditya Raj",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
-        "mail": "202001099@daiict.ac.in",
-        "role" : [ "Frontend Development", "Backend Development"]
-    },
-    {
-        "name": "Dhruv Prajapati",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
-        "mail": "202001103@daiict.ac.in",
-        "role" : [ "Frontend Development", "Backend Development"]
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+        "roles" : ["Group Leader" , "Frontend Developer", "Backend Developer"]
     },
     {
         "name": "Nikhil Jethanandani",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001108@daiict.ac.in",
-        "role" : [ "Frontend Development"]
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+        "roles" : [ "Frontend Developer"]
     },
     {
         "name": "Gaurav Shah",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001116@daiict.ac.in",
-        "role" : [ "Frontend Development"]
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-3.png",
+        "roles" : [ "Frontend Developer"]
     },
     {
-        "name": "Vinal Boricha",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
-        "mail": "202001062@daiict.ac.in",
-        "role" : [ "Frontend Development"]
+        "name": "Dhruv Prajapati",
+        "mail": "202001103@daiict.ac.in",
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-3.png",
+        "roles" : ["Backend Developer"]
+    },
+    {
+        "name": "Aditya Raj",
+        "mail": "202001099@daiict.ac.in",
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-1.png",
+        "roles" : [ "Frontend Developer"]
     },
     {
         "name": "Deep Rakhasiya",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001094@daiict.ac.in",
-        "role" : [ "Frontend Development"]
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+        "roles" : [ "Frontend Developer"]
     },
     {
         "name": "Priyank Pitliya",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001089@daiict.ac.in",
-        "role" : []
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-3.png",
+        "roles" : ["Tester"]
     },
     {
         "name": "Shobhit Verma",
-        "age": 20,
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, dolorem?",
         "mail": "202001100@daiict.ac.in",
-        "role" : []
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+        "roles" : ["Tester"]
+    },
+    {
+        "name": "Vinal Boricha",
+        "mail": "202001062@daiict.ac.in",
+        "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+        "roles" : [ "Tester"]
     }
 ]
