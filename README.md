@@ -7,7 +7,7 @@
 - 202001094 - Deep Rakhasiya
 - 202001099 - Aditya Raj
 - 202001100 - Shobhit Verma
-- 202001103 0 Dhruv Prajapati
+- 202001103 - Dhruv Prajapati
 - 202001108 - Nikhil Jethanandani
 - 202001110 - Vihar Shah
 - 202001116 - Gaurav Shah
