@@ -90,7 +90,7 @@ router.post(
             return res.json({authToken});
         }
         catch( error ) {
-            console.error(error);
+            console.error(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -108,8 +108,8 @@ router.post(
             return res.send(user);
         }
         catch (error){
-            console.error(error);
-            return res.sendStatus(500).send("Internal Server Error!");
+            console.error(error.message);
+            return res.status(500).send("Internal Server Error!");
         }
     }
 );
@@ -130,8 +130,8 @@ router.delete(
             res.send(data);
         }
         catch(error){
-            console.error(error);
-            return res.sendStatus(500).send("Internal Server Error!");
+            console.error(error.message);
+            return res.status(500).send("Internal Server Error!");
         }
 });
 

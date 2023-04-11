@@ -2,33 +2,37 @@ const mongoose = require("mongoose");
 
 const RecipeSchema = new mongoose.Schema({
     owner: {
-        type:mongoose.schema.Types.ObjectId,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        require: true
     },
     name: {
         type: String,
-        required: true
+        require: true
     },
     description: {
         type: String,
-        required: true
+        require: true
     },
     steps: {
         type: [String],
-        required: true
+        require: true
     },
     ingredients: {
         type: [String],
-        required: true
+        require: true
     },
     video_url: {
         type: String,
+        default: ""
     },
     ratings: {
-        type: Number
+        type: Number,
+        default: 0
     },
     totalUsersRated: {
-        type: Number
+        type: Number,
+        default: 0
     }
 });
 

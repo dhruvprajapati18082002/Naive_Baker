@@ -3,29 +3,31 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        require: true,
     },
     email: {
         type: String,
-        required: true,
+        require: true,
         unique: true,
     },
     password: {
         type: String,
-        required: true,
+        require: true,
     },
     hasPremium: {
         type: Boolean,
-        required: true
+        require: true
     },
     watchHistory: {
         type: [String]
     },
     recipesOwned: {
-        type: [String]
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "recipe"
     },
     recipesRated: {
-        type: [String]
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "recipe"
     }
 });
 
