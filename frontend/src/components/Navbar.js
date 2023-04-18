@@ -1,10 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar(props) {
+
+    const navigate = useNavigate(); 
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        alert('Logged Out Succesfully');
+        navigate('/login');
+    }
+
     return (
         <div>
-            <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
 
                     {/* Loading the website name and logo in the navigation bar */}
@@ -31,13 +40,18 @@ export default function Navbar(props) {
                             <Link className="nav-link active" to="/dashboard">Dashboard</Link>
                             <Link className="nav-link" to="/Search">Search</Link>
                             <Link className="nav-link" to="/about-us">About Us</Link>
-                            <Link className="nav-link" to="/login">Login</Link>
                         </div>
 
-                        <div className={`form-check form-switch mx-3 text-${props.mode==='dark'?'light':'dark'}`}>
-                            <input className="form-check-input" type="checkbox" onClick={props.toggleMode} id="flexSwitchCheckDefault" />
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
-                        </div>
+                        {
+                            localStorage.getItem('token') ?
+                            <div>
+                                <button onClick={handleLogout} className="btn btn-outline-primary mx-3">Logout</button>
+                            </div>
+                            :
+                            <div>
+                                <Link className="btn btn-outline-primary mx-3" to="/login" role="button">Login</Link>
+                            </div>
+                        }
                     </div>
                 </div>
             </nav>

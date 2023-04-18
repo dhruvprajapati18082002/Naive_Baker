@@ -14,27 +14,28 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="container my-3" style={{width: "18rem"}}>
+        <div className="container shadow-lg my-3 bg-body-tertiary rounded" style={{width: "fit-content"}}>
             
-            {/* Pills navs */}
-            <ul className="nav nav-pills nav-justified mb-3" id="tabs" role="tablist">
+            {/* Tab navs start*/}
+            <ul className="nav nav-tabs nav-justified mb-3" id="tabs" role="tablist">
                 <li className="nav-item" role="presentation">
-                    <Link className={`nav-link ${isLogin ? "active" : ""}`} id="tab-login" data-mdb-toggle="pill" role="tab"
+                    <Link className={`nav-link ${isLogin ? "active" : ""}`} id="tab-login" data-mdb-toggle="tab" role="tab"
                         aria-controls="pills-login" aria-selected={`${isLogin}`} onClick={openLogin}>Login</Link>
                 </li>
                 <li className="nav-item" role="presentation">
-                    <Link className={`nav-link ${isLogin ? "" : "active"}`} id="tab-register" data-mdb-toggle="pill" role="tab"
+                    <Link className={`nav-link ${isLogin ? "" : "active"}`} id="tab-register" data-mdb-toggle="tab" role="tab"
                     aria-controls="pills-register" aria-selected={`${!isLogin}`} onClick={openRegister}>Register</Link>
                 </li>
             </ul>
-            {/* Pills navs */}
+            {/* Tab navs end*/}
 
-            {/* Pills content */}
-            <div className="tab-content">
-                <SignIn isLogin={isLogin} openRegister={openRegister}/>
-                <SignUp isLogin={isLogin} openLogin={openLogin}/>
+            {/* Tab content start*/}
+            <div className="tab-content d-flex justify-content-center align-items-center" 
+                style={{height: "32rem", width: "28rem"}}>
+                <SignIn active={isLogin} linkToRegister={openRegister}/>
+                <SignUp active={!isLogin} linkToLogin={openLogin}/>
             </div>
-            {/* Pills content */}
+            {/* Tab content end*/}
         </div>
     )
 }

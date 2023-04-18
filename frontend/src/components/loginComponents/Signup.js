@@ -1,59 +1,119 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const SignUp = (props) => {
-  return (
-      <div className={`tab-pane fade show ${props.isLogin ? "" : "active"}`} id="register" role="tabpanel" aria-labelledby="tab-register">
-        <form>
-            <div className="text-center mb-3">
-                <p>Sign up with:</p>
-            </div>
+    
+    let navigate = useNavigate();
+    const [credentials, setCredentials] = useState({name: "", email: "", password: "", confirmPassword: ""});
 
-            {/* Name input */}
-            <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="registerName">Name</label>
-                <input type="text" id="registerName" className="form-control" />
-            </div>
+    const onChangeHandler = (event) => {
+        setCredentials({...credentials, [event.target.name]: event.target.value})
+    }
 
-            {/* Email input */}
-            <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="registerEmail">Email</label>
-                <input type="email" id="registerEmail" className="form-control" />
-            </div>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        if (credentials.password !== credentials.confirmPassword)
+        {
+            alert("Password and Confirm Password Must Match");
+            return;
+        }
 
-            {/* Password input */}
-            <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="registerPassword">Password</label>
-                <input type="password" id="registerPassword" className="form-control" />
-            </div>
+        axios.post("http://localhost:5000/api/auth/createuser", {
+            name: credentials.name,
+            email: credentials.email,
+            password: credentials.password,
+            hasPremium: false
+        })
+        .then(response => {
+            if (response.status === 200){
+                localStorage.setItem('token', response.data.authToken);
+                navigate('/');
+            }
+            else
+                alert(response.data)
+        })
+        .catch(error => {
+            alert("Invalid Credentials");
+        });
+    }
 
-            {/* Repeat Password input */}
-            <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="registerRepeatPassword">Repeat password</label>
-                <input type="password" id="registerRepeatPassword" className="form-control" />
-            </div>
+    return (
+        <div className={`tab-pane fade show ${props.active ? "active" : ""}`} id="register" role="tabpanel" aria-labelledby="tab-register">
+            <form onSubmit={handleSubmit}>
+                {/* Name input */}
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="name">Name*</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="form-control"
+                        value={credentials.name}
+                        onChange={onChangeHandler}
+                        required
+                    />
+                </div>
 
-            {/* Checkbox */}
-            <div className="form-check d-flex justify-content-center mb-4">
-                <input className="form-check-input me-2" type="checkbox" value="" id="registerCheck"
-                aria-describedby="registerCheckHelpText" />
-                <label className="form-check-label" htmlFor="registerCheck">
-                    I have read and agree to the terms
-                </label>
-            </div>
+                {/* Email input */}
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="email">Email*</label>
+                    <input 
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="form-control" 
+                        value={credentials.email}
+                        onChange={onChangeHandler}
+                        required
+                    />
+                </div>
 
-            {/* Submit button */}
-            <div className="text-center">
+                {/* Password input */}
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="password">Password*</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="form-control"
+                        value={credentials.password}
+                        onChange={onChangeHandler}
+                        required
+                        autoComplete='on'
+                    />
+                </div>
+
+                {/* Repeat Password input */}
+                <div className="+form-outline mb-4">
+                    <label className="form-label" htmlFor="confirmPassword">Repeat password*</label>
+                    <input 
+                        type="password"
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        className="form-control"
+                        value={credentials.confirmPassword}
+                        onChange={onChangeHandler}
+                        required
+                        autoComplete='on'
+                    />
+                </div>
+
+                {/* Checkbox */}
+                <div className="form-check d-flex justify-content-center mb-4">
+                    <input className="form-check-input me-2" type="checkbox" value="" id="registerCheck"
+                    aria-describedby="registerCheckHelpText" required/>
+                    <label className="form-check-label" htmlFor="registerCheck">
+                        I agree to the conditions applied.
+                    </label>
+                </div>
+
+                {/* Submit button */}
                 <button type="submit" className="btn btn-dark" style={{width: "100%"}}>Register</button>
-            </div>
-
-            {/* Login buttons */}
-            <div className="text-center my-3">
-                <p>Already a member? <Link onClick={props.openLogin}>Login</Link></p>
-            </div>
-        </form>
-    </div>
-  );
+            </form>
+        </div>
+    );
 }
 
 export default SignUp;
