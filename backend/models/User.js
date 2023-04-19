@@ -16,14 +16,14 @@ const UserSchema = new mongoose.Schema({
     },
     hasPremium: {
         type: Boolean,
-        require: true
+        default: false
     },
     watchHistory: {
         type: [String]
     },
-    recipesOwned: {
+    UserFollowing: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "recipe"
+        ref: "user"
     },
     recipesRated: {
         type: [mongoose.Schema.Types.ObjectId],

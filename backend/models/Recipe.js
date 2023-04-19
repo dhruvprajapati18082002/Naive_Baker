@@ -19,7 +19,8 @@ const RecipeSchema = new mongoose.Schema({
         require: true
     },
     ingredients: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "ingredient",
         require: true
     },
     video_url: {

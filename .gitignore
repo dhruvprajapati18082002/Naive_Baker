@@ -1,5 +1,7 @@
-# no need to store the node modules which can easily be installed later
+# ignoring projected related file/folder
 node_modules
 build
+.env
 
+# ignoring system related file/folder
 .DS_Store

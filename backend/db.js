@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const mongoURI = "mongodb://127.0.0.1:27017/naivebakerDB?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
+require("dotenv").config();
 
 const connectToMongo = async () => {
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to Mongo DB");
 }
 

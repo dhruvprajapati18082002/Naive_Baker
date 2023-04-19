@@ -1,15 +1,18 @@
 const connectToMongo = require("./db");
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
 connectToMongo();
 const app = express();
-const port = 5000; // port on which the backend API will be running
+
+// port on which the backend API will be running. Either import from environment file or take 5000
+const port = process.env.port || 5000;
 
 app.use(express.json()); // enabling capacity to send json objects in response
 // enabling cors as middleware
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }));
 
