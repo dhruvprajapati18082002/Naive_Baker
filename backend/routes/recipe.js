@@ -15,6 +15,9 @@ router.post(
     body('ingredients').isArray({min: 1}),
     fetchuser,
     async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
         try
         {
             let cred = {
@@ -29,16 +32,17 @@ router.post(
                 cred[video_url] = req.body.video_url;
 
             let recipe = await Recipe.create(cred);
-            return res.json(recipe);
+            return res.status(201).json(recipe);
         } 
         catch (error) {
             console.error(error.message);
-            res.status(500).send("Internal Server Error!");
+            return res.status(500).send("Internal Server Error!");
         }
     }
 )
 
 
+// END-POINT 2: FETCH ALL RECIPES END-POINT: POST /api/recipe/fetchallrecipe/ LOGIN REQUIRED
 router.post(
     "/fetchallrecipes",
     fetchuser,
@@ -55,7 +59,7 @@ router.post(
 );
 
 
-// END-POINT 2: FETCH RECIPE END-POINT: GET /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
+// END-POINT 3: FETCH RECIPE END-POINT: POST /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
 router.post(
     "/fetchrecipe/:recipeId",
     fetchuser,
@@ -67,7 +71,15 @@ router.post(
                 return res.status(400).json({ error: "No Recipe with that ID found." });
             
             if (recipe.owner != req.user.id)
-                res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+            {
+                recipe = {
+                    "name": recipe.name,
+                    "description": recipe.description,
+                    "video_url": recipe.video_url,
+                    "steps": recipe.steps,
+                    "ingredients": recipe.ingredients
+                }
+            }
             
             return res.send(recipe);
         }
@@ -79,24 +91,24 @@ router.post(
 )
 
 
-// END-POINT 3: UPDATE RECIPE END-POINT: POST /api/recipe/updaterecipe. LOGIN REQUIRED
-router.post(
-    "/",
-    fetchuser,
-    async (req, res) => {
+// END-POINT 4: UPDATE RECIPE END-POINT: POST /api/recipe/updaterecipe. LOGIN REQUIRED
+// router.post(
+//     "/",
+//     fetchuser,
+//     async (req, res) => {
         
-    }
-)
+//     }
+// )
 
 
-// END-POINT 4: DELETE RECIPE END-POINT: DELETE /api/recipe/deleterecipe/:recipeId. LOGIN REQUIRED
-router.post(
-    "/",
-    fetchuser,
-    async (req, res) => {
+// END-POINT 5: DELETE RECIPE END-POINT: DELETE /api/recipe/deleterecipe/:recipeId. LOGIN REQUIRED
+// router.post(
+//     "/",
+//     fetchuser,
+//     async (req, res) => {
         
-    }
-)
+//     }
+// )
 
 
 module.exports = router;

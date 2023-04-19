@@ -48,11 +48,13 @@ router.post(
                 }
             }
             const authtoken = jwt.sign(data, JWT_SECRET);
-            res.json({ authtoken })
+
+            // status code 201 indicates successfull creation of a resource
+            return res.status(201).json({ authtoken })
         
         } catch (error) {
             console.error(error.message);
-            res.status(500).send("Internal Server Error!");
+            return res.status(500).send("Internal Server Error!");
         }
     }
 );
@@ -126,9 +128,9 @@ router.delete(
             const data = await User.findByIdAndDelete(userId);
 
             if (!data)
-                res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+                return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
 
-            res.send(data);
+            return res.send(204);
         }
         catch(error){
             console.error(error.message);
@@ -136,4 +138,4 @@ router.delete(
         }
 });
 
-module.exports = router
+module.exports = router;
