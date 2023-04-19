@@ -16,6 +16,7 @@ router.post(
     "/createuser",
     // validation parameters
     body("name", "Name too Short!!").isLength({ min: 5 }),
+    body("username", "UserName too Short!!").isLength({ min: 5 }),
     body("email", "Email Not Valid!!").isEmail(),
     body("password", "Password too Short!!").isLength({ min: 5 }),
     body("hasPremium", "Must specify Account Type").exists(),
@@ -32,13 +33,20 @@ router.post(
             if (user) {
                 return res.status(400).json({ error: "Sorry a user with this email already exists" })
             }
+
+            user = await User.findOne({ username: req.body.username });
+            if (user) {
+                return res.status(400).json({ error: "Sorry a user with this username already exists" })
+            }
+
             const salt = await bcrypt.genSalt(10);
-            const secPass = await bcrypt.hash(req.body.password, salt);
+            const securePassword = await bcrypt.hash(req.body.password, salt);
         
             // Create a new user
             user = await User.create({
                 name: req.body.name,
-                password: secPass,
+                username: username,
+                password: securePassword,
                 email: req.body.email,
                 hasPremium: req.body.hasPremium
             });
@@ -100,9 +108,9 @@ router.post(
 );
 
 
-// END-POINT 3: GET USER END-POINT: POST /api/auth/getuser. LOGIN NEEDED
+// END-POINT 3: GET USER END-POINT: POST /api/auth/getprofile. LOGIN NEEDED
 router.post(
-    '/getuser',
+    '/getProfile',
     fetchuser,
     async (req, res) => {
         try{
@@ -118,7 +126,23 @@ router.post(
 );
 
 
-// END-POINT 4: DELETE USER END-POINT: DELETE /api/auth/delete. LOGIN NEEDED
+// END-POINT 4: GET OTHER USER'S DETAILS END-POINT: POST /api/auth/getuser/:username. LOGIN NOT REQUIRED
+router.post(
+    '/getuser/:username',
+    async (req, res) => {
+        try{
+            const user = await User.findOne({username: req.params.username}).select("name username email recipesOwned");
+            return res.send(user);
+        }
+        catch (error){
+            console.error(error.message);
+            return res.status(500).send("Internal Server Error!");
+        }
+    }
+);
+
+
+// END-POINT 5: DELETE USER END-POINT: DELETE /api/auth/delete. LOGIN NEEDED
 router.delete(
     '/delete',
     fetchuser,
@@ -138,4 +162,4 @@ router.delete(
         }
 });
 
-module.exports = router;
+module.exports = router;

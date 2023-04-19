@@ -5,6 +5,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    username: {
+        type: String,
+        require: true,
+        unique: true,
+    },
     email: {
         type: String,
         require: true,
@@ -24,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     UserFollowing: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "user"
+    },
+    recipesOwned: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "recipe"
     },
     recipesRated: {
         type: [mongoose.Schema.Types.ObjectId],
