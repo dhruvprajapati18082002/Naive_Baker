@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 const fetchuser = require("../middleware/fetchuser");
 
 const Recipe = require('../models/Recipe');
+const User = require("../models/User");
 const router = express.Router();
 
 
@@ -32,10 +33,17 @@ router.post(
                 cred[video_url] = req.body.video_url;
 
             let recipe = await Recipe.create(cred);
+            
+            let user = await User.findById(req.user.id)
+
+            const newUser = {recipesOwned: user.recipesOwned.concat(recipe._id)}
+
+            user = await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new:true});
+
             return res.status(201).json(recipe);
         } 
         catch (error) {
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -52,7 +60,7 @@ router.post(
             return res.json(recipes);
         }
         catch(error){
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -84,7 +92,7 @@ router.post(
             return res.send(recipe);
         }
         catch(error){
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }

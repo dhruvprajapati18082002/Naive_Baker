@@ -3,10 +3,12 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+
 require("dotenv").config();
 
 const User = require("../models/User");
 const fetchuser = require("../middleware/fetchuser");
+const Recipe = require("../models/Recipe");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -45,7 +47,7 @@ router.post(
             // Create a new user
             user = await User.create({
                 name: req.body.name,
-                username: username,
+                username: req.body.username,
                 password: securePassword,
                 email: req.body.email,
                 hasPremium: req.body.hasPremium
@@ -55,13 +57,13 @@ router.post(
                 id: user.id
                 }
             }
-            const authtoken = jwt.sign(data, JWT_SECRET);
+            const authToken = jwt.sign(data, JWT_SECRET);
 
             // status code 201 indicates successfull creation of a resource
-            return res.status(201).json({ authtoken })
+            return res.status(201).json({ authToken: authToken })
         
         } catch (error) {
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -98,10 +100,10 @@ router.post(
                 }
             }
             const authToken = jwt.sign(data, JWT_SECRET);
-            return res.json({authToken});
+            return res.json({authToken: authToken});
         }
         catch( error ) {
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -119,7 +121,7 @@ router.post(
             return res.send(user);
         }
         catch (error){
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -135,7 +137,7 @@ router.post(
             return res.send(user);
         }
         catch (error){
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
     }
@@ -149,15 +151,21 @@ router.delete(
     async (req, res) => {
         try{
             const userId = req.user.id;
+            
             const data = await User.findByIdAndDelete(userId);
-
+            
             if (!data)
                 return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+            
+            // deleting all the recipes owned by that user
+            data.recipesOwned.forEach( async (recipeId) => {
+                await Recipe.findByIdAndDelete(recipeId);
+            })
 
-            return res.send(204);
+            return res.sendStatus(204);
         }
         catch(error){
-            console.error(error.message);
+            console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }
 });
