@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useContext } from "react";
 
 import AboutUs from "./components/AboutUs";
 import Footer from "./components/Footer";
@@ -9,39 +9,23 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import LoginPage from "./components/LoginPage";
-
-import UserContextProvider  from "./context/user/UserContextProvider";
+import Alert from "./components/Alert";
 
 export default function App() {
-    // using hook method to create a variable to store current theme (Light / Dark)
-    const [mode, setMode] = useState("light");
-
-    // handler to toggle between the themes
-    const toggleMode = () => {
-        if (mode === "dark") {
-            setMode("light");
-        } else {
-            setMode("dark");
-        }
-    };
 
     return (
-        <UserContextProvider>
-            <Router className="App">
-                {/* Each component which will be modified with the current theme will have an attribute named mode to which the current theme will be provided */}
-                <Navbar toggleMode={toggleMode} mode={mode} />
-                {/* toggleMode is passed to the navbar because the switch to toggle between modes is created inside navbar */}
+        <Router className="App">
+            <Navbar />
+            <Alert />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/Search" element={<Search />} />
+                <Route path="/login" element={<LoginPage />} />
+            </Routes>
 
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about-us" element={<AboutUs />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/Search" element={<Search />} />
-                    <Route path="/login" element={<LoginPage />} />
-                </Routes>
-
-                <Footer />
-            </Router>
-        </UserContextProvider>
+            <Footer />
+        </Router>
     );
 }
