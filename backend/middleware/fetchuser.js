@@ -9,7 +9,7 @@ const fetchuser = (req, res, next)=>{
     const token = req.header('auth-token');
 
     if (!token){
-        res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+        return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
     }
 
     try{
@@ -18,7 +18,7 @@ const fetchuser = (req, res, next)=>{
         next();
     }
     catch(error){
-        res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+        return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
     }
 }
 

@@ -3,7 +3,6 @@ const { body, validationResult } = require("express-validator");
 const fetchuser = require("../middleware/fetchuser");
 
 const Recipe = require('../models/Recipe');
-const User = require("../models/User");
 const router = express.Router();
 
 
@@ -33,13 +32,6 @@ router.post(
                 cred[video_url] = req.body.video_url;
 
             let recipe = await Recipe.create(cred);
-            
-            let user = await User.findById(req.user.id)
-
-            const newUser = {recipesOwned: user.recipesOwned.concat(recipe._id)}
-
-            user = await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new:true});
-
             return res.status(201).json(recipe);
         } 
         catch (error) {
@@ -56,7 +48,7 @@ router.post(
     fetchuser,
     async (req, res) => {
         try{
-            const recipes = await Recipe.find({owner: req.user.id});
+            const recipes = await Recipe.find();
             return res.json(recipes);
         }
         catch(error){
@@ -67,7 +59,23 @@ router.post(
 );
 
 
-// END-POINT 3: FETCH RECIPE END-POINT: POST /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
+// END-POINT 3: FETCH USER'S ALL RECIPES: POST /api/recipe/fetchuserrecipe. LOGIN REQUIRED
+router.post(
+    "/fetchuserrecipe",
+    fetchuser,
+    async (req, res) => {
+        try {
+            const userRecipes = await Recipe.find({ owner:req.user.id }); 
+            res.status(200).json(userRecipes);
+          } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: "Internal Server error" });
+          }
+    }
+)
+
+
+// END-POINT 4: FETCH RECIPE END-POINT: POST /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
 router.post(
     "/fetchrecipe/:recipeId",
     fetchuser,
@@ -99,24 +107,59 @@ router.post(
 )
 
 
-// END-POINT 4: UPDATE RECIPE END-POINT: POST /api/recipe/updaterecipe. LOGIN REQUIRED
-// router.post(
-//     "/",
-//     fetchuser,
-//     async (req, res) => {
-        
-//     }
-// )
+// END-POINT 5: UPDATE RECIPE END-POINT: POST /api/recipe/updaterecipe. LOGIN REQUIRED
+router.put(
+    "/updaterecipe/:recipeId",
+    fetchuser,
+    async (req, res) => {
+        const { name, description, steps,ingredients } = req.body;
+        try {
+            const newRecipe = {};
+            if (name) { newRecipe.name = name };
+            if (description) { newRecipe.description = description };
+            if (steps) { newRecipe.steps = steps };
+            if (ingredients) { newRecipe.ingredients = ingredients };
+
+            let recipe = await Recipe.findById(req.params.recipeId);
+            if (!recipe) { 
+                return res.status(404).send("Not Found") 
+            }
+    
+            if (recipe.owner.toString() !== req.user.id) {
+                return res.status(401).send("Not Allowed");
+            }
+            recipe = await Recipe.findByIdAndUpdate(req.params.recipeId, { $set: newRecipe }, { new: true })
+            res.json({ recipe });
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    }
+)
 
 
-// END-POINT 5: DELETE RECIPE END-POINT: DELETE /api/recipe/deleterecipe/:recipeId. LOGIN REQUIRED
-// router.post(
-//     "/",
-//     fetchuser,
-//     async (req, res) => {
-        
-//     }
-// )
-
+// END-POINT 6: DELETE RECIPE END-POINT: DELETE /api/recipe/deleterecipe/:recipeId. LOGIN REQUIRED
+router.delete(
+    "/deleterecipe/:recipeId",
+    fetchuser,
+    async (req, res) => {
+        try {
+            let recipe = await Recipe.findById(req.params.recipeId);
+            if (!recipe) { 
+                return res.status(404).send("Not Found") 
+            }
+    
+            if (recipe.user.toString() !== req.user.id) {
+                return res.status(401).send("Not Allowed");
+            }
+    
+            recipe = await Recipe.findByIdAndDelete(req.params.recipeId)
+            res.json({ "Success": "Recipe has been deleted", recipe: recipe });
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    }
+)
 
 module.exports = router;

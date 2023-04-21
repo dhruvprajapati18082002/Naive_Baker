@@ -170,4 +170,62 @@ router.delete(
         }
 });
 
+
+// END-POINT 6: UPDATE USER DETAILS END-POINT: PUT /api/auth/updateuser. LOGIN NEEDED
+router.put(
+    "/updateuser",
+    fetchuser,
+    async (req, res) => {
+        try{
+            const {name, email} = req.body;
+            
+            const newUser = {};
+            if (name)
+                newUser.name = name;
+            if (email)
+                newUser.email = email;
+
+            let user = User.findById(req.user.id);
+            if (!user)
+                return res.status(401).send("Operation Not Allowed");
+
+            user = await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new: true});
+            return res.json(user);
+        }
+        catch (error){
+            console.log(error.message);
+            return res.status(500).send("Internal Server Error!");
+        }
+    }
+)
+
+
+// END-POINT 7: UPDATE USER PASSWORD END-POINT: PUT /api/auth/passwordChange. LOGIN NEEDED
+router.put(
+    "/updateuser",
+    fetchuser,
+    async (req, res) => {
+        try{
+            const {oldPassword, newPassword} = req.body;
+            
+            let user = User.findById(req.user.id);
+            if (!user)
+                return res.status(401).send("Operation Not Allowed");
+
+            const newUser = {};
+            if (!bcrypt.compare(oldPassword, user.password))
+                return res.status(401).send("Invalid Password");
+            
+            newUser.password = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
+
+            user = await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new: true}).select("-password");
+            return res.json(user);
+        }
+        catch (error){
+            console.log(error.message);
+            return res.status(500).send("Internal Server Error!");
+        }
+    }
+)
+
 module.exports = router;
