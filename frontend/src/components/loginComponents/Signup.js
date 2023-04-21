@@ -5,7 +5,7 @@ import axios from 'axios';
 const SignUp = (props) => {
     
     let navigate = useNavigate();
-    const [credentials, setCredentials] = useState({name: "", email: "", password: "", confirmPassword: ""});
+    const [credentials, setCredentials] = useState({name: "", username: "", email: "", password: "", confirmPassword: ""});
 
     const onChangeHandler = (event) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
@@ -22,12 +22,13 @@ const SignUp = (props) => {
 
         axios.post("http://localhost:5000/api/auth/createuser", {
             name: credentials.name,
+            username: credentials.username,
             email: credentials.email,
             password: credentials.password,
             hasPremium: false
         })
         .then(response => {
-            if (response.status === 200){
+            if (response.status === 201){
                 localStorage.setItem('token', response.data.authToken);
                 navigate('/');
             }
@@ -51,6 +52,20 @@ const SignUp = (props) => {
                         name="name"
                         className="form-control"
                         value={credentials.name}
+                        onChange={onChangeHandler}
+                        required
+                    />
+                </div>
+
+                {/* username input */}
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="name">username*</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        value={credentials.username}
                         onChange={onChangeHandler}
                         required
                     />

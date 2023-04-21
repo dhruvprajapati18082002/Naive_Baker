@@ -31,7 +31,7 @@ export default function LoginPage() {
 
             {/* Tab content start*/}
             <div className="tab-content d-flex justify-content-center align-items-center" 
-                style={{height: "32rem", width: "28rem"}}>
+                style={{height: "37rem", width: "28rem"}}>
                 <SignIn active={isLogin} linkToRegister={openRegister}/>
                 <SignUp active={!isLogin} linkToLogin={openLogin}/>
             </div>
