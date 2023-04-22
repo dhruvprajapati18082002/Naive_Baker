@@ -33,12 +33,12 @@ router.post(
             // Check whether the user with this email exists already
             let user = await User.findOne({ email: req.body.email });
             if (user) {
-                return res.status(400).json({ error: "Sorry a user with this email already exists" })
+                return res.status(400).json({ errors: ["Sorry a user with this email already exists"] })
             }
 
             user = await User.findOne({ username: req.body.username });
             if (user) {
-                return res.status(400).json({ error: "Sorry a user with this username already exists" })
+                return res.status(400).json({ errors: ["Sorry a user with this username already exists"] })
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -87,12 +87,12 @@ router.post(
         try{
             let user = await User.findOne({email});
             if (!user)
-                return res.status(400).json({error: "Please provide valid credentials."});
+                return res.status(400).json({errors: ["Please provide valid credentials."]});
             
             // compare the password from URL with the user's password hash fetched from the database
             const passwordCompare = await bcrypt.compare(password, user.password);
             if (!passwordCompare)
-                return res.status(400).json({error: "Please provide valid credentials."});
+                return res.status(400).json({errors: ["Please provide valid credentials."]});
 
             const data = {
                 user: {
@@ -118,7 +118,11 @@ router.post(
         try{
             const userId = req.user.id;
             const user = await User.findById(userId).select("-password");
-            return res.send(user);
+
+            if (user)
+                return res.send(user);
+            else
+                return res.status(400).send({errors: ["Auth-Token Contains Non-existent User"]})
         }
         catch (error){
             console.log(error.message);
@@ -144,34 +148,7 @@ router.post(
 );
 
 
-// END-POINT 5: DELETE USER END-POINT: DELETE /api/auth/delete. LOGIN NEEDED
-router.delete(
-    '/delete',
-    fetchuser,
-    async (req, res) => {
-        try{
-            const userId = req.user.id;
-            
-            const data = await User.findByIdAndDelete(userId);
-            
-            if (!data)
-                return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
-            
-            // deleting all the recipes owned by that user
-            data.recipesOwned.forEach( async (recipeId) => {
-                await Recipe.findByIdAndDelete(recipeId);
-            })
-
-            return res.sendStatus(204);
-        }
-        catch(error){
-            console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
-        }
-});
-
-
-// END-POINT 6: UPDATE USER DETAILS END-POINT: PUT /api/auth/updateuser. LOGIN NEEDED
+// END-POINT 5:  UPDATE USER DETAILS END-POINT: PUT /api/auth/updateuser. LOGIN NEEDED
 router.put(
     "/updateuser",
     fetchuser,
@@ -200,9 +177,9 @@ router.put(
 )
 
 
-// END-POINT 7: UPDATE USER PASSWORD END-POINT: PUT /api/auth/passwordChange. LOGIN NEEDED
+// END-POINT 6: UPDATE USER PASSWORD END-POINT: PUT /api/auth/changepassword. LOGIN NEEDED
 router.put(
-    "/updateuser",
+    "/changepassword",
     fetchuser,
     async (req, res) => {
         try{
@@ -227,5 +204,33 @@ router.put(
         }
     }
 )
+
+
+// END-POINT 7: DELETE USER END-POINT: DELETE /api/auth/delete. LOGIN NEEDED
+router.delete(
+    '/delete',
+    fetchuser,
+    async (req, res) => {
+        try{
+            const userId = req.user.id;
+            
+            const data = await User.findByIdAndDelete(userId);
+            
+            if (!data)
+                return res.status(401).send({errors: ["Unauthorized - invalid authentication credentials given."]});
+            
+            // deleting all the recipes owned by that user
+            data.recipesOwned.forEach( async (recipeId) => {
+                await Recipe.findByIdAndDelete(recipeId);
+            })
+
+            return res.sendStatus(204);
+        }
+        catch(error){
+            console.log(error.message);
+            return res.status(500).send("Internal Server Error!");
+        }
+});
+
 
 module.exports = router;
