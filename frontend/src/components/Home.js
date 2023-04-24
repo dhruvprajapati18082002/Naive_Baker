@@ -5,7 +5,7 @@ const Home = (props) => {
     return (
         <div style={{backgroundColor : '#8fc4b7'}}>
 
-            <div style={{backgroundImage: 'url(https://img.freepik.com/free-photo/top-view-flour-eggs-cooking_52683-88221.jpg?w=2000&t=st=1682331679~exp=1682332279~hmac=47fec1f723ed8aa14c89ed1700f23f32c76141eac3d03297e64abea59b40d309)',
+            <div style={{backgroundImage: 'url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg)',
                         backgroundOrigin : "border-box",
                         backgroundRepeat : "no-repeat",
                         backgroundSize : "stretch",

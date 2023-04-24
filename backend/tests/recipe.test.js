@@ -42,6 +42,8 @@ describe("POST /api/recipe/addrecipe", () => {
                 description: "hot water used for various purposes",
                 steps: ["heat water on gas"],
                 ingredients: ["water"],
+                miniutesToCook: 45,
+                cuisine: "Italian",
             })
             .set({
                 "Content-Type": "application/json",
@@ -58,6 +60,8 @@ describe("POST /api/recipe/addrecipe", () => {
                 description: "hot water used for various purposes",
                 steps: ["heat water on gas"],
                 ingredients: ["water"],
+                miniutesToCook: 45,
+                cuisine: "Italian",
             })
             .set({
                 "Content-Type": "application/json",
@@ -75,6 +79,8 @@ describe("POST /api/recipe/addrecipe", () => {
                 description: "hot water used for various purposes",
                 steps: ["heat water on gas"],
                 ingredients: ["water"],
+                miniutesToCook: 45,
+                cuisine: "Italian",
             })
             .set({
                 "Content-Type": "application/json",
@@ -92,6 +98,8 @@ describe("POST /api/recipe/addrecipe", () => {
                 description: "hot water used for various purposes",
                 steps: "heat water on gas",
                 ingredients: "water",
+                miniutesToCook: 45,
+                cuisine: "Italian",
             })
             .set({
                 "Content-Type": "application/json",
