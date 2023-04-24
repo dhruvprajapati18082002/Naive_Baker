@@ -13,12 +13,12 @@ const INVALID_TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMDAwMCJ9LCJpYXQiOjE2ODIxNTYzNTB9.BTIM0S7_IvbrVB7NhPKbqJd7u2sr4txREL_lkbzl8YU";
 
 // Connecting to the database before each test.
-beforeEach(async () => {
+beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_URI);
 });
 
 // Closing database connection after each test.
-afterEach(async () => {
+afterAll(async () => {
     await mongoose.connection.close();
 });
 
