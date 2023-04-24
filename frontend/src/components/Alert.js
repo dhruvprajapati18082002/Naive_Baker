@@ -9,7 +9,7 @@ const Alert = () => {
     const { alert } = useContext(alertContext);
 
     return (
-        <div style={{ height: "50px" }}>
+        <div>
             {alert && (
                 <div
                     className={`alert alert-${alert.type} alert-dismissible fade show`}
