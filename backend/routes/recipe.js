@@ -13,6 +13,8 @@ router.post(
     body('name').isLength({min: 5}),
     body('description').isLength({min: 10}),
     body('steps').isArray({min: 1}),
+    body('miniutesToCook').isNumeric({min :1}),
+    body('cuisine').isLength({min:2}),
     body('ingredients').isArray({min: 1}),
     fetchuser,
     async (req, res) => {
@@ -99,6 +101,8 @@ router.post(
                     "name": recipe.name,
                     "description": recipe.description,
                     "video_url": recipe.video_url,
+                    "miniutesToCook": recipe.miniutesToCook,
+                    "cuisine": recipe.cuisine,
                     "steps": recipe.steps,
                     "ingredients": recipe.ingredients
                 }
@@ -126,7 +130,9 @@ router.put(
             if (description) { newRecipe.description = description };
             if (steps) { newRecipe.steps = steps };
             if (ingredients) { newRecipe.ingredients = ingredients };
-
+            if (miniutesToCook) { newRecipe.miniutesToCook = miniutesToCook };
+            if (cuisine) { newRecipe.cuisine = cuisine };
+            
             let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe) { 
                 return res.status(404).send("Not Found") 
