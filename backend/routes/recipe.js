@@ -53,11 +53,10 @@ router.post(
 // END-POINT 2: FETCH ALL RECIPES END-POINT: POST /api/recipe/fetchallrecipe/ LOGIN REQUIRED
 router.post(
     "/fetchallrecipes",
-    fetchuser,
     async (req, res) => {
         try{
             const recipes = await Recipe.find();
-            return res.json(recipes);
+            return res.json({recipes: recipes});
         }
         catch(error){
             console.log(error.message);
@@ -74,7 +73,7 @@ router.post(
     async (req, res) => {
         try {
             const userRecipes = await Recipe.find({ owner:req.user.id }); 
-            res.status(200).json(userRecipes);
+            res.status(200).json({recipes: userRecipes});
           } catch (err) {
             console.log(err);
             res.status(500).json({ message: "Internal Server error" });
@@ -90,7 +89,7 @@ router.post(
     async (req, res) => {
         try
         {
-            const recipe = await Recipe.findById(req.params.recipeId);
+            let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe)
                 return res.status(400).json({ error: "No Recipe with that ID found." });
             
@@ -105,7 +104,7 @@ router.post(
                 }
             }
             
-            return res.send(recipe);
+            return res.send({recipes: recipe});
         }
         catch(error){
             console.log(error.message);
