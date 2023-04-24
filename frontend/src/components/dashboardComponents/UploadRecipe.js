@@ -12,52 +12,66 @@ export default function UploadRecipe() {
                         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Upload Recipe</h3>
 
                         <form className="px-md-2">
-
+                            
+                            {/* this is for name input */}
                             <div className="form-outline mb-4">
-                                <input type="text" id="form3Example1q" className="form-control" />
-                                <label className="form-label" htmlFor="form3Example1q">Name</label>
+                                <label className="form-label" htmlFor="name">Recipe Title*</label>
+                                <input
+                                    type="text"
+                                    id="recipetitle"
+                                    name="recipetitle"
+                                    className="form-control"
+                                />
                             </div>
 
-                            <div className="row">
-                                <div className="col-md-6 mb-4">
-
-                                <div className="form-outline datepicker">
-                                    <input type="text" className="form-control" id="exampleDatepicker1" />
-                                    <label htmlFor="exampleDatepicker1" className="form-label">Select a date</label>
-                                </div>
-
-                                </div>
-                                <div className="col-md-6 mb-4">
-
-                                <select className="select">
-                                    <option value="1" disabled>Gender</option>
-                                    <option value="2">Female</option>
-                                    <option value="3">Male</option>
-                                    <option value="4">Other</option>
-                                </select>
-
-                                </div>
+                            {/* this is for description */}
+                            <div className="mb-3">
+                                <label for="exampleFormControlTextarea1" className="form-label">Description of Recipe*</label>
+                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
 
-                            <div className="mb-4">
 
-                                <select className="select">
-                                <option value="1">Vegetarian</option>
-                                <option value="2">Non-Vegetarian</option>
-                                </select>
-
+                            {/* this is for cuisine */}
+                            <div className="form-outline mb-4">
+                                <label for="cuisine" className="form-label">Enter Cuisine*</label>
+                                    <input className="form-control" list="types" id="cuisine" placeholder="Type to search..."/>
+                                    <datalist id="types">
+                                        <option value="Indian" />
+                                        <option value="French" />
+                                        <option value="Italian" />
+                                        <option value="Mexican" />
+                                        <option value="Chinese" />
+                                        <option value="Mediterranean" />
+                                        <option value="Russian" />
+                                    </datalist>
+                            </div>
+                            
+                            {/* this is for veg/non-veg */}
+                            <div className="form-outline mb-4">
+                                <label for="cuisinetype" className="form-label">Cuisine type*</label>
+                                    <input className="form-control" list="cuisineoptions" id="cuisinetype" placeholder="Type to search...veg/non-veg/vegan"/>
+                                        <datalist id="cuisineoptions">
+                                            <option value="Vegetarian" />
+                                            <option value="Non Vegetarian" />
+                                            <option value="Vegan" />
+                                        </datalist>
+                            </div>
+                            {/* this is duration */}
+                            <div className="form-outline mb-4">
+                                <label for="recipeduration" className="form-label">Duration*</label>
+                                    <input className="form-control" type="number" id="recipeduration" placeholder="in minutes.."/>
                             </div>
 
-                            <div className="row mb-4 pb-2 pb-md-0 mb-md-5">
-                                <div className="col-md-6">
+                            {/* this is for ingrediants */}
 
-                                <div className="form-outline">
-                                    <input type="text" id="form3Example1w" className="form-control" />
-                                    <label className="form-label" htmlFor="form3Example1w"></label>
-                                </div>
 
-                                </div>
+                            {/* this is for steps of recipe */}
+                            <div className="mb-3">
+                                <label for="recipetutorial" className="form-label">Step by step tutorial*</label>
+                                <textarea className="form-control" id="recipetutorial" rows="3" placeholder='begin new step from new line...'></textarea>
                             </div>
+
+                            
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 
