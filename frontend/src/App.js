@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
-import Search from "./components/Search";
+import Search from "./components/SearchComponents/Search";
 import LoginPage from "./components/LoginPage";
 import Alert from "./components/Alert";
 

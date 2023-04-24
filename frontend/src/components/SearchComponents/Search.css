@@ -1,0 +1,194 @@
+.body_search{
+  margin: 0; 
+  padding: 0;
+  background: #ffffff;
+  height: 100vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  align-content: center;
+  height: 15vh;
+}
+.box_s{
+  position: relative;
+}
+
+.input {
+  padding: 10px;
+  width: 80px;
+  height: 80px;
+  background: none;
+  border: 4px solid rgb(223, 223, 14);
+  border-radius: 50px;
+  box-sizing: border-box;
+  font-family: Comic Sans MS;
+  font-size: 26px;
+  color: black;
+  outline: none;
+  transition: .5s;
+}
+.box_s:hover input{
+  width: 350px;
+  background: white;
+  border-radius: 10px;
+}
+.box_s i{
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(-50%,-50%);
+  font-size: 26px;
+  color: #ffd52d;
+  transition: .2s;
+}
+.box_s:hover i{
+  opacity: 0;
+  z-index: -1;
+}
+
+/* YouTube icon */
+#ytb {
+height: 50px;
+width: 50px;
+text-align: center;
+line-height: 52px;
+border: 2px solid transparent;
+color: #ff1717;
+font-size: 25px;
+transition: 0.3s;
+}
+
+#ytb:hover{
+border-radius: 50%;
+border-color: #ff1717;
+box-shadow: 0 0 10px #ff4040;
+}
+.searchCat {
+  margin-left: 185px;
+  margin-top: 60px;
+  display:flex;
+  width: 75%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-cat {
+  padding: 12px;
+  margin-right: 4px;
+}
+
+.blackButton{
+  position: relative;
+  height: 95px;
+  width: 240px;
+  margin: 0 40px;
+  margin-bottom: 20px;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  outline: none;
+  cursor: pointer;
+  background: #dee605;
+  overflow: hidden;
+  transition: 0.6s;
+}
+
+.whiteButton{
+  position:relative;
+  height: 85px;
+  width: 230px;
+  margin: 0 40px;
+  margin-bottom: 20px;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  outline: none;
+  cursor: pointer;
+  background: #f9f9a9  ;
+  overflow: hidden;
+  transition: 0.6s;
+}
+
+h1 {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 3%;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 90px;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+h1 span {
+  display: block;
+  font-size: 0.5em;
+  line-height: 1.3;
+}
+h1 em {
+  font-style: normal;
+  font-weight: 600;
+}
+.headText h1 {
+  text-align: center;
+  color:#222; font-size:60px; font-weight:400;
+  text-transform: uppercase;
+  word-spacing: 1px; letter-spacing:2px; color:#818d06;
+}
+.headText h1 span {
+  line-height:2em; padding-bottom:15px;
+  text-transform: none;
+  font-size:.7em;
+  font-weight: normal;
+  font-style: italic; font-family: "Playfair Display","Bookman",serif;
+  color:#999; letter-spacing:-0.005em; word-spacing:1px;
+  letter-spacing:none;
+}
+.headText h1:after, .headText h1:before {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 45px;
+  height: 4px;
+  content: "";
+  right: 45px; 
+  margin:auto;
+  background-color: #ccc;
+}
+.headText h1:before { 
+background-color:#e8fba2;
+  left:45px; width:90px;
+}
+
+.card_search-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card_search {
+  border: 1px solid #bfc907;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 10px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.card_search h2 {
+  margin-top: 0;
+}
+
+.card_search p {
+  margin-bottom: 5px;
+}
