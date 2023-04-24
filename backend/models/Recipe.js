@@ -10,7 +10,7 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    miniutesToCook: {
+    minutesToCook: {
         type: Number,
         require: true
     },
@@ -32,6 +32,10 @@ const RecipeSchema = new mongoose.Schema({
         require: true
     },
     video_url: {
+        type: String,
+        default: ""
+    },
+    image_url: {
         type: String,
         default: ""
     },
