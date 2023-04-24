@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Search from "./components/SearchComponents/Search";
 import LoginPage from "./components/LoginPage";
 import Alert from "./components/Alert";
+import UploadRecipe from "./components/dashboardComponents/UploadRecipe";
 
 export default function App() {
 
@@ -23,6 +24,7 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/Search" element={<Search />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/uploadrecipe" element={<UploadRecipe />} />
             </Routes>
 
             <Footer />

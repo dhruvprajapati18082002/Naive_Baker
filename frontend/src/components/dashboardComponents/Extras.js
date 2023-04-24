@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import userContext from "../../context/user/userContext";
 
+import { Link } from "react-router-dom";
+
 const Extras = () => {
 
     const { user } = useContext(userContext);
@@ -10,7 +12,7 @@ const Extras = () => {
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <button type="button" className="btn btn-dark my-1">
-                        Upload Recipe
+                    <Link className="nav-link" to="/uploadrecipe">Upload Recipe</Link>
                     </button>
                 </li>
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
