@@ -26,9 +26,10 @@ router.post(
     async (req, res) => {
         try{
             let query = "{\"$or\": [";
-
+            let count=0;
             if (req.body.ingredients !== undefined && req.body.ingredients.length > 0 )
             {
+                count=count+1;
                 query += "{\"ingredients\" : {\"$all\" : [";
                 for (let i=0; i < req.body.ingredients.length - 1; i++)
                 {
@@ -38,15 +39,35 @@ router.post(
                 query += "\"" + req.body.ingredients[req.body.ingredients.length - 1] + "\" ]}}";
             }
 
+            if (req.body.cuisine !== undefined && req.body.cuisine.length > 0 )
+            {
+                count=count+1;
+                query += "{\"cuisine\" : {\"$all\" : [";
+                query += "\"" + req.body.cuisine + "\" ]}}";
+            }
 
+            if (req.body.minutesToCook !== undefined )
+            {
+                count=count+1;
+                query += "{\"minutesToCook\" : {\"$lte\" : ";
+                query += "\"" + req.body.minutesToCook + "\" }}";
+            }
+            if (req.body.ratings !== undefined )
+            {
+                count=count+1;
+                query += "{\"ratings\" : {\"$gte\" : ";
+                query += "\"" + req.body.ratings + "\" }}";
+            }
             query += "]}"
-
             console.log(query)
+            if(count>1){
+                return res.status(400).send("Not Allowed to enter more than one filter");
+            }
             query = JSON.parse(query);
             console.log(query)
             const recipes = await Recipe.find(query);
 
-            return res.send({recipes: recipes});
+            return res.send({total: recipes.length , recipes: recipes});
         }
         catch(error){
             console.log(error.message);
