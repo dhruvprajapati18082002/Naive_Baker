@@ -32,7 +32,7 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-// TEST-CASE 1
+// END-POINT 1: TEST CASES 1-4
 describe("POST /api/recipe/addrecipe", () => {
     it("should add the recipe to the database", async () => {
         const response = await supertest(app)
@@ -50,10 +50,40 @@ describe("POST /api/recipe/addrecipe", () => {
 
         expect(response.statusCode).toBe(201);
     });
-});
+    it("should not add this recipe to the database as the name of the recipe is not given", async () => {
+        const response = await supertest(app)
+            .post("/api/recipe/addrecipe")
+            .send({
+                name: "",
+                description: "hot water used for various purposes",
+                steps: ["heat water on gas"],
+                ingredients: ["water"],
+            })
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
 
-// TEST-CASE 2
-describe("POST /api/recipe/addrecipe (with Error)", () => {
+        expect(response.statusCode).toBe(400);
+    });
+
+    it("should not add this recipe to the database as AuthToken is invalid", async () => {
+        const response = await supertest(app)
+            .post("/api/recipe/addrecipe")
+            .send({
+                name: "boiled water",
+                description: "hot water used for various purposes",
+                steps: ["heat water on gas"],
+                ingredients: ["water"],
+            })
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN + "change",
+            });
+
+        expect(response.statusCode).toBe(401);
+    });
+
     it("should cause error due to invalid ingredients and steps type", async () => {
         const response = await supertest(app)
             .post("/api/recipe/addrecipe")
@@ -70,35 +100,47 @@ describe("POST /api/recipe/addrecipe (with Error)", () => {
 
         expect(response.statusCode).toBe(400);
     });
+
 });
 
-// TEST-CASE 3
+// END POINT-2 TEST CASE-5
 describe("POST /api/recipe/fetchallrecipes", () => {
-    it("should get all recipes of the user", async () => {
+    it("should get all recipes", async () => {
         const response = await supertest(app)
             .post("/api/recipe/fetchallrecipes")
             .set({
                 "Content-Type": "application/json",
-                "auth-token": AUTH_TOKEN,
             });
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBeGreaterThan(0);
+        expect (response.status).toBe(200);
+        expect (response.body.recipes).toBeDefined();
     });
 });
-
-// TEST-CASE 4
+// END POINT-3 TEST CASE-6
+describe("POST /api/recipe/fetchuserrecipe", () => {
+    it("should get all recipes of the user", async () => {
+        const response = await supertest(app)
+            .post("/api/recipe/fetchuserrecipe")
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+        expect (response.status).toBe(200);
+        expect (response.body.recipes).toBeDefined();
+    });
+});
+// END POINT-4 TEST CASE 7-8
 describe("POST /api/recipe/fetchrecipe/:recipeId", () => {
     it("should get fetch a single recipe based on the ID", async () => {
         // get all recipes, take the first recipe's ID and then use it to fetch all other recipes
         let response = await supertest(app)
-            .post("/api/recipe/fetchallrecipes")
+            .post("/api/recipe/fetchuserrecipe")
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,
             });
 
-        const recipeId = response.body[0]._id;
+        const recipeId = response.body.recipes[0]._id;
 
         response = await supertest(app)
             .post(`/api/recipe/fetchrecipe/${recipeId}`)
@@ -108,5 +150,26 @@ describe("POST /api/recipe/fetchrecipe/:recipeId", () => {
             });
 
         expect(response.statusCode).toBe(200);
+        expect(response.body.recipes).toBeDefined();
+    });
+
+    it("should get fetch a single recipe based on the ID", async () => {
+        // get all recipes, take the first recipe's ID and then use it to fetch all other recipes but with wrong recipeId
+        let response = await supertest(app)
+            .post("/api/recipe/fetchuserrecipe")
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+        console.log(response.body);
+        const recipeId = response.body.recipes._id;
+        response = await supertest(app)
+            .post(`/api/recipe/fetchrecipe/${recipeId+"123"}`)
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        expect(response.statusCode).toBe(400);
     });
 });
