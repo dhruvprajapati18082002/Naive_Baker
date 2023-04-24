@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+
+import alertContext from '../../context/alert/alertContext';
 
 const SignUp = (props) => {
     
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({name: "", username: "", email: "", password: "", confirmPassword: ""});
+    const { showAlert } = useContext(alertContext);
 
     const onChangeHandler = (event) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
@@ -16,7 +19,7 @@ const SignUp = (props) => {
         
         if (credentials.password !== credentials.confirmPassword)
         {
-            alert("Password and Confirm Password Must Match");
+            showAlert("Password and Confirm Password Must Match", "warning");
             return;
         }
 
@@ -33,10 +36,10 @@ const SignUp = (props) => {
                 navigate('/');
             }
             else
-                alert(response.data)
+                showAlert(response.data, "warning");
         })
         .catch(error => {
-            alert("Invalid Credentials");
+            showAlert(error.message, "danger");
         });
     }
 

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import alertContext from '../../context/alert/alertContext';
 
 const Signin = (props) => {
     let navigate = useNavigate();
 
     const [credentials, setCredentials] = useState({loginEmail: "", loginPassword: ""});
+    const { showAlert } = useContext(alertContext);
 
     const onChangeHandler = (event) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
@@ -21,13 +24,14 @@ const Signin = (props) => {
         .then(response => {
             if (response.status === 200){
                 localStorage.setItem('token', response.data.authToken);
+                showAlert("Logged-in successfully", "success");
                 navigate('/');
             }
             else
-                alert(response.data)
+                showAlert(response.data, "warning");
         })
         .catch(error => {
-            alert("Invalid Credentials");
+            showAlert(error.message, "danger");
         });
     }
 

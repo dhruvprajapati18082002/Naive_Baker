@@ -16,11 +16,7 @@ const Alert = () => {
                     role="alert"
                 >
                     <strong>
-                        {capitalize(
-                            alert.type === "danger"
-                                ? "error"
-                                : alert.type
-                        )}
+                        {capitalize(alert.type === "danger" ? "error" : alert.type)}
                     </strong>
                     : {alert.message}
                 </div>

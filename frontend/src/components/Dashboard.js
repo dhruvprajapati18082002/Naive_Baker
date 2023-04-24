@@ -1,20 +1,23 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import userContext from "../context/user/userContext";
+import { useNavigate } from "react-router-dom";
 
 import ProfilePic from "./dashboardComponents/ProfilePic";
 import Extras from "./dashboardComponents/Extras";
 import UserDetails from "./dashboardComponents/UserDetails";
 
+import userContext from "../context/user/userContext";
+import alertContext from "../context/alert/alertContext";
+
 const Profile = () => {
     const navigate = useNavigate();
-    const context = useContext(userContext);
-    const { user, getProfile } = context;
+
+    const { getProfile } = useContext(userContext);
+    const { showAlert } = useContext(alertContext)
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
             navigate("/login");
-            alert("please login first");
+            showAlert("please login first", "warning");
         } else {
             getProfile();
         }
