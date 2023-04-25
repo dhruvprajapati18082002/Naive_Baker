@@ -1,24 +1,54 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import recipeContext from '../../context/recipe/recipeContext';
+import alertContext from "../../context/alert/alertContext";
+import { useNavigate } from "react-router-dom";
 // import './boxstyle.css'
 
 export default function UploadRecipe() {
-    const onSubmit = (e) => {
-        e.preventDefault();
-        console.log("refresh prevented");
+
+    const  { uploadRecipe } = useContext(recipeContext);
+    const { showAlert } = useContext(alertContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem("token")){
+            showAlert("Please Login First !", "warning");
+            navigate("/login");
+        }
+    }, [])
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const name = document.getElementById("recipename").value;
+        const description = document.getElementById("description").value;
+        const cuisine = document.getElementById("cuisine").value;
+        const duration = document.getElementById("recipeduration").value;
+        let steps = document.getElementById("recipetutorial").value;
+
+        steps = steps.split("\n").filter((element)=>{return element.length !== 0})
+        
+        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps);
+        
+        if (res._id !== undefined)
+            showAlert("Recipe Succesfully Added", "success")
+            // navigate(`/recipe/${res._id}`);
+        else
+            showAlert("Failed to add recipe !", "danger");
       };
 
-    const [tags, setTags] = useState([]);
-    const addTag = (e) => {
+    const [ingredients, setIngredients] = useState([]);
+    
+    const addIngredients = (e) => {
       if (e.key === "Enter") {
         if (e.target.value.length > 0) {
-          setTags([...tags, e.target.value]);
+          setIngredients([...ingredients, e.target.value]);
           e.target.value = "";
         }
       }
     };
-    const removeTag = (removedTag) => {
-      const newTags = tags.filter((tag) => tag !== removedTag);
-      setTags(newTags);
+    const removeIngredients = (ingredientToRemove) => {
+      const newIngredients = ingredients.filter((ingredient) => ingredient !== ingredientToRemove);
+      setIngredients(newIngredients);
     };
 
 
@@ -31,15 +61,15 @@ export default function UploadRecipe() {
                     <div className="card-body p-4 p-md-5">
                         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Upload Recipe</h3>
 
-                        <form className="px-md-2" onSubmit={onSubmit}>
+                        <form onSubmit={handleSubmit} className="px-md-2">
                             
                             {/* this is for name input */}
                             <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="name">Recipe Title*</label>
+                                <label className="form-label" htmlFor="recipename">Recipe Name*</label>
                                 <input
                                     type="text"
-                                    id="recipetitle"
-                                    name="recipetitle"
+                                    id="recipename"
+                                    name="recipename"
                                     className="form-control"
                                     required
                                     minLength={4}
@@ -49,13 +79,13 @@ export default function UploadRecipe() {
 
                             {/* this is for description */}
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlTextarea1" className="form-label">Description of Recipe*</label>
+                                <label htmlFor="description" className="form-label">Description of Recipe*</label>
                                 <textarea className="form-control" 
-                                id="exampleFormControlTextarea1" 
+                                id="description" 
                                 rows="3" 
                                 required 
                                 minLength={10} 
-                                maxLength={50} />
+                                maxLength={200} />
                             </div>
 
 
@@ -80,7 +110,7 @@ export default function UploadRecipe() {
                             </div>
                             
                             {/* this is for veg/non-veg */}
-                            <div className="form-outline mb-4">
+                            {/* <div className="form-outline mb-4">
                                 <label htmlFor="cuisinetype" className="form-label">Cuisine type*</label>
                                     <input className="form-control" 
                                     list="cuisineoptions" 
@@ -88,12 +118,12 @@ export default function UploadRecipe() {
                                     placeholder="Type to search...veg/non-veg/vegan"
                                     required
                                     />
-                                        <datalist id="cuisineoptions">
-                                            <option value="Vegetarian" />
-                                            <option value="Non Vegetarian" />
-                                            <option value="Vegan" />
-                                        </datalist>
-                            </div>
+                                    <datalist id="cuisineoptions">
+                                        <option value="Vegetarian" />
+                                        <option value="Non Vegetarian" />
+                                        <option value="Vegan" />
+                                    </datalist>
+                            </div> */}
                             {/* this is duration */}
                             <div className="form-outline mb-4">
                                 <label htmlFor="recipeduration" className="form-label">Duration*</label>
@@ -105,20 +135,20 @@ export default function UploadRecipe() {
                                     />
                             </div>
 
-                            {/* this is for ingrediants */}
+                            {/* this is for ingredients */}
                             <div className="form-outline mb-4">
-                            <label htmlFor="boxes">Ingrediants*</label>
+                            <label htmlFor="boxes">Ingredients*</label>
                                 <div className="form-control" id="boxes" >
-                                    {tags.map((tag, index) => {
+                                    {ingredients.map((ingredient, index) => {
                                     return (
                                         <div key={index} >
 
-                                        {tag} <span onClick={() => removeTag(tag)} >x</span>
+                                        {ingredient} <span style={{cursor: "pointer"}} onClick={() => removeIngredients(ingredient)} >X</span>
                                         </div>
                                     );
                                     })}
                                     
-                                    <input onKeyDown={addTag} />
+                                    <input onKeyDown={addIngredients} />
                                 </div>
                                 </div>
   
@@ -132,8 +162,6 @@ export default function UploadRecipe() {
                                 placeholder='begin new step from new line...'
                                 required />
                             </div>
-
-                            
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 

@@ -1,36 +1,36 @@
 name: Backend Unit Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  build:
+    build:
+        runs-on: windows-latest
 
-    runs-on: windows-latest
+        strategy:
+            matrix:
+                node-version: [18.x]
 
-    strategy:
-      matrix:
-        node-version: [18.x]
+        env:
+            MONGODB_URI: ${{ secrets.MONGODB_URI }}
+            FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+            PORT: ${{ secrets.PORT }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            REACT_APP_BACKEND: ${{ secrets.REACT_APP_BACKEND }}
 
-    env:
-      MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-      PORT: ${{ secrets.PORT }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-        working-directory: backend
-      - run: npm run build --if-present
-        working-directory: backend
-      - run: npm test
-        working-directory: backend
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm ci
+              working-directory: backend
+            - run: npm run build --if-present
+              working-directory: backend
+            - run: npm test
+              working-directory: backend

@@ -167,7 +167,7 @@ router.get(
 
 
 // END-POINT 4: GET OTHER USER'S DETAILS END-POINT: POST /api/auth/getuser/:username. LOGIN NOT REQUIRED
-router.get(
+router.post(
     '/getuser/:username',
     async (req, res) => {
         try{
