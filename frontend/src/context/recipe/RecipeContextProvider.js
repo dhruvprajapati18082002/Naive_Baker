@@ -30,8 +30,39 @@ const RecipeContextProvider = (props) => {
         return response.data;
     }
 
+    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, rating) => {
+        
+        let data = {};
+        if (veg_name !== undefined)
+          data.name = veg_name;
+        else if (time_to_make !== undefined)
+          data.minutesToCook = time_to_make;
+        else if (ingredients !== undefined)
+          data.ingredients = ingredients;
+        else if (cuisine !== undefined)
+          data.cuisine = cuisine;
+        else if (rating !== undefined)
+          data.ratings = rating;
+        
+        const response = await axios.post(
+            `http://localhost:5000/api/query/search`, data,{
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        ).catch(error => {
+            return error.message
+        })
+
+        if (response.status === 200){
+            setRecipes(response.data.recipes)
+            console.log(response.data.recipes)
+        }
+        console.log(recipes)
+      }
+
     return (
-        <recipeContext.Provider value={{ recipes, uploadRecipe }}>
+        <recipeContext.Provider value={{ recipes, uploadRecipe, searchRecipe  }}>
             {props.children}
         </recipeContext.Provider>
     );
