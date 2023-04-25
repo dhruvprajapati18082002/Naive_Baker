@@ -8,8 +8,8 @@ const UserContextProvider = (props) => {
     // fetch logged in user's profile
     const getProfile = async () => {
 
-        const res = await axios.post(
-            "http://localhost:5000/api/auth/getProfile", null, {
+        const res = await axios.get(
+            "http://localhost:5000/api/auth/getProfile", {
                 headers: {
                     "auth-token": localStorage.getItem("token"),
                 },

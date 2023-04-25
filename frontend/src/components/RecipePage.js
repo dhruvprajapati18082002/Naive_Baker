@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import recipeContext from "../context/recipe/recipeContext";
+import alertContext from "../context/alert/alertContext";
+
 
 const RecipePage = () => {
+
+    const navigate = useNavigate();
+    const { recipeId } = useParams();
+    const { recipeDisplayed, getRecipe } = useContext(recipeContext);
+    const { showAlert } = useContext(alertContext);
+
+    useEffect( () => {
+        if ( !getRecipe(recipeId) ){
+            showAlert("Invalid Recipe Requested", "danger");
+            navigate("/");
+        }
+    }, [])
+
+
     return (
         <div style={{backgroundColor: "#8fc4b7"}}>
             <div className="container">
-                <p className="h1 text-center">Pasta with White Sauce</p>
+                <p className="h1 text-center">{recipeDisplayed.name}</p>
 
                 <div className="d-flex">
                     <div className="container my-5 align-items-center justify-content-center" style={{width: "fit-content"}}>
@@ -19,19 +38,19 @@ const RecipePage = () => {
                             <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
                                 <div className="card-body">
                                     <div className="card-title"><strong>Cooking Time:</strong></div>
-                                    <div className="card-text">30 Min</div>
+                                    <div className="card-text">{recipeDisplayed.minutesToCook} Min</div>
                                 </div>
                             </div>
                             <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
                                 <div className="card-body">
                                     <div className="card-title"><strong>Cuisine Type:</strong></div>
-                                    <div className="card-text">Italian</div>
+                                    <div className="card-text">{recipeDisplayed.cuisine}</div>
                                 </div>
                             </div>
                             <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
                                 <div className="card-body">
                                     <div className="card-title"><strong>Avg Ratings:</strong></div>
-                                    <div className="card-text">4.2</div>
+                                    <div className="card-text">{recipeDisplayed.ratings}</div>
                                 </div>
                             </div>
                         </div>
@@ -46,8 +65,7 @@ const RecipePage = () => {
                             <p className="h2">Description</p>
                             <ul className="list-group">
                                 <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>
-                                    The creamy white sauce made with butter, flour, milk, and flavored with garlic, Parmesan cheese, and herbs.
-                                Simply toss the sauce with your favorite pasta have a comforting and satisfying meal that will please the whole family.
+                                    {recipeDisplayed.description}
                                 </li>
                             </ul>
                         </div>
@@ -57,12 +75,13 @@ const RecipePage = () => {
                         <div className="container my-3">
                             <p className="h2">Ingredients</p>
                             <div className="d-flex">
-                                <h5><div className="badge bg-secondary mx-1" >pasta</div></h5>
-                                <h5><div className="badge bg-secondary mx-1" >butter</div></h5>
-                                <h5><div className="badge bg-secondary mx-1" >flour</div></h5>
-                                <h5><div className="badge bg-secondary mx-1" >milk</div></h5>
-                                <h5><div className="badge bg-secondary mx-1" >garlic</div></h5>
-                                <h5><div className="badge bg-secondary mx-1" >cheese</div></h5>
+                                {
+                                    recipeDisplayed.ingredients !== undefined && recipeDisplayed.ingredients.map((ingredient, key) => {
+                                        return (
+                                            <h5 key={key}><div className="badge bg-secondary mx-1">{ingredient}</div></h5>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                         {/* ingredients */}
@@ -71,11 +90,13 @@ const RecipePage = () => {
                         <div className="container my-3">
                             <p className="h2">Steps</p>
                             <div className="list-group list-group-numbered">
-                                <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>Cook the pasta until al dente.</li>
-                                <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>Make a white sauce by melting butter, adding garlic, and whisking in flour and milk.</li>
-                                <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>Add Parmesan cheese to the sauce and stir until melted.</li>
-                                <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>Combine the pasta and sauce in a large pot and stir to coat the pasta.</li>
-                                <li className="list-group-item h6 shadow-lg" style={{backgroundColor: "#6da295"}}>Serve hot and enjoy!</li>
+                                {
+                                    recipeDisplayed.steps !== undefined && recipeDisplayed.steps.map((step, key) =>{
+                                        return (
+                                            <li className="list-group-item h6 shadow-lg" key={key} style={{backgroundColor: "#6da295"}}>{step}</li>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                         {/* steps */}

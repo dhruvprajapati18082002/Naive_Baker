@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useContext } from "react";
 
 import AboutUs from "./components/AboutUs";
 import Footer from "./components/Footer";
@@ -25,8 +24,10 @@ export default function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/Search" element={<Search />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/recipepage" element={<RecipePage />} />
                 <Route path="/uploadrecipe" element={<UploadRecipe />} />
+
+                {/* passing the id "recipeId" of the recipe to be displayed as url parameter */}
+                <Route path="/recipe/:recipeId" element={<RecipePage />} />
             </Routes>
 
             <Footer />
