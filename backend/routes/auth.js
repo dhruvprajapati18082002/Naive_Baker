@@ -9,10 +9,44 @@ require("dotenv").config();
 const User = require("../models/User");
 const fetchuser = require("../middleware/fetchuser");
 const Recipe = require("../models/Recipe");
-
+const nodemailer= require("nodemailer");
+const randomstring= require("randomstring");
 const JWT_SECRET = process.env.JWT_SECRET;
-
-
+const check={
+    emailUser:"naivebaker123@gmail.com",
+    emailPassword: "fkozzuotdshxdcuq"
+}
+const resendPasswordMail = async(name,emaiil,token)=>{
+    try{
+        let transporter=nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: false,
+            auth: {
+                user: check.emailUser,
+                pass: check.emailPassword
+            }
+        });
+        const mailOptions ={
+            from:check.emailUser,
+            to: emaiil,
+            subject: 'For reset Password',
+            html: '<p> Hi '+name+',Please copy the link and <a href="localhost:8080/api/auth/resetPassword?token='+token+'">reset your password</a>'
+        }
+        transporter.sendMail(mailOptions,function(error,info){
+            if(error){
+                console.log(error);
+            }
+            else{
+                console.log("Mail has been sent",info.response);
+            }
+        })
+    }
+    catch(error){
+        res.status(400).send({success:false,msg:error.message});
+    }
+}
 // END-POINT 1: CREATE USER END-POINT: POST /api/auth/createuser. NO LOGIN NEEDED
 router.post(
     "/createuser",
@@ -110,8 +144,8 @@ router.post(
 );
 
 
-// END-POINT 3: GET USER END-POINT: GET /api/auth/getprofile. LOGIN NEEDED
-router.get(
+// END-POINT 3: GET USER END-POINT: POST /api/auth/getprofile. LOGIN NEEDED
+router.post(
     '/getProfile',
     fetchuser,
     async (req, res) => {
@@ -132,8 +166,8 @@ router.get(
 );
 
 
-// END-POINT 4: GET OTHER USER'S DETAILS END-POINT: GET /api/auth/getuser/:username. LOGIN NOT REQUIRED
-router.get(
+// END-POINT 4: GET OTHER USER'S DETAILS END-POINT: POST /api/auth/getuser/:username. LOGIN NOT REQUIRED
+router.post(
     '/getuser/:username',
     async (req, res) => {
         try{
@@ -232,5 +266,51 @@ router.delete(
         }
 });
 
+router.post(
+    '/forgotPassword',
+    async (req, res) => {
+        try{
+            const email= req.body.email;
+            const userData=await User.findOne({email:email});
+            if(userData){
+                const randostring= randomstring.generate();
+                const data= await User.findOneAndUpdate({email:email},{$set:{token:randostring}});
+                const userData2=await User.findOne({email:email});
+                resendPasswordMail(userData.name,userData.email,userData2.token);
+                res.status(200).send({msg:"Please Check inbox of your mail",data:userData2});
+            }
+            else{
+                return res.status(200).send("This Email doesn't exist");
+            }
+        }
+        catch(error){
+            console.log(error.message);
+            return res.status(400).send({success:false , error:error.message});
+        }
+});
 
+router.get(
+    '/resetPassword',
+    async (req, res) => {
+        try{
+            const token=req.query.token;
+            const tokenData= await User.findOne({token: token});
+            console.log({data:token});
+            console.log({data:tokenData});
+            if(tokenData){
+                const password=req.body.password;
+                const salt = await bcrypt.genSalt(10);
+                const newPassword = await bcrypt.hash(password, salt);
+                const userData=await User.findByIdAndUpdate({_id: tokenData._id},{$set:{password:newPassword,token:''}},{new:true});
+                res.status(200).send({success:true,msg:"Password Changed successfuly",data:userData});
+            }
+            else{
+                res.status(400).send({msg:"This link has expired",data: token});
+            }
+        }
+        catch(error){
+            console.log(error.message);
+            return res.status(400).send({success:false , error:error.message});
+        }
+});
 module.exports = router;

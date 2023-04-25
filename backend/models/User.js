@@ -37,6 +37,10 @@ const UserSchema = new mongoose.Schema({
     recipesRated: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: "recipe"
+    },
+    token: {
+        type: String,
+        default:''
     }
 });
 
