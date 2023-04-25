@@ -16,9 +16,6 @@ class ButtonSearch extends React.Component {
       if (this.state.darkBtn === btn) return "blackButton";
       else return "whiteButton";
     };
-  
-    
-    
   }
   
 export default ButtonSearch;

@@ -30,11 +30,11 @@ const data = [
     "veg_name": "Honey Glazed Carrots",
     "time_to_make": "25 minutes",
     "ingredients": [
-      "1 pound carrots, peeled and sliced",
-      "2 tablespoons unsalted butter",
-      "2 tablespoons honey",
-      "1/4 teaspoon ground ginger",
-      "Salt and pepper to taste"
+      "carrots",
+      "unsalted butter",
+      "honey",
+      "ginger",
+      "Salt"
     ],
     "cuisine":"italian",
     "rating":"9",
@@ -67,7 +67,38 @@ const data = [
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchCategory, setSearchCategory] = useState('meals');
-
+  // const f = (toSearch ) => {
+  //   console.log(data)
+  //   let ans = [];
+  //   for(let j = 0; j < data.length; j++ ) {   
+  //     console.log(data[j])
+  //     console.log(toSearch)
+  //     console.log(data[j].ingredients);
+  //     var take = true;
+  //     for(let i=0; i < toSearch.length; i++) {
+  //       if(!JSON.stringify(data[j]).includes(toSearch[i])) {
+  //         console.log('thing: ' + toSearch[i] + ' data[j] ' + data[j].veg_name)
+  //         take = false;
+  //         break;
+  //       }
+  //       if(take) {
+  //         console.log("+===============================================+  ")
+  //         // for(let i in data[j]){
+  //         //   ans.push(data[j][i]);
+  //         // }
+  //         ans.push(data[j]);
+  //         console.log("ans= " + ans.toString());
+  //         for(let k=0;k<ans.length;k++){
+  //           for(let n in ans[k]){
+  //             console.log("ans[k][n] = " + ans[k][n]);
+  //           }
+  //         }  
+  //       }
+  //     }
+  //   }
+  //   console.log("ans2 = " + ans)
+  //   return ans;
+  // }
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -90,22 +121,39 @@ function Search() {
   const setTocuisine=()=>{
     setSearchCategory('cuisine');
   }
+  let once = true;
   const filteredData = data.filter((item) => {
     if (searchCategory === 'meals') {
+      once=true;
       return item.veg_name.toLowerCase().includes(searchTerm.toLowerCase());
     } else if (searchCategory === 'cuisine') {
+      once=true;
       return item.cuisine.toString().includes(searchTerm);
     }
     else if(searchCategory === 'time'){
-        return item.time_to_make.toString().includes(searchTerm);
+      once=true;
+      return item.time_to_make.toString().includes(searchTerm);
     }
     else if(searchCategory === 'rating'){
+      once=true;
+      console.log("test = " + item.rating.toString().includes(searchTerm));
       return item.rating.toString().includes(searchTerm);
     }
     else if(searchCategory === 'ingredients'){
-      return item.ingredients.toString().includes(searchTerm);
+      let toSearch = searchTerm.split(',') 
+      let take=true
+      for(let i=0; i < toSearch.length; i++) {
+        if(!JSON.stringify(item).includes(toSearch[i])) {
+          console.log('thing: ' + toSearch[i] + ' data[j] ' + item.veg_name)
+          take = false;
+          return false;
+        }
+      }
+      return take;
+
     }
     else if(searchCategory === 'healthReq'){
+      once=true;
       return item.healthReq.toString().includes(searchTerm);
     }
   });
@@ -157,7 +205,7 @@ function Search() {
               <a href={item.url}>
               <h2>{item.veg_name}</h2>
               <p>time: {item.time_to_make}</p>
-              <p>ingredients: {item.ingredients}</p>
+              <p>ingredients: {item.ingredients.toString()}</p>
               <p>Rating: {item.rating}</p>
               <p>Cuisine: {item.cuisine}</p>
               </a>
