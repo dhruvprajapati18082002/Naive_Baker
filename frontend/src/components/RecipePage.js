@@ -1,21 +1,40 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import recipeContext from "../context/recipe/recipeContext";
 import alertContext from "../context/alert/alertContext";
+import axios from "axios";
 
+const BACKEND = process.env.REACT_APP_BACKEND;
 
 const RecipePage = () => {
 
     const navigate = useNavigate();
     const { recipeId } = useParams();
-    const { recipeDisplayed, getRecipe } = useContext(recipeContext);
     const { showAlert } = useContext(alertContext);
 
+    const [ recipeDisplayed, setRecipeDisplayed ] = useState({});
+
+
     useEffect( () => {
-        if ( !getRecipe(recipeId) ){
-            showAlert("Invalid Recipe Requested", "danger");
-            navigate("/");
+        if (!localStorage.getItem("token"))
+        {
+            showAlert("Login First to View the Recipe", "warning");
+            navigate("/login");
+        }
+        else{
+            axios.get(
+                `${BACKEND}/api/recipe/fetchrecipe/${recipeId}`, {
+                        headers: {
+                            "auth-token" : localStorage.getItem("token"),
+                        }
+                    }
+                ).then(res => {
+                    setRecipeDisplayed(res.data.recipes);
+                }).catch(error => {
+                    showAlert("Error Fetching the Required Recipe", "danger");
+                    navigate("/");
+                })
+            console.log(recipeDisplayed);
         }
     }, [])
 

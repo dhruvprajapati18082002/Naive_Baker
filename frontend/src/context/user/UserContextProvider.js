@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import userContext from "./userContext";
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+
 const UserContextProvider = (props) => {
     const [user, setUser] = useState({});
 
@@ -9,7 +11,7 @@ const UserContextProvider = (props) => {
     const getProfile = async () => {
 
         const res = await axios.get(
-            "http://localhost:5000/api/auth/getProfile", {
+            `${BACKEND}/api/auth/getProfile`, {
                 headers: {
                     "auth-token": localStorage.getItem("token"),
                 },

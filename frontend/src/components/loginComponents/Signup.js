@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import alertContext from '../../context/alert/alertContext';
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+
 const SignUp = (props) => {
     
     let navigate = useNavigate();
@@ -23,7 +25,7 @@ const SignUp = (props) => {
             return;
         }
 
-        axios.post("http://localhost:5000/api/auth/createuser", {
+        axios.post(`${BACKEND}/api/auth/createuser`, {
             name: credentials.name,
             username: credentials.username,
             email: credentials.email,
