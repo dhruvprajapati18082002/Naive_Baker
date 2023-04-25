@@ -1,0 +1,275 @@
+[{
+  "_id": {
+    "$oid": "6446197534aae5c96de4353d"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "recipe 1",
+  "description": "this is an amazing recipe",
+  "ingredients": [
+    "milk",
+    "water"
+  ],
+  "ratings": 0,
+  "minutesToCook": 30,
+  "cuisine": "chinese"
+},{
+  "_id": {
+    "$oid": "6446197c34aae5c96de43541"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "recipe 2",
+  "description": "this is an amazing recipe",
+  "ingredients": [
+    "milk",
+    "sugar"
+  ],
+  "ratings": 0,
+  "cuisine": "indian",
+  "minutesToCook": 20
+},{
+  "_id": {
+    "$oid": "6446198034aae5c96de43545"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "recipe 3",
+  "description": "this is an amazing recipe",
+  "ingredients": [
+    "sugar",
+    "water"
+  ],
+  "ratings": 0,
+  "cuisine": "mediterranean",
+  "minutesToCook": 45
+},{
+  "_id": {
+    "$oid": "6446198234aae5c96de43549"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "recipe 4",
+  "description": "this is an amazing recipe",
+  "ingredients": [
+    "pepper",
+    "salt"
+  ],
+  "ratings": 0,
+  "cuisine": "chinese",
+  "minutesToCook": 40
+},{
+  "_id": {
+    "$oid": "6446198434aae5c96de4354d"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "recipe 5",
+  "description": "this is an amazing recipe",
+  "ingredients": [
+    "sugar",
+    "pepper",
+    "water"
+  ],
+  "ratings": 0,
+  "cuisine": "french",
+  "minutesToCook": 30
+},{
+  "_id": {
+    "$oid": "64461a8234aae5c96de43559"
+  },
+  "owner": {
+    "$oid": "64461a1a34aae5c96de43556"
+  },
+  "name": "recipe delivery",
+  "description": "this is another users amazing recipe",
+  "ingredients": [
+    "zomato",
+    "cash"
+  ],
+  "ratings": 0,
+  "cuisine": "indian",
+  "minutesToCook": 20
+},{
+  "_id": {
+    "$oid": "64461a9934aae5c96de4355d"
+  },
+  "owner": {
+    "$oid": "64461a1a34aae5c96de43556"
+  },
+  "name": "recipe parcel",
+  "description": "this is another users amazing recipe",
+  "ingredients": [
+    "swiggy",
+    "paytm"
+  ],
+  "ratings": 0,
+  "cuisine": "italian",
+  "minutesToCook": 40
+},{
+  "_id": {
+    "$oid": "64461ac234aae5c96de43561"
+  },
+  "owner": {
+    "$oid": "64461a1a34aae5c96de43556"
+  },
+  "name": "maggi",
+  "description": "how to cook maggi",
+  "ingredients": [
+    "water",
+    "maggi"
+  ],
+  "ratings": 0,
+  "cuisine": "Indian",
+  "minutesToCook": 10
+},{
+  "_id": {
+    "$oid": "6447b063018bedef9d7eb79b"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "pasta with white sauce",
+  "minutesToCook": 60,
+  "cuisine": "Italian",
+  "description": "The creamy white sauce made with butter, flour, milk, and flavored with garlic, Parmesan cheese, and herbs. Simply toss the sauce with your favorite pasta have a comforting and satisfying meal that will please the whole family.",
+  "ingredients": [
+    "pasta",
+    "butter",
+    "flour",
+    "milk",
+    "garlic",
+    "cheese"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e7732604f1246ae39c87"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namerrefe",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e7dd2604f1246ae39c8b"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namerrefe",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e7f42604f1246ae39c8f"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namerrefe",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e8a12604f1246ae39c93"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namevsfv",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e8a52604f1246ae39c97"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namevsfv",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e8f02604f1246ae39c9b"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "namevsfv",
+  "minutesToCook": 39,
+  "cuisine": "Italian",
+  "description": "siuvnasvijnaivjns",
+  "ingredients": [
+    "ing1",
+    " ing2",
+    " ing3"
+  ],
+  "image_url": "",
+  "ratings": 0
+},{
+  "_id": {
+    "$oid": "6447e9b52604f1246ae39ca1"
+  },
+  "owner": {
+    "$oid": "64452f862027862662c7405d"
+  },
+  "name": "Chicken Biryani",
+  "minutesToCook": 49,
+  "cuisine": "Indian",
+  "description": "Biryani is a mixed rice dish originating among the Muslims of South Asia. It is made with Indian spices, vegetables, rice, and usually some type of meat.",
+  "ingredients": [
+    " rice"
+  ],
+  "image_url": "",
+  "ratings": 0
+}]

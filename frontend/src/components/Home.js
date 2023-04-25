@@ -9,16 +9,15 @@ import "./fonts/AngelicaPersonalUseItalic-MVmZB.ttf";
 import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 const Home = (props) => {
   return (
-    <div style={{ backgroundColor: "#8fc4b7" }}>
+    <div className="container-fluid" style={{ backgroundColor: "#8fc4b7" }}>
       <div
+        className="row bg-image"
         style={{
           backgroundImage:
             "url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg)",
-          backgroundOrigin: "border-box",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "stretch",
+          
           height: "100vh",
-          width: "auto",
+          
         }}
       >
         <div style={{ width: "50em" }}>

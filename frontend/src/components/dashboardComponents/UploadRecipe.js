@@ -162,6 +162,14 @@ export default function UploadRecipe() {
                                 placeholder='begin new step from new line...'
                                 required />
                             </div>
+                            
+                            {/* this is for image upload */}
+                            <div className="form-group">
+                                <label htmlFor="photo">Upload a Photo*</label>
+                                <input type="file" className="form-control-file" 
+                                id="photo"
+                                />
+                            </div>
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 
