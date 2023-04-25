@@ -1,7 +1,7 @@
 .body_search{
   margin: 0; 
   padding: 0;
-  background: #ffffff;
+  /* background: #ffffff; */
   height: 100vh;
   display: flex;
   justify-content: space-evenly;
@@ -12,6 +12,7 @@
 }
 .box_s{
   position: relative;
+
 }
 
 .input {
@@ -24,13 +25,13 @@
   box-sizing: border-box;
   font-family: Comic Sans MS;
   font-size: 26px;
-  color: black;
+  color: rgb(255, 255, 255);
   outline: none;
   transition: .5s;
 }
 .box_s:hover input{
   width: 350px;
-  background: white;
+  background: rgb(14, 14, 14);
   border-radius: 10px;
 }
 .box_s i{
@@ -47,23 +48,6 @@
   z-index: -1;
 }
 
-/* YouTube icon */
-#ytb {
-height: 50px;
-width: 50px;
-text-align: center;
-line-height: 52px;
-border: 2px solid transparent;
-color: #ff1717;
-font-size: 25px;
-transition: 0.3s;
-}
-
-#ytb:hover{
-border-radius: 50%;
-border-color: #ff1717;
-box-shadow: 0 0 10px #ff4040;
-}
 .searchCat {
   margin-left: 185px;
   margin-top: 60px;
@@ -119,6 +103,7 @@ h1 {
   position: relative;
   padding: 0;
   margin: 0;
+  /* margin-top: 3.6%; */
   margin-bottom: 3%;
   font-family: "Raleway", sans-serif;
   font-weight: 300;
@@ -141,8 +126,9 @@ h1 em {
 .headText h1 {
   text-align: center;
   color:#222; font-size:60px; font-weight:400;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   text-transform: uppercase;
-  word-spacing: 1px; letter-spacing:2px; color:#818d06;
+  word-spacing: 1px; letter-spacing:2px; color:#ffd52d;
 }
 .headText h1 span {
   line-height:2em; padding-bottom:15px;
@@ -150,7 +136,7 @@ h1 em {
   font-size:.7em;
   font-weight: normal;
   font-style: italic; font-family: "Playfair Display","Bookman",serif;
-  color:#999; letter-spacing:-0.005em; word-spacing:1px;
+  color:#fbf7f7; letter-spacing:-0.005em; word-spacing:1px;
   letter-spacing:none;
 }
 .headText h1:after, .headText h1:before {
@@ -178,6 +164,7 @@ background-color:#e8fba2;
 .card_search {
   border: 1px solid #bfc907;
   border-radius: 5px;
+  background-color: #ccc;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px;
   padding: 10px;
@@ -191,4 +178,10 @@ background-color:#e8fba2;
 
 .card_search p {
   margin-bottom: 5px;
+}
+
+.main {
+  background-image: url('https://images.wallpaperscraft.com/image/single/cocoa_marshmallow_plaid_118517_1600x900.jpg');
+  background-repeat: no-repeat;
+  background-size:cover ;
 }

@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'GreatVibes';
+    font-weight: 900;
+    src: local('GreatVibes'), url(./fonts/GreatVibes-Regular.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'AutumnFlowers';
+    font-weight: 900;
+    src: local('AutumnFlowers-9YVZK'), url(./fonts/AutumnFlowers-9YVZK.otf) format('truetype');
+  }
+  /* @font-face {
+    font-family: 'SweetHipster-PzlE';
+    font-weight: 900;
+    src: local('SweetHipster-PzlE'), url(./fonts/SweetHipster-PzlE.ttf) format('truetype');
+  } */
+  @font-face {
+    font-family: 'WeddingdayPersonalUseRegular-1Gvo0';
+    font-weight: 900;
+    src: local('WeddingdayPersonalUseRegular-1Gvo0'), url(./fonts/WeddingdayPersonalUseRegular-1Gvo0.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'AngelicaPersonalUseItalic-MVmZB';
+    font-weight: 900;
+    src: local('AngelicaPersonalUseItalic-MVmZB'), url(./fonts/AngelicaPersonalUseItalic-MVmZB.ttf) format('truetype');
+  }
+  @font-face {
+    font-family: 'BunchBlossomsPersonalUse-0nA4';
+    font-weight: 900;
+    src: local('BunchBlossomsPersonalUse-0nA4'), url(./fonts/BunchBlossomsPersonalUse-0nA4.ttf) format('truetype');
+  }

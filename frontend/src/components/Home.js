@@ -1,6 +1,12 @@
 import React from "react"
 import RecipeItem from "./RecipeItem";
-
+import './font.css';
+import "./fonts/GreatVibes-Regular.ttf";    
+import "./fonts/AutumnFlowers-9YVZK.otf";    
+// import "./fonts/SweetHipster-PzlE.tff";    
+import "./fonts/WeddingdayPersonalUseRegular-1Gvo0.ttf"; 
+import "./fonts/AngelicaPersonalUseItalic-MVmZB.ttf"; 
+import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf"; 
 const Home = (props) => {
     return (
         <div style={{backgroundColor : '#8fc4b7'}}>
@@ -13,7 +19,7 @@ const Home = (props) => {
                         width : 'auto'
                     }}>
                 <div style={{width : '50em'}}>
-                    <p style ={{ fontSize : 80, color : "white", fontWeight:'bold', fontFamily:'great vibes'}}> <center> <br />WELCOME <br />TO <br />NAIVE BAKER </center></p>
+                    <p style ={{ fontSize : 86, color : "white", fontWeight:'bold', fontFamily:'BunchBlossomsPersonalUse-0nA4'}}> <center> <br />WELCOME <br />TO <br />NAIVE BAKER </center></p>
                 </div>
                 <div>
                     

@@ -130,6 +130,7 @@ function Search() {
 
   return (
     <div>
+      <div className='main'>
       <div className="headText">
         <h1>Search
             <span>Search your Favorite Recipes Here</span>
@@ -154,6 +155,9 @@ function Search() {
         <button className = {getClass('ingredients')} id='ing' value={searchCategory} onClick={()=>{setToIngre(); changeColor(this);}}>Ingredients</button>
       </div>  
 
+      
+      </div>
+      <div>
       {searchTerm !== '' && filteredData.length > 0 ? (
         <div className="card_search-container">
           {filteredData.map((item, index) => (
@@ -172,6 +176,7 @@ function Search() {
       ) : (
         searchTerm !== '' && <p>No results found.</p>
       )}
+      </div>
     </div>
   );
 }
