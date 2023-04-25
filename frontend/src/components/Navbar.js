@@ -58,5 +58,36 @@ export default function Navbar() {
                 </div>
             </nav>
         </div>
+
+        /*
+        <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+          <a className="navbar-brand" href="/">
+                        <img src="logo.png" alt="Logo" width="50" height="50" className="d-inline block mx-1"/>
+                        <div className="fs-6">NaiveBaker</div>
+            </a>
+          <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+            <button class="btn btn-primary">Button</button>
+          </div>
+        </div>
+         */
     );
 }

@@ -12,7 +12,6 @@ const data = [
     ],
     "cuisine":"italian",
     "rating":"9",
-    "healthReq":"healthy"
     },
   {
     "veg_name": "Garlic Mashed Potatoes",
@@ -26,7 +25,6 @@ const data = [
     ],
     "cuisine":"italian",
     "rating":"9",
-    "healthReq":"healthy",
   },
   {
     "veg_name": "Honey Glazed Carrots",
@@ -40,7 +38,6 @@ const data = [
     ],
     "cuisine":"italian",
     "rating":"9",
-    "healthReq":"healthy"
   },
   {
     "veg_name": "Roasted Brussels Sprouts",
@@ -52,7 +49,6 @@ const data = [
     ],
     "cuisine":"italian",
     "rating":"9",
-    "healthReq":"healthy"
   },
   {
     "veg_name": "Sauteed Green Beans",
@@ -65,7 +61,6 @@ const data = [
     ],
     "cuisine":"italian",
     "rating":"9",
-    "healthReq":"healthy"
   }
 ];
 
@@ -91,9 +86,6 @@ function Search() {
   }
   const setToRating=()=>{
     setSearchCategory('rating');
-  }
-  const setToHealthReq=()=>{
-    setSearchCategory('healthReq');
   }
   const setTocuisine=()=>{
     setSearchCategory('cuisine');
@@ -141,16 +133,16 @@ function Search() {
     <div className="box_s">
           <form name="search">      
             <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();" value={searchTerm} onChange={handleSearchTermChange} />
+            <button type='submit' id='submitButton'> Search </button>
         </form>
         <i class="fas fa-search"></i>
     </div>
   </div>
       <div className="searchCat">
-        
         <button className = {getClass('meals')} id='meals' value={searchCategory} onClick={()=>{setToName(); changeColor(this);}}>Meals</button>
         <button className = {getClass('time')} id='time' value={searchCategory} onClick={()=>{setTotime(); changeColor(this);}}>Time</button>
         <button className = {getClass('rating')} id='rating' value={searchCategory} onClick={()=>{setToRating(); changeColor(this);}}>Rating</button>
-        <button className = {getClass('healthReq')} id='health' value={searchCategory} onClick={()=>{setToHealthReq(); changeColor(this);}}>Health requirements</button>
+        {/* <button className = {getClass('healthReq')} id='health' value={searchCategory} onClick={()=>{setToHealthReq(); changeColor(this);}}>Health requirements</button> */}
         <button className = {getClass('cuisine')} id='cuisine' value={searchCategory} onClick={()=>{setTocuisine(); changeColor(this);}}>Cuisine</button>
         <button className = {getClass('ingredients')} id='ing' value={searchCategory} onClick={()=>{setToIngre(); changeColor(this);}}>Ingredients</button>
       </div>  
@@ -167,7 +159,6 @@ function Search() {
               <p>time: {item.time_to_make}</p>
               <p>ingredients: {item.ingredients}</p>
               <p>Rating: {item.rating}</p>
-              <p>Health Requirements: {item.healthReq}</p>
               <p>Cuisine: {item.cuisine}</p>
               </a>
             </div>
