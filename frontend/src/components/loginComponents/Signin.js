@@ -66,7 +66,7 @@ const Signin = (props) => {
                 {/* 2 column grid layout */}
                 <div className="row mb-4 text-center">
                         {/* Simple link */}
-                        <Link to="/bhulgaya">Forgot password?</Link>
+                        <Link to="/forgotpass">Forgot password?</Link>
                 </div>
 
                 {/* Submit button */}

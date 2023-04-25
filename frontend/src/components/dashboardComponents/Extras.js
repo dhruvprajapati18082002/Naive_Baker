@@ -11,9 +11,9 @@ const Extras = () => {
         <div className="card mt-3">
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <button type="button" className="btn btn-dark my-1">
-                    <Link className="nav-link" to="/uploadrecipe">Upload Recipe</Link>
-                    </button>
+                    
+                    <Link className="btn btn-dark my-1" to="/uploadrecipe">Upload Recipe</Link>
+                    
                 </li>
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <button type="button" className="btn btn-dark my-1">
@@ -26,9 +26,7 @@ const Extras = () => {
                     </button>
                 </li>
                 <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <button type="button" className="btn btn-dark my-1">
-                        Clear Watch History
-                    </button>
+                <Link className="btn btn-dark my-1" to="/resetpass">Reset Password </Link>
                 </li>
             </ul>
         </div>

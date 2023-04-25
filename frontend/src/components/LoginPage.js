@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import SignIn from './loginComponents/Signin';
 import SignUp from './loginComponents/Signup';
+import { useNavigate } from 'react-router-dom';
+import alertContext from '../context/alert/alertContext';
 
 export default function LoginPage() {
 
     const [isLogin, setIsLogin] = useState(true);
+    const { showAlert } = useContext(alertContext);
+    const navigate = useNavigate();
     const openLogin = () =>{
         setIsLogin(true);
     }
     const openRegister = () =>{
         setIsLogin(false);
     }
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/dashboard");
+            showAlert("You are already logged-in !", "warning");
+        }
+    }, []);
 
     return (
         <div className="container shadow-lg my-3 bg-body-tertiary rounded" style={{width: "fit-content"}}>

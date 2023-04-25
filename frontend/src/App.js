@@ -11,8 +11,8 @@ import LoginPage from "./components/LoginPage";
 import Alert from "./components/Alert";
 import RecipePage from "./components/RecipePage";
 import UploadRecipe from "./components/dashboardComponents/UploadRecipe";
-import ForgotPass from "./components/loginComponents/Bhulgaya";
-import ResetPass from "./components/loginComponents/sudhaarle"
+import ForgotPass from "./components/loginComponents/ForgotPass";
+import ResetPass from "./components/loginComponents/ResetPass"
 
 export default function App() {
 
@@ -27,8 +27,8 @@ export default function App() {
                 <Route path="/Search" element={<Search />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/uploadrecipe" element={<UploadRecipe />} />
-                <Route path="/bhulgaya" element={<ForgotPass />} />
-                <Route path="/sudhaarle" element={<ResetPass />} />
+                <Route path="/forgotpass" element={<ForgotPass />} />
+                <Route path="/resetpass" element={<ResetPass />} />
 
                 {/* passing the id "recipeId" of the recipe to be displayed as url parameter */}
                 <Route path="/recipe/:recipeId" element={<RecipePage />} />
