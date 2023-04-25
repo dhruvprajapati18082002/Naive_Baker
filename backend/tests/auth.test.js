@@ -121,10 +121,10 @@ describe("POST /api/auth/login", () => {
 });
 
 // END-POINT 3: TEST-CASES 8-10
-describe("POST /api/auth/getprofile", () => {
+describe("GET /api/auth/getprofile", () => {
     it("should fetch loggedin user's profile", async () => {
         const response = await supertest(app)
-            .post("/api/auth/getprofile")
+            .get("/api/auth/getprofile")
             .set({ "auth-token": AUTH_TOKEN });
 
         expect(response.status).toBe(200);
@@ -132,7 +132,7 @@ describe("POST /api/auth/getprofile", () => {
     });
     it("should return error due to invalid data in auth-token", async () => {
         const response = await supertest(app)
-            .post("/api/auth/getprofile")
+            .get("/api/auth/getprofile")
             .set({ "auth-token": INVALID_DATA_TOKEN });
 
         expect(response.status).toBe(400);
@@ -140,7 +140,7 @@ describe("POST /api/auth/getprofile", () => {
     });
     it("should return error due to invalid auth-token", async () => {
         const response = await supertest(app)
-            .post("/api/auth/getprofile")
+            .get("/api/auth/getprofile")
             .set({ "auth-token": INVALID_TOKEN });
 
         expect(response.status).toBe(401);

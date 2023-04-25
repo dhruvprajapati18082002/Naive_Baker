@@ -110,8 +110,8 @@ router.post(
 );
 
 
-// END-POINT 3: GET USER END-POINT: POST /api/auth/getprofile. LOGIN NEEDED
-router.post(
+// END-POINT 3: GET USER END-POINT: GET /api/auth/getprofile. LOGIN NEEDED
+router.get(
     '/getProfile',
     fetchuser,
     async (req, res) => {
@@ -132,8 +132,8 @@ router.post(
 );
 
 
-// END-POINT 4: GET OTHER USER'S DETAILS END-POINT: POST /api/auth/getuser/:username. LOGIN NOT REQUIRED
-router.post(
+// END-POINT 4: GET OTHER USER'S DETAILS END-POINT: GET /api/auth/getuser/:username. LOGIN NOT REQUIRED
+router.get(
     '/getuser/:username',
     async (req, res) => {
         try{

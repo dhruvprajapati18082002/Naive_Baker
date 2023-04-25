@@ -24,11 +24,11 @@ beforeAll(async () => {
 
 // Closing database connection after each test.
 afterAll(async () => {
-    const response = await supertest(app).delete("/api/auth/delete").set({
+    await supertest(app).delete("/api/auth/delete").set({
         "Content-Type": "application/json",
-        "auth-token": AUTH_TOKEN
+        "auth-token": AUTH_TOKEN,
     });
-    
+
     await mongoose.connection.close();
 });
 
@@ -42,7 +42,7 @@ describe("POST /api/recipe/addrecipe", () => {
                 description: "hot water used for various purposes",
                 steps: ["heat water on gas"],
                 ingredients: ["water"],
-                miniutesToCook: 45,
+                minutesToCook: 45,
                 cuisine: "Italian",
             })
             .set({
@@ -108,41 +108,42 @@ describe("POST /api/recipe/addrecipe", () => {
 
         expect(response.statusCode).toBe(400);
     });
-
 });
 
 // END POINT-2 TEST CASE-5
-describe("POST /api/recipe/fetchallrecipes", () => {
+describe("GET /api/recipe/fetchallrecipes", () => {
     it("should get all recipes", async () => {
         const response = await supertest(app)
-            .post("/api/recipe/fetchallrecipes")
+            .get("/api/recipe/fetchallrecipes")
             .set({
                 "Content-Type": "application/json",
             });
 
-        expect (response.status).toBe(200);
-        expect (response.body.recipes).toBeDefined();
+        expect(response.status).toBe(200);
+        expect(response.body.recipes).toBeDefined();
     });
 });
+
 // END POINT-3 TEST CASE-6
-describe("POST /api/recipe/fetchuserrecipe", () => {
+describe("GET /api/recipe/fetchuserrecipe", () => {
     it("should get all recipes of the user", async () => {
         const response = await supertest(app)
-            .post("/api/recipe/fetchuserrecipe")
+            .get("/api/recipe/fetchuserrecipe")
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,
             });
-        expect (response.status).toBe(200);
-        expect (response.body.recipes).toBeDefined();
+        expect(response.status).toBe(200);
+        expect(response.body.recipes).toBeDefined();
     });
 });
+
 // END POINT-4 TEST CASE 7-8
-describe("POST /api/recipe/fetchrecipe/:recipeId", () => {
+describe("GET /api/recipe/fetchrecipe/:recipeId", () => {
     it("should get fetch a single recipe based on the ID", async () => {
         // get all recipes, take the first recipe's ID and then use it to fetch all other recipes
         let response = await supertest(app)
-            .post("/api/recipe/fetchuserrecipe")
+            .get("/api/recipe/fetchuserrecipe")
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,
@@ -151,7 +152,7 @@ describe("POST /api/recipe/fetchrecipe/:recipeId", () => {
         const recipeId = response.body.recipes[0]._id;
 
         response = await supertest(app)
-            .post(`/api/recipe/fetchrecipe/${recipeId}`)
+            .get(`/api/recipe/fetchrecipe/${recipeId}`)
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,
@@ -164,15 +165,15 @@ describe("POST /api/recipe/fetchrecipe/:recipeId", () => {
     it("should get fetch a single recipe based on the ID", async () => {
         // get all recipes, take the first recipe's ID and then use it to fetch all other recipes but with wrong recipeId
         let response = await supertest(app)
-            .post("/api/recipe/fetchuserrecipe")
+            .get("/api/recipe/fetchuserrecipe")
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,
             });
-        console.log(response.body);
+
         const recipeId = response.body.recipes._id;
         response = await supertest(app)
-            .post(`/api/recipe/fetchrecipe/${recipeId+"123"}`)
+            .get(`/api/recipe/fetchrecipe/${recipeId + "123"}`)
             .set({
                 "Content-Type": "application/json",
                 "auth-token": AUTH_TOKEN,

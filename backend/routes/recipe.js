@@ -13,7 +13,7 @@ router.post(
     body('name').isLength({min: 5}),
     body('description').isLength({min: 10}),
     body('steps').isArray({min: 1}),
-    body('miniutesToCook').isNumeric({min :1}),
+    body('minutesToCook').isNumeric({min :1}),
     body('cuisine').isLength({min:2}),
     body('ingredients').isArray({min: 1}),
     fetchuser,
@@ -23,12 +23,19 @@ router.post(
             return res.status(400).json({errors: errors.array()});
         try
         {
+            let user = await User.findById(req.user.id)
+
+            if (!user)
+                return res.status(401).json({errors: ["Invalid authentication credentials given."]})
+
             let cred = {
                 owner: req.user.id,
                 name: req.body.name,
                 description: req.body.description,
                 steps: req.body.steps,
-                ingredients: req.body.ingredients
+                ingredients: req.body.ingredients,
+                cuisine: req.body.cuisine,
+                minutesToCook: req.body.minutesToCook
             }
             
             if (req.body.video_url)
@@ -36,11 +43,10 @@ router.post(
 
             let recipe = await Recipe.create(cred);
 
-            let user = await User.findById(req.user.id)
 
             const newUser = {recipesOwned: user.recipesOwned.concat(recipe._id)}
 
-            user = await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new:true});
+            await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new:true});
 
             return res.status(201).json(recipe);
         } 
@@ -52,8 +58,8 @@ router.post(
 )
 
 
-// END-POINT 2: FETCH ALL RECIPES END-POINT: POST /api/recipe/fetchallrecipe/ LOGIN REQUIRED
-router.post(
+// END-POINT 2: FETCH ALL RECIPES END-POINT: GET /api/recipe/fetchallrecipe/ LOGIN REQUIRED
+router.get(
     "/fetchallrecipes",
     async (req, res) => {
         try{
@@ -68,8 +74,8 @@ router.post(
 );
 
 
-// END-POINT 3: FETCH USER'S ALL RECIPES: POST /api/recipe/fetchuserrecipe. LOGIN REQUIRED
-router.post(
+// END-POINT 3: FETCH USER'S ALL RECIPES: GET /api/recipe/fetchuserrecipe. LOGIN REQUIRED
+router.get(
     "/fetchuserrecipe",
     fetchuser,
     async (req, res) => {
@@ -84,8 +90,8 @@ router.post(
 )
 
 
-// END-POINT 4: FETCH RECIPE END-POINT: POST /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
-router.post(
+// END-POINT 4: FETCH RECIPE END-POINT: GET /api/recipe/fetchrecipe/:recipeId. LOGIN REQUIRED
+router.get(
     "/fetchrecipe/:recipeId",
     fetchuser,
     async (req, res) => {
@@ -101,7 +107,7 @@ router.post(
                     "name": recipe.name,
                     "description": recipe.description,
                     "video_url": recipe.video_url,
-                    "miniutesToCook": recipe.miniutesToCook,
+                    "minutesToCook": recipe.minutesToCook,
                     "cuisine": recipe.cuisine,
                     "steps": recipe.steps,
                     "ingredients": recipe.ingredients
@@ -123,14 +129,14 @@ router.put(
     "/updaterecipe/:recipeId",
     fetchuser,
     async (req, res) => {
-        const { name, description, steps,ingredients } = req.body;
+        const { name, description, steps,ingredients, minutesToCook, cuisine } = req.body;
         try {
             const newRecipe = {};
             if (name) { newRecipe.name = name };
             if (description) { newRecipe.description = description };
             if (steps) { newRecipe.steps = steps };
             if (ingredients) { newRecipe.ingredients = ingredients };
-            if (miniutesToCook) { newRecipe.miniutesToCook = miniutesToCook };
+            if (minutesToCook) { newRecipe.minutesToCook = minutesToCook };
             if (cuisine) { newRecipe.cuisine = cuisine };
             
             let recipe = await Recipe.findById(req.params.recipeId);
