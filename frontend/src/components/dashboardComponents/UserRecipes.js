@@ -21,7 +21,7 @@ const UserRecipes = () => {
 							cuisinearea = {entry.cuisine}
               duration = {entry.minutesToCook}
 							text = {entry.description}
-							recipeLink = "/search"
+							recipeLink = {`/recipe/${entry._id}`}
 						/>
 					)
 				}) :
