@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import alertContext from '../../context/alert/alertContext';
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 const SignUp = (props) => {
     

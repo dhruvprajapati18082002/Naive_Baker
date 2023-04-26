@@ -23,15 +23,17 @@ export default function UploadRecipe() {
         const description = document.getElementById("description").value;
         const cuisine = document.getElementById("cuisine").value;
         const duration = document.getElementById("recipeduration").value;
+        const type = document.getElementById("type").value;
         let steps = document.getElementById("recipetutorial").value;
 
         steps = steps.split("\n").filter((element)=>{return element.length !== 0})
         
-        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps);
+        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type);
         
-        if (res._id !== undefined)
+        if (res._id !== undefined){
             showAlert("Recipe Succesfully Added", "success")
-            // navigate(`/recipe/${res._id}`);
+            navigate(`/recipe/${res._id}`);
+        }
         else
             showAlert("Failed to add recipe !", "danger");
       };
@@ -110,20 +112,20 @@ export default function UploadRecipe() {
                             </div>
                             
                             {/* this is for veg/non-veg */}
-                            {/* <div className="form-outline mb-4">
-                                <label htmlFor="cuisinetype" className="form-label">Cuisine type*</label>
+                            <div className="form-outline mb-4">
+                                <label htmlFor="cuisinetype" className="form-label">Type*</label>
                                     <input className="form-control" 
                                     list="cuisineoptions" 
-                                    id="cuisinetype" 
+                                    id="type" 
                                     placeholder="Type to search...veg/non-veg/vegan"
                                     required
                                     />
                                     <datalist id="cuisineoptions">
-                                        <option value="Vegetarian" />
-                                        <option value="Non Vegetarian" />
+                                        <option value="Veg" />
+                                        <option value="Non-Veg" />
                                         <option value="Vegan" />
                                     </datalist>
-                            </div> */}
+                            </div>
                             {/* this is duration */}
                             <div className="form-outline mb-4">
                                 <label htmlFor="recipeduration" className="form-label">Duration*</label>
@@ -164,12 +166,12 @@ export default function UploadRecipe() {
                             </div>
                             
                             {/* this is for image upload */}
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label htmlFor="photo">Upload a Photo*</label>
                                 <input type="file" className="form-control-file" 
                                 id="photo"
                                 />
-                            </div>
+                            </div> */}
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 

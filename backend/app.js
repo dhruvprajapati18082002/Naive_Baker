@@ -9,7 +9,7 @@ app.use(express.json());
 
 // enabling cors as middleware to allow requests from frontend only
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL.replace(/"/g, ""),
     credentials: true
 }));
 

@@ -3,14 +3,15 @@ import recipeContext from "./recipeContext";
 import { useState } from "react";
 import axios from "axios";
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 const RecipeContextProvider = (props) => {
 
     const [ recipes, setRecipes ] = useState([]);
+    const [ userRecipes, setUserRecipes ] = useState([]);
 
     // add recipe
-    const uploadRecipe = async (name, description, cuisine, duration, ingredients, steps) => {
+    const uploadRecipe = async (name, description, cuisine, duration, ingredients, steps, type) => {
         const response = await axios.post(
             `${BACKEND}/api/recipe/addrecipe`,{
                 name: name,
@@ -18,7 +19,8 @@ const RecipeContextProvider = (props) => {
                 cuisine: cuisine,
                 minutesToCook: duration,
                 ingredients: ingredients,
-                steps: steps
+                steps: steps,
+                type: type
             },{
                 headers: {
                     "auth-token": localStorage.getItem("token")
@@ -30,22 +32,25 @@ const RecipeContextProvider = (props) => {
         return response.data;
     }
 
-    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, rating) => {
+    // Search Recipe 
+    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, rating, type) => {
         
         let data = {};
         if (veg_name !== undefined)
-          data.name = veg_name;
+            data.name = veg_name;
         else if (time_to_make !== undefined)
-          data.minutesToCook = time_to_make;
+            data.minutesToCook = time_to_make;
         else if (ingredients !== undefined)
-          data.ingredients = ingredients;
+            data.ingredients = ingredients;
         else if (cuisine !== undefined)
-          data.cuisine = cuisine;
+            data.cuisine = cuisine;
         else if (rating !== undefined)
-          data.ratings = rating;
+            data.ratings = rating;
+        else if (type !== undefined)
+            data.type = type;
         
         const response = await axios.post(
-            `http://localhost:5000/api/query/search`, data,{
+            `${BACKEND}/api/query/search`, data,{
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -55,14 +60,29 @@ const RecipeContextProvider = (props) => {
         })
 
         if (response.status === 200){
-            setRecipes(response.data.recipes)
-            console.log(response.data.recipes)
+            setRecipes(response.data.recipes);
         }
-        console.log(recipes)
+        else 
+            setRecipes([]);
+      }
+
+      // fetch user recipes
+      const fetchUserRecipes = async () => {
+        const response = await axios.get(
+            `${BACKEND}/api/recipe/fetchuserrecipe`,{
+                headers: {
+                    'auth-token': localStorage.getItem('token'),
+                }
+            }
+        );
+        if (response.status === 200)
+            setUserRecipes(response.data.recipes);
+        else
+            setUserRecipes([]);
       }
 
     return (
-        <recipeContext.Provider value={{ recipes, uploadRecipe, searchRecipe  }}>
+        <recipeContext.Provider value={{ recipes, userRecipes, uploadRecipe, searchRecipe, fetchUserRecipes }}>
             {props.children}
         </recipeContext.Provider>
     );

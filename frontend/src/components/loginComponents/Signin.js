@@ -4,7 +4,8 @@ import axios from 'axios';
 
 import alertContext from '../../context/alert/alertContext';
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
+
 
 const Signin = (props) => {
     let navigate = useNavigate();
@@ -18,7 +19,8 @@ const Signin = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+        console.log(BACKEND)
+        console.log(`${BACKEND}/api/auth/login`)
         axios.post(`${BACKEND}/api/auth/login`, {
             email: credentials.loginEmail,
             password: credentials.loginPassword

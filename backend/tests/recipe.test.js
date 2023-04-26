@@ -21,7 +21,6 @@ beforeAll(async () => {
             username: "TestUser@02",
             email: EMAIL,
             password: PASSWORD,
-            hasPremium: true,
         });
     
         AUTH_TOKEN = await token.body.authToken;
@@ -34,6 +33,7 @@ beforeAll(async () => {
         })
         AUTH_TOKEN = await token.body.authToken;
     }
+    await User.findOneAndUpdate({email: EMAIL}, { $set: { hasPremium: true }});
 });
 
 // Closing database connection after each test.
@@ -58,6 +58,7 @@ describe("POST /api/recipe/addrecipe", () => {
                 ingredients: ["water"],
                 minutesToCook: 45,
                 cuisine: "Italian",
+                type: "veg"
             })
             .set({
                 "Content-Type": "application/json",
@@ -76,6 +77,7 @@ describe("POST /api/recipe/addrecipe", () => {
                 ingredients: ["water"],
                 miniutesToCook: 45,
                 cuisine: "Italian",
+                type: "veg"
             })
             .set({
                 "Content-Type": "application/json",
@@ -95,6 +97,7 @@ describe("POST /api/recipe/addrecipe", () => {
                 ingredients: ["water"],
                 miniutesToCook: 45,
                 cuisine: "Italian",
+                type: "veg"
             })
             .set({
                 "Content-Type": "application/json",
@@ -114,6 +117,7 @@ describe("POST /api/recipe/addrecipe", () => {
                 ingredients: "water",
                 miniutesToCook: 45,
                 cuisine: "Italian",
+                type: "veg"
             })
             .set({
                 "Content-Type": "application/json",

@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import userContext from "./userContext";
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 const UserContextProvider = (props) => {
     const [user, setUser] = useState({});

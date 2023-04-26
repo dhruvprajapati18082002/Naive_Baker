@@ -18,6 +18,10 @@ const RecipeSchema = new mongoose.Schema({
         type:String,
         require: true
     },
+    type: {
+        type:String,
+        require: true
+    },
     description: {
         type: String,
         require: true

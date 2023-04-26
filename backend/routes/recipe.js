@@ -16,6 +16,7 @@ router.post(
     body('minutesToCook').isNumeric({min :1}),
     body('cuisine').isLength({min:2}),
     body('ingredients').isArray({min: 1}),
+    body('type').exists(),
     fetchuser,
     async (req, res) => {
         const errors = validationResult(req);
@@ -35,7 +36,8 @@ router.post(
                 steps: req.body.steps,
                 ingredients: req.body.ingredients,
                 cuisine: req.body.cuisine,
-                minutesToCook: req.body.minutesToCook
+                minutesToCook: req.body.minutesToCook,
+                type: req.body.type,
             }
             
             if (req.body.video_url)

@@ -6,6 +6,7 @@ const app = require("../app");
 
 const EMAIL = "testuser01@example.com";
 const PASSWORD = "testpassword";
+
 let AUTH_TOKEN = null;
 const INVALID_DATA_TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0M2FjOWY1NWVlNjYxODZlYTY1ODBiIn0sImlhdCI6MTY4MjE1NjcwM30.gB3zacXMVQnmZC_hSTh2-LcmAsjWOySyjHt4OAr78OU";

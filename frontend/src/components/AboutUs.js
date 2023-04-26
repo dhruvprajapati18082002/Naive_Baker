@@ -6,9 +6,6 @@ import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 export default function AboutUs() {
     return (
         <div>
-
-
-
             <div style={{ backgroundColor: '#8fc4b7' }}>
 
                 <div className="container py-5">
