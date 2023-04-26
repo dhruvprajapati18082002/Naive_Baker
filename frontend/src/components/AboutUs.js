@@ -89,21 +89,39 @@ export default function AboutUs() {
                     </div>
                 </div>
                 <div className="card">
-
                     <div className="card-header">
                         <h2>Feedback Form</h2>
-                    </div>
-                    <div className="card-body text-center">
-                        <div className="form-group my-3">
-                            <label htmlFor="feedback">Please provide your feedback:</label>
-                            <textarea className="form-control" id="feedback" rows="5"></textarea>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+
+                        <form className="d-flex flex-column justify-content-center align-items-center g-3 needs-validation" noValidate>
+                    
+                            <div className="col-md-5">
+                                <div className='input-group my-2'>
+                                    <label className="input-group-text"> Email </label>
+                                    <input type="text" className="form-control" minLength={0}  maxLength={30} id="validationCustom02" placeholder="here " required />
+                                </div>
+                            </div>
+                        
+                            <div className="col-md-5">
+                                <div className='input-group my-2'>
+                                    <label className="input-group-text"> Provide Feedback here </label>
+                                    <textarea className="form-control" minLength={0}  maxLength={150} id="validationCustom02" placeholder="here " required />
+                                </div>
+                            </div>
+        
+                            <div className="col-md-5">
+                                <div className="input-group my-2">
+                                    <label className="input-group-text" id="inputGroupPrepend">Ratings</label>
+                                    <input type="number" className="form-control"  id="validationCustomUsername" aria-describedby="inputGroupPrepend" required />
+                                </div>
+                            </div>
+                            
+                            <div className="col-12 my-3">
+                                <button className="btn btn-primary" type="submit">Submit form</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-            </div></div>
-
-
+            </div>
+        </div>
     );
 }
