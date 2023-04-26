@@ -229,21 +229,29 @@ router.put(
 // END-POINT 6: UPDATE USER PASSWORD END-POINT: PUT /api/auth/changepassword. LOGIN NEEDED
 router.put(
     "/changepassword",
+    body("oldPassword").exists(),
+    body("newPassword").exists(),
     fetchuser,
     async (req, res) => {
         try {
-            let user = User.findById(req.user.id);
-            if (!user) return res.status(401).send("Operation Not Allowed");
+            const errors = validationResult(req);
+            if (!errors.isEmpty())
+                return res.status(400).json({errors: errors.array()});
+
+            let user = await User.findById(req.user.id);
+            if (!user)
+                return res.status(401).send("Operation Not Allowed");
+            
+            const { oldPassword, newPassword } = req.body;
 
             const newUser = {};
             console.log(req.body);
-            if (!bcrypt.compare(req.body.oldPassword, user.password))
+
+            const passwordCompare = await bcrypt.compare(oldPassword, user.password);
+            if (! passwordCompare)
                 return res.status(401).send("Invalid Password");
 
-            newUser.password = await bcrypt.hash(
-                req.body.rnewPassword,
-                await bcrypt.genSalt(10)
-            );
+            newUser.password = await bcrypt.hash( newPassword, await bcrypt.genSalt(10));
 
             user = await User.findByIdAndUpdate(req.user.id, { $set: newUser }, { new: true } ).select("-password");
 

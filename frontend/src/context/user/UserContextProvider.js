@@ -20,8 +20,25 @@ const UserContextProvider = (props) => {
         setUser(json);
     };
 
+    const changePassword = async (oldPassword, newPassword) => {
+        const response = await axios.put(
+            `${BACKEND}/api/auth/changepassword`, {
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            },{
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": localStorage.getItem("token")
+                }
+            }
+        ).catch(error=> {
+            return error.response;
+        })
+        return response;
+    }
+
     return (
-        <userContext.Provider value={{ user, getProfile }}>
+        <userContext.Provider value={{ user, getProfile, changePassword }}>
             {props.children}
         </userContext.Provider>
     );

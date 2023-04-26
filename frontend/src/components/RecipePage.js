@@ -34,7 +34,6 @@ const RecipePage = () => {
                     showAlert("Error Fetching the Required Recipe", "danger");
                     navigate("/");
                 })
-            console.log(recipeDisplayed);
         }
     }, [])
 
