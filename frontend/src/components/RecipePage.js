@@ -47,7 +47,8 @@ const RecipePage = () => {
                 <div className="d-flex">
                     <div className="container my-5 align-items-center justify-content-center" style={{width: "fit-content"}}>
                         <img
-                            src="https://cookingwithbry.com/wp-content/uploads/Paneer-Tikka-Masala-Recipe-1-735x735.jpg?_t=1678593746"
+                            src={recipeDisplayed.image_url}
+                            // src="https://cookingwithbry.com/wp-content/uploads/Paneer-Tikka-Masala-Recipe-1-735x735.jpg?_t=1678593746"
                             className="card-img-top"
                             alt="..."
                             style={{ width: "30rem", height: "20rem" }}

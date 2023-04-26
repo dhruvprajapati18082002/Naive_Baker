@@ -25,10 +25,9 @@ export default function UploadRecipe() {
         const duration = document.getElementById("recipeduration").value;
         const type = document.getElementById("type").value;
         let steps = document.getElementById("recipetutorial").value;
-
         steps = steps.split("\n").filter((element)=>{return element.length !== 0})
-        
-        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type);
+        let image_url=document.getElementById("recipeimage").value;
+        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type,image_url);
         
         if (res._id !== undefined){
             showAlert("Recipe Succesfully Added", "success")
