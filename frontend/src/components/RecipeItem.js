@@ -10,7 +10,7 @@ export default function RecipeItem(props) {
                     <img src={props.image} className="card-img-top" alt="..." style={{height:"13rem"}}/>
                     <div className="card-body">
                         <h5 className="card-title">{props.title}</h5>
-                        <p className="card-text" style={{height: "5rem" }}>{props.text}</p>
+                        <p className="card-text" style={{height: "2.5rem" }}>{props.text.length > 50 ? props.text.slice(47)+"..." : props.text}</p>
                     </div>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">{props.cuisinearea}</li>

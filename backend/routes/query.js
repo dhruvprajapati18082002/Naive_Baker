@@ -83,6 +83,32 @@ router.post(
 );
 
 
+// END-POINT to fetch "size" number of random recipes. Default value for size is 15.
+// "size" is passed as query parameter
+router.get(
+    "/randomrecipes",
+    async(req, res) => {
+        try{
+            let count = 15;
+            if (req.query.size !== undefined)
+                count = req.query.size;
+            
+            let query = `[{ \"$sample\": { \"size\": ${count} } }]`;
+            
+            query = JSON.parse(query)
+            
+            const recipes = await Recipe.aggregate(query);
+            
+            return res.json({total: recipes.length, recipes: recipes});
+        }
+        catch(error){
+            console.log(error.message);
+            return res.status(500).send("Internal Server Error!");
+        }
+    }
+)
+
+
 router.post(
     "/allchefs",
     async (req, res) => {

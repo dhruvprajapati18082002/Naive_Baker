@@ -9,6 +9,7 @@ const RecipeContextProvider = (props) => {
 
     const [ recipes, setRecipes ] = useState([]);
     const [ userRecipes, setUserRecipes ] = useState([]);
+    const [ dashboardRecipes, setDashboardRecipes ] = useState([]);
 
     // add recipe
     const uploadRecipe = async (name, description, cuisine, type, minutesToCook, image_url, ingredients, steps) => {
@@ -82,8 +83,24 @@ const RecipeContextProvider = (props) => {
             setUserRecipes([]);
       }
 
+      // fetch random recipes
+      const fetchRandom = async (count) => {
+        
+        let URL = `${BACKEND}/api/query/randomrecipes`
+        if (count !== undefined)
+            URL += `/?size=${count}`;
+
+        const response = await axios.get(URL);
+        
+        if (response.status === 200)
+            setDashboardRecipes(response.data.recipes);
+        else
+            setDashboardRecipes([]);
+      }
+
+
     return (
-        <recipeContext.Provider value={{ recipes, userRecipes, uploadRecipe, searchRecipe, fetchUserRecipes }}>
+        <recipeContext.Provider value={{ recipes, userRecipes, dashboardRecipes, uploadRecipe, searchRecipe, fetchUserRecipes, fetchRandom }}>
             {props.children}
         </recipeContext.Provider>
     );
