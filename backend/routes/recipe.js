@@ -103,19 +103,6 @@ router.get(
             if (!recipe)
                 return res.status(400).json({ error: "No Recipe with that ID found." });
             
-            if (recipe.owner != req.user.id)
-            {
-                recipe = {
-                    "name": recipe.name,
-                    "description": recipe.description,
-                    "video_url": recipe.video_url,
-                    "minutesToCook": recipe.minutesToCook,
-                    "cuisine": recipe.cuisine,
-                    "steps": recipe.steps,
-                    "ingredients": recipe.ingredients
-                }
-            }
-            
             return res.send({recipes: recipe});
         }
         catch(error){
