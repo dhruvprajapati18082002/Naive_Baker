@@ -11,13 +11,13 @@ const RecipeContextProvider = (props) => {
     const [ userRecipes, setUserRecipes ] = useState([]);
 
     // add recipe
-    const uploadRecipe = async (name, description, cuisine, duration, ingredients, steps, type,image_url) => {
+    const uploadRecipe = async (name, description, cuisine, type, minutesToCook, image_url, ingredients, steps) => {
         const response = await axios.post(
             `${BACKEND}/api/recipe/addrecipe`,{
                 name: name,
                 description: description,
                 cuisine: cuisine,
-                minutesToCook: duration,
+                minutesToCook: minutesToCook,
                 ingredients: ingredients,
                 steps: steps,
                 type: type,
@@ -28,7 +28,7 @@ const RecipeContextProvider = (props) => {
                 }
             }
         ).catch(error => {
-            return error.message
+            return error.message;
         })
         return response.data;
     }

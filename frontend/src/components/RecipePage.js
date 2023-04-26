@@ -93,7 +93,7 @@ const RecipePage = () => {
                         {/* ingredients */}
                         <div className="container my-3">
                             <p className="h2">Ingredients</p>
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                                 {
                                     recipeDisplayed.ingredients !== undefined && recipeDisplayed.ingredients.map((ingredient, key) => {
                                         return (

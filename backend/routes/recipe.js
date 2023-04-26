@@ -40,8 +40,8 @@ router.post(
                 type: req.body.type,
             }
             
-            if (req.body.video_url)
-                cred[video_url] = req.body.video_url;
+            if (req.body.image_url)
+                cred.image_url = req.body.image_url;
 
             let recipe = await Recipe.create(cred);
 

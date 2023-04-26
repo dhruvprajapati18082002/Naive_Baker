@@ -10,6 +10,21 @@ export default function UploadRecipe() {
     const { showAlert } = useContext(alertContext);
     const navigate = useNavigate();
 
+    const [cred, setCred] = useState({
+        name: "",
+        description: "",
+        cuisine: "",
+        ingredients: "",
+        minutesToCook: "",
+        type: "",
+        steps: "",
+        image_url: ""
+    });
+
+    const onChangeHandler = (event) => {
+        setCred({...cred, [event.target.id]: event.target.value});
+    }
+
     useEffect(() => {
         if (!localStorage.getItem("token")){
             showAlert("Please Login First !", "warning");
@@ -19,15 +34,11 @@ export default function UploadRecipe() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const name = document.getElementById("recipename").value;
-        const description = document.getElementById("description").value;
-        const cuisine = document.getElementById("cuisine").value;
-        const duration = document.getElementById("recipeduration").value;
-        const type = document.getElementById("type").value;
-        let steps = document.getElementById("recipetutorial").value;
-        steps = steps.split("\n").filter((element)=>{return element.length !== 0})
-        let image_url=document.getElementById("recipeimage").value;
-        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type,image_url);
+
+        const ingredients = cred.ingredients.split("\n");
+        const steps = cred.steps.split("\n");
+
+        const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.image_url, ingredients, steps);
         
         if (res._id !== undefined){
             showAlert("Recipe Succesfully Added", "success")
@@ -36,10 +47,6 @@ export default function UploadRecipe() {
         else
             showAlert("Failed to add recipe !", "danger");
       };
-
-    const [ingredients, setIngredients] = useState([]);
-    
-
 
     return (
         <section className="h-100 h-custom" style={{backgroundColor: '#8fc4b7'}}>
@@ -57,12 +64,13 @@ export default function UploadRecipe() {
                                 <label className="form-label" htmlFor="recipename">Recipe Name*</label>
                                 <input
                                     type="text"
-                                    id="recipename"
-                                    name="recipename"
+                                    id="name"
                                     className="form-control"
                                     required
-                                    minLength={4}
-                                    maxLength={17}
+                                    onChange={onChangeHandler}
+                                    value={cred.name}
+                                    minLength={5}
+                                    maxLength={20}
                                 />
                             </div>
 
@@ -70,11 +78,13 @@ export default function UploadRecipe() {
                             <div className="mb-3">
                                 <label htmlFor="description" className="form-label">Description of Recipe*</label>
                                 <textarea className="form-control" 
-                                id="description" 
-                                rows="3" 
+                                id="description"
+                                rows="3"
                                 required 
+                                onChange={onChangeHandler}
+                                value={cred.description}
                                 minLength={10} 
-                                maxLength={50} />
+                                maxLength={150} />
                             </div>
 
 
@@ -85,6 +95,8 @@ export default function UploadRecipe() {
                                     list="types" 
                                     id="cuisine" 
                                     placeholder="Type to search..."
+                                    value={cred.cuisine}
+                                    onChange={onChangeHandler}
                                     required
                                     />
                                     <datalist id="types">
@@ -103,7 +115,9 @@ export default function UploadRecipe() {
                                 <label htmlFor="cuisinetype" className="form-label">Type*</label>
                                     <input className="form-control" 
                                     list="cuisineoptions" 
-                                    id="type" 
+                                    id="type"
+                                    value={cred.type}
+                                    onChange={onChangeHandler} 
                                     placeholder="Type to search...veg/non-veg/vegan"
                                     required
                                     />
@@ -118,7 +132,9 @@ export default function UploadRecipe() {
                                 <label htmlFor="recipeduration" className="form-label">Duration*</label>
                                     <input className="form-control" 
                                     type="number" 
-                                    id="recipeduration" 
+                                    id="minutesToCook"
+                                    value={cred.minutesToCook}
+                                    onChange={onChangeHandler} 
                                     placeholder="in minutes.."
                                     required
                                     />
@@ -128,7 +144,9 @@ export default function UploadRecipe() {
                             <div className="mb-3">
                                 <label htmlFor="ingrediant" className="form-label">Ingredients*</label>
                                 <textarea className="form-control" 
-                                id="ingrediant" 
+                                id="ingredients"
+                                value={cred.ingredients}
+                                onChange={onChangeHandler} 
                                 rows="3" 
                                 placeholder='begin new ingrediant from new line...'
                                 required />
@@ -139,7 +157,9 @@ export default function UploadRecipe() {
                             <div className="mb-3">
                                 <label htmlFor="recipetutorial" className="form-label">Step by step tutorial*</label>
                                 <textarea className="form-control" 
-                                id="recipetutorial" 
+                                id="steps"
+                                value={cred.steps}
+                                onChange={onChangeHandler} 
                                 rows="3" 
                                 placeholder='begin new step from new line...'
                                 required />
@@ -150,8 +170,9 @@ export default function UploadRecipe() {
                                 <label className="form-label" htmlFor="recipeimage">Image*</label>
                                 <input
                                     type="text"
-                                    id="recipeimage"
-                                    name="recipeimage"
+                                    id="image_url"
+                                    onChange={onChangeHandler}
+                                    value={cred.image_url}
                                     className="form-control"
                                     placeholder="enter image URL"
                                 />
