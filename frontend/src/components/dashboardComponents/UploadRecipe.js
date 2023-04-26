@@ -166,12 +166,16 @@ export default function UploadRecipe() {
                             </div>
                             
                             {/* this is for image upload */}
-                            {/* <div className="form-group">
-                                <label htmlFor="photo">Upload a Photo*</label>
-                                <input type="file" className="form-control-file" 
-                                id="photo"
+                            <div className="form-outline mb-4">
+                                <label className="form-label" htmlFor="recipeimage">Image*</label>
+                                <input
+                                    type="text"
+                                    id="recipeimage"
+                                    name="recipeimage"
+                                    className="form-control"
+                                    placeholder="enter image URL"
                                 />
-                            </div> */}
+                            </div>
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 
