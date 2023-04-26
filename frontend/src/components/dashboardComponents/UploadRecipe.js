@@ -39,18 +39,6 @@ export default function UploadRecipe() {
 
     const [ingredients, setIngredients] = useState([]);
     
-    const addIngredients = (e) => {
-      if (e.key === "Enter") {
-        if (e.target.value.length > 0) {
-          setIngredients([...ingredients, e.target.value]);
-          e.target.value = "";
-        }
-      }
-    };
-    const removeIngredients = (ingredientToRemove) => {
-      const newIngredients = ingredients.filter((ingredient) => ingredient !== ingredientToRemove);
-      setIngredients(newIngredients);
-    };
 
 
     return (
@@ -137,21 +125,14 @@ export default function UploadRecipe() {
                             </div>
 
                             {/* this is for ingredients */}
-                            <div className="form-outline mb-4">
-                            <label htmlFor="boxes">Ingredients*</label>
-                                <div className="form-control" id="boxes" >
-                                    {ingredients.map((ingredient, index) => {
-                                    return (
-                                        <div key={index} >
-
-                                        {ingredient} <span style={{cursor: "pointer"}} onClick={() => removeIngredients(ingredient)} >X</span>
-                                        </div>
-                                    );
-                                    })}
-                                    
-                                    <input onKeyDown={addIngredients} />
-                                </div>
-                                </div>
+                            <div className="mb-3">
+                                <label htmlFor="ingrediant" className="form-label">Ingredients*</label>
+                                <textarea className="form-control" 
+                                id="ingrediant" 
+                                rows="3" 
+                                placeholder='begin new ingrediant from new line...'
+                                required />
+                            </div>
   
 
                             {/* this is for steps of recipe */}
