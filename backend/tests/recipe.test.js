@@ -3,6 +3,7 @@ const supertest = require("supertest");
 require("dotenv").config();
 
 const app = require("../app");
+const User = require("../models/User");
 
 let EMAIL = "testuser02@example.com";
 let PASSWORD = "testpassword";
@@ -11,15 +12,28 @@ let AUTH_TOKEN = null;
 // Connecting to the database before each test.
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_URI);
-    const token = await supertest(app).post("/api/auth/createuser").send({
-        name: "Test User",
-        username: "TestUser@02",
-        email: EMAIL,
-        password: PASSWORD,
-        hasPremium: true,
-    });
 
-    AUTH_TOKEN = await token.body.authToken;
+    const user = await User.findOne({email: EMAIL});
+
+    if (!user){
+        const token = await supertest(app).post("/api/auth/createuser").send({
+            name: "Test User",
+            username: "TestUser@02",
+            email: EMAIL,
+            password: PASSWORD,
+            hasPremium: true,
+        });
+    
+        AUTH_TOKEN = await token.body.authToken;
+    }
+    else{
+        // in-case previous test failed and the user was not removed
+        const token = await supertest(app).post("/api/auth/login").send({
+            email: EMAIL,
+            password: PASSWORD
+        })
+        AUTH_TOKEN = await token.body.authToken;
+    }
 });
 
 // Closing database connection after each test.
