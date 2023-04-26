@@ -8,7 +8,7 @@ const AlertContextProvider = (props) => {
         setAlert({ message: message, type: type });
         setTimeout(() => {
             setAlert(null);
-        }, 2000);
+        }, 5000);
     };
 
     return (

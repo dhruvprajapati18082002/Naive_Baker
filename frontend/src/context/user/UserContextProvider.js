@@ -37,8 +37,32 @@ const UserContextProvider = (props) => {
         return response;
     }
 
+    const getOTP = async (email) => {
+        const response = await axios.post(
+            `${BACKEND}/api/auth/forgotpassword`,{
+                email: email
+            }
+        ).catch(error => {
+            return error.response;
+        })
+        return response.data;
+    }
+
+    const verifyOTP = async (otp, password) => {
+        const response = await axios.post(
+            `${BACKEND}/api/auth/resetpassword?token=${otp}`, {
+                password: password
+            }
+        ).then(res => {
+            return res.data;
+        }).catch(error => {
+            return error.response;
+        })
+        return response;
+    }
+
     return (
-        <userContext.Provider value={{ user, getProfile, changePassword }}>
+        <userContext.Provider value={{ user, getProfile, changePassword, getOTP, verifyOTP }}>
             {props.children}
         </userContext.Provider>
     );

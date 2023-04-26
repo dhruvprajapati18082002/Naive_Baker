@@ -5,54 +5,13 @@ const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
 require("dotenv").config();
-
+const sendOTP=require('../sendmail.js');
 const User = require("../models/User");
 const fetchuser = require("../middleware/fetchuser");
 const Recipe = require("../models/Recipe");
-const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const EMAIL = process.env.SMTP_EMAIL;
-const PASSWORD = process.env.SMTP_PASSWORD;
-
-const check = {
-    emailUser: EMAIL,
-    emailPassword: PASSWORD,
-};
-const resendPasswordMail = async (name, emaiil, token) => {
-    console.log(EMAIL);
-    try {
-        let transporter = nodemailer.createTransport({
-            service: "gmail", // or your own SMTP
-            port: 587,
-            providerauth: {
-                user: check.emailUser,
-                pass: check.emailPassword,
-            },
-        });
-        const mailOptions = {
-            from: check.emailUser,
-            to: emaiil,
-            subject: "For reset Password",
-            html:
-                "<p> Hi " +
-                name +
-                ',Please copy the link and <a href="http://localhost:8080/api/auth/resetPassword?token=' +
-                token +
-                '">reset your password</a>',
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Mail has been sent", info.response);
-            }
-        });
-    } catch (error) {
-        res.status(400).send({ success: false, msg: error.message });
-    }
-};
 
 // END-POINT 1: CREATE USER END-POINT: POST /api/auth/createuser. NO LOGIN NEEDED
 router.post(
@@ -309,44 +268,41 @@ router.post(
             const email = req.body.email;
             const userData = await User.findOne({ email: email });
             if (userData) {
-                const randostring = randomstring.generate();
+                const randstring = randomstring.generate({
+                    charset: "numeric",
+                    length: 6
+                });
                 await User.findOneAndUpdate(
                     { email: email },
-                    { $set: { token: randostring } }
-                );
-                const userData2 = await User.findOne({ email: email });
-                resendPasswordMail(
-                    userData.name,
-                    userData.email,
-                    userData2.token
-                );
-                return res.status(200).json({ msg: "Please Check inbox of your mail" });
+                    { $set: { token: randstring } }
+                    );
+                    sendOTP(email, randstring);
+                    return res.status(200).json({ msg: "Please Check inbox of your mail" });
             } else {
-                return res.status(400).send("This Email doesn't exist");
+                return res.status(400).json({errors: ["This Email doesn't exist"]});
             }
         } catch (error) {
             console.log(error.message);
-            return res.status(500).json({ success: false, error: error.message });
+            return res.status(500).json({ errors: [error.message] });
         }
     }
 );
 
-router.get("/resetPassword", async (req, res) => {
+router.post("/resetPassword", async (req, res) => {
     try {
         const token = req.query.token;
-        const tokenData = await User.findOne({ token: token });
-        console.log({ data: token });
-        console.log({ data: tokenData });
-        if (tokenData) {
+        const tokenUser = await User.findOne({ token: token });
+        
+        if (tokenUser) {
             const password = req.body.password;
             const salt = await bcrypt.genSalt(10);
-            const newPassword = await bcrypt.hash(password, salt);
+            const hashedPassword = await bcrypt.hash(password, salt);
             await User.findByIdAndUpdate(
-                { _id: tokenData._id },
-                { $set: { password: newPassword, token: "" } },
+                { _id: tokenUser._id },
+                { $set: { password: hashedPassword, token: "" } },
                 { new: true }
             );
-            return res.status(200).json({ message: "Password Changed Successfully" });
+            return res.json({ msg: "Password Changed Successfully" });
         } else {
             return res.status(400).json({ errors: ["The  link has expired"] });
         }

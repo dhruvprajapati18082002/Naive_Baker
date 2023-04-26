@@ -15,7 +15,7 @@ const ResetPass = () => {
         if (! localStorage.getItem('token'))
         {
             navigate("/login");
-            showAlert("Please Login First !", "warning");
+            showAlert("Please Login First or try Forgot Password!", "warning");
         }
     }, []);
 
