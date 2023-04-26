@@ -144,18 +144,19 @@ function Search() {
                 </div>
             </div>
             <div>
-                <div className="d-flex flex-wrap justify-content-around">
+                <div className="d-flex flex-wrap justify-content-around" style={{backgroundColor: "#8fc4b7"}}>
                     {recipes !== undefined && recipes.length > 0
-                        ? recipes.map((recipe) => {
+                        ? recipes.map((entry) => {
                               return (
-                                  <RecipeItem
-                                      key={recipe._id}
-                                      image="https://www.manjulaskitchen.com/wp-content/uploads/punjabi_aloo_paratha.jpg"
-                                      title={recipe.name}
-                                      subtitle={`${recipe.minutesToCook} min`}
-                                      text={recipe.description}
-                                      recipeLink="/search"
-                                  />
+                                <RecipeItem key={entry._id}
+                                    image = {entry.image_url}
+                                    title = {entry.name}
+                                    typearea = {entry.type}
+                                    cuisinearea = {entry.cuisine}
+                                    duration = {entry.minutesToCook}
+                                    text = {entry.description}
+                                    recipeLink = {`/recipe/${entry._id}`}
+                                />
                               );
                           })
                         : <p>No results found.</p>

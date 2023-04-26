@@ -15,10 +15,13 @@ const UserRecipes = () => {
 				userRecipes !== undefined && userRecipes.length > 0 ? userRecipes.map((entry) => {
 					return (
 						<RecipeItem key={entry._id}
+              image = {entry.image_url}
 							title = {entry.name}
-							subtitle = {entry.minutesToCook + "min, " + entry.ratings + " Stars"}
+              typearea = {entry.type}
+							cuisinearea = {entry.cuisine}
+              duration = {entry.minutesToCook}
 							text = {entry.description}
-							recipeLink = "/search"
+							recipeLink = {`/recipe/${entry._id}`}
 						/>
 					)
 				}) :

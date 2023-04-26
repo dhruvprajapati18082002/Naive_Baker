@@ -5,15 +5,23 @@ export default function RecipeItem(props) {
     return (
 
         <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
-            <div className="card" style={{ width: "17rem", height: "30rem" }}>
-                <img src={props.image} className="card-img-top" alt="..." style={{height: "12rem" }}/>
-                <div className="card-body" style={{height: "11rem" }}>
-                    <h5 className="card-title" >{props.title}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted" >{props.subtitle}</h6>
-                    <p className="card-text" style={{height: "11rem" }}>{props.text}</p>
+
+                <div className="card" style={{width: "18rem"}}>
+                <img src={props.image} className="card-img-top" alt="..." />
+                <div className="card-body">
+                    <h5 className="card-title">{props.title}</h5>
+                    <p className="card-text" style={{height: "5rem" }}>{props.text}</p>
+                </div>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">{props.cuisinearea}</li>
+                    <li className="list-group-item">{props.typearea}</li>
+                    <li className="list-group-item">{props.duration} Min</li>
+                </ul>
+                <div className="card-body">
                     <center><Link to={props.recipeLink} className="btn btn-dark">See Recipe in Detail</Link></center>
                 </div>
-            </div>
+                </div>
+
         </div>
     )
 }

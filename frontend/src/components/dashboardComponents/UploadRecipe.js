@@ -25,10 +25,9 @@ export default function UploadRecipe() {
         const duration = document.getElementById("recipeduration").value;
         const type = document.getElementById("type").value;
         let steps = document.getElementById("recipetutorial").value;
-
         steps = steps.split("\n").filter((element)=>{return element.length !== 0})
-        
-        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type);
+        let image_url=document.getElementById("recipeimage").value;
+        const res = await uploadRecipe(name, description, cuisine, duration, ingredients, steps, type,image_url);
         
         if (res._id !== undefined){
             showAlert("Recipe Succesfully Added", "success")
@@ -87,7 +86,7 @@ export default function UploadRecipe() {
                                 rows="3" 
                                 required 
                                 minLength={10} 
-                                maxLength={200} />
+                                maxLength={50} />
                             </div>
 
 
@@ -166,12 +165,16 @@ export default function UploadRecipe() {
                             </div>
                             
                             {/* this is for image upload */}
-                            {/* <div className="form-group">
-                                <label htmlFor="photo">Upload a Photo*</label>
-                                <input type="file" className="form-control-file" 
-                                id="photo"
+                            <div className="form-outline mb-4">
+                                <label className="form-label" htmlFor="recipeimage">Image*</label>
+                                <input
+                                    type="text"
+                                    id="recipeimage"
+                                    name="recipeimage"
+                                    className="form-control"
+                                    placeholder="enter image URL"
                                 />
-                            </div> */}
+                            </div>
 
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>
 

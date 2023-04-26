@@ -11,7 +11,7 @@ const RecipeContextProvider = (props) => {
     const [ userRecipes, setUserRecipes ] = useState([]);
 
     // add recipe
-    const uploadRecipe = async (name, description, cuisine, duration, ingredients, steps, type) => {
+    const uploadRecipe = async (name, description, cuisine, duration, ingredients, steps, type,image_url) => {
         const response = await axios.post(
             `${BACKEND}/api/recipe/addrecipe`,{
                 name: name,
@@ -20,7 +20,8 @@ const RecipeContextProvider = (props) => {
                 minutesToCook: duration,
                 ingredients: ingredients,
                 steps: steps,
-                type: type
+                type: type,
+                image_url: image_url
             },{
                 headers: {
                     "auth-token": localStorage.getItem("token")
