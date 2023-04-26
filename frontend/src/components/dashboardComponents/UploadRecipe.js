@@ -87,7 +87,7 @@ export default function UploadRecipe() {
                                 rows="3" 
                                 required 
                                 minLength={10} 
-                                maxLength={200} />
+                                maxLength={50} />
                             </div>
 
 
