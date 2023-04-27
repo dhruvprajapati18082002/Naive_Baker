@@ -26,9 +26,9 @@ const Profile = () => {
 
   return (
     <div style={{ backgroundColor: "#8fc4b7" }}>
-      <div className="container py-5 h-100">
+      <div className="container py-5 h-100 ">
         <div className="col gutters-sm">
-          <div className="row-col-sm-3">
+          <div className="row-col-sm-3 shadow-lg p-3 mb-5 bg-body-tertiary rounded" style={{backgroundColor:"#FDFEFB"}}>
             <ProfilePic />
             <UserDetails />
           </div>

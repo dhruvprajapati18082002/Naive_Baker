@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 export default function RecipeItem(props) {
     return (
 
-        <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
+        // <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
 
-                <div className="card" style={{width: "18rem"}}>
+                <div className="card my-3 mx-3 shadow-lg" style={{width: "18rem" ,backgroundColor:"#FDFEFB"}}>
                     <img src={props.image} className="card-img-top" alt="..." style={{height:"13rem"}}/>
                     <div className="card-body">
                         <h5 className="card-title">{props.title}</h5>
@@ -22,6 +22,6 @@ export default function RecipeItem(props) {
                     </div>
                 </div>
 
-        </div>
+    //      </div>
     )
 }
