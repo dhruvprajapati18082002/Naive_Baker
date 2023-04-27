@@ -1,4 +1,5 @@
 const express = require("express");
+const { body, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 const Recipe = require("../models/Recipe");
@@ -19,68 +20,57 @@ router.get(
     }
 );
 
+
 router.post(
     "/search",
+    // body("satisfyAll").default(false).isBoolean(),
     async (req, res) => {
+
+        // const errors = validationResult(req);
+        // if (!errors.isEmpty())
+        //     return res.status(400).json({errors: errors.array()});
+
         try{
-            let query = "{\"$or\": [";
-            let count = 0;
+            let constraints = []
 
-            if (req.body.name !== undefined )
-            {
-                count++
-                query += "{\"name\" : {\"$regex\" : \".*";
-                query += req.body.name + ".*\" }}";
-            }
-            if (req.body.ingredients !== undefined && req.body.ingredients.length > 0 )
-            {
-                count++;
-                query += "{\"ingredients\" : {\"$all\" : [";
-                for (let i=0; i < req.body.ingredients.length - 1; i++)
-                {
-                    query += `\"${req.body.ingredients[i]}\"`;
-                    query += ",";
-                }
-                query += "\"" + req.body.ingredients[req.body.ingredients.length - 1] + "\" ]}}";
-            }
-
-            if (req.body.cuisine !== undefined && req.body.cuisine.length > 0 )
-            {
-                count++
-                query += "{\"cuisine\" : {\"$all\" : [";
-                query += "\"" + req.body.cuisine + "\" ]}}";
-            }
-
-            if (req.body.minutesToCook !== undefined )
-            {
-                count++
-                query += "{\"minutesToCook\" : {\"$lte\" : ";
-                query += "\"" + req.body.minutesToCook + "\" }}";
-            }
-            if (req.body.ratings !== undefined )
-            {
-                count++
-                query += "{\"ratings\" : {\"$gte\" : ";
-                query += "\"" + req.body.ratings + "\" }}";
-            }
-            if(req.body.type!== undefined){
-                count++;
-                console.log('in type query')
-                query += "{\"type\" : {\"$all\" : [";
-                query += "\"" + req.body.type + "\" ]}}";
-            }
-            query += "]}"
+            if (req.body.name !== undefined)
+                constraints.push({name: {$regex: req.body.name, $options: 'i'}});
             
-            if(count>1)
-                return res.status(400).send("Not Allowed to enter more than one filter");
+            if (req.body.cuisine !== undefined)
+                constraints.push({cuisine: {$regex: req.body.cuisine, $options: 'i'}});
             
-            query = JSON.parse(query);
-            
-            const recipes = await Recipe.find(query);
+            if (req.body.type !== undefined)
+                constraints.push({type: {$regex: `^${req.body.type}`, $options: 'i'}});
 
-            return res.json({total: recipes.length , recipes: recipes});
+            if (req.body.minutesToCook !== undefined)
+                constraints.push({minutesToCook: {$lte: req.body.minutesToCook}});
+    
+            if (req.body.ratings !== undefined)
+                constraints.push({ratings: {$gte: req.body.ratings}});
+            
+            if (req.body.ingredients !== undefined && req.body.ingredients.length > 0){
+                // converting each ingredient to /.*<name>.*/i regex where i denotes case-insensitivity
+                const ingredients = req.body.ingredients.map( ingred => { return RegExp(ingred, ["i"]) } );  
+                constraints.push({ingredients: {$all: ingredients}});
+            }
+
+            let recipes = null;
+            let query = {$or: constraints}
+            // if (req.body.satisfyAll)
+            //     query.$and = constraints;
+            // else 
+            //     query.$or = constraints;
+
+            if (constraints.length === 0)
+                recipes = await Recipe.find();
+            else if (constraints.length === 1)
+                recipes = await Recipe.find(query);
+            else
+                return res.status(400).json({errors: ["Cannot Send More than one query Parameter"]});
+            
+            return res.json({total: recipes.length, recipes: recipes});
         }
-        catch(error){
+        catch(error) {
             console.log(error.message);
             return res.status(500).send("Internal Server Error!");
         }

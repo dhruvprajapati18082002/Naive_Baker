@@ -35,7 +35,7 @@ const RecipeContextProvider = (props) => {
     }
 
     // Search Recipe 
-    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, rating, type) => {
+    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, type) => {
         
         let data = {};
         if (veg_name !== undefined)
@@ -46,11 +46,10 @@ const RecipeContextProvider = (props) => {
             data.ingredients = ingredients;
         else if (cuisine !== undefined)
             data.cuisine = cuisine;
-        else if (rating !== undefined)
-            data.ratings = rating;
         else if (type !== undefined)
             data.type = type;
         
+        console.log(data)
         const response = await axios.post(
             `${BACKEND}/api/query/search`, data,{
                 headers: {
