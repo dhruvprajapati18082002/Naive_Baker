@@ -8,10 +8,14 @@ const Payment = () => {
             <center>
                 <div className="card px-4 py-1" style={{ height: "30rem", backgroundColor: '#0dcaf0', width: "50%"}}>
                     <center><p className="h2 py-3">Payment Details</p></center>
+                    <center>
+                    <p className="text mb-1">(Only at 100/- monthly)</p>
+                    </center>
+
                     <form className="row gx-3">
                         <div className="col-12">
                             <hr/>
-                            <br/>
+                            
                             <div className="d-flex flex-column">
                                 <p className="text mb-1">Name</p>
                                 <input className="form-control mb-3" type="text" placeholder="Name" />
@@ -39,7 +43,7 @@ const Payment = () => {
                         <center>
                             <br/>
                             <div className="btn btn-primary mb-3">
-                                <span className="ps-3">PAY Rs 1000</span>
+                                <span className="ps-1">Get Premium</span>
                                 <span className="fas fa-arrow-right"></span>
                             </div>
                         </center>
