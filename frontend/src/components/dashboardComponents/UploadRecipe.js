@@ -73,7 +73,7 @@ export default function UploadRecipe() {
                                     onChange={onChangeHandler}
                                     value={cred.name}
                                     minLength={5}
-                                    maxLength={20}
+                                    maxLength={100}
                                 />
                             </div>
 
@@ -87,7 +87,7 @@ export default function UploadRecipe() {
                                 onChange={onChangeHandler}
                                 value={cred.description}
                                 minLength={10} 
-                                maxLength={150} />
+                                maxLength={250} />
                             </div>
 
 
@@ -129,21 +129,18 @@ export default function UploadRecipe() {
                             </div>
                             {/* this is duration */}
                             <div className="form-outline mb-4">
-                                <label htmlFor="recipeduration" className="form-label">Duration*</label>
+                                <label htmlFor="minutesToCook" className="form-label">Duration*</label>
+                                <div className='input-group'>
                                     <input className="form-control" 
                                     type="number" 
                                     id="minutesToCook"
                                     value={cred.minutesToCook}
-                                    onChange={onChangeHandler} 
-                                    placeholder="in minutes.."
+                                    onChange={onChangeHandler}
                                     required
-                                    min={0}
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                          event.preventDefault();
-                                        }
-                                      }}
+                                    min="1"
                                     />
+                                    <label htmlFor="minutesToCook" className='input-group-text'>Minutes</label>
+                                </div>
                             </div>
 
                             {/* this is for ingredients */}
