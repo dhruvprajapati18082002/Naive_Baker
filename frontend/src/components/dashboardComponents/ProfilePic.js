@@ -27,9 +27,8 @@ const ProfilePic = () => {
                             </li>
                             
                             <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <button type="button" className="btn btn-success my-1" disabled={user.hasPremium}>
-                                    Upgrade To Premium
-                                </button>
+                                <Link className="btn btn-success my-1" to="/payment">Upgrade to Premium</Link>
+                            
                             </li>
                             <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <Link className="btn btn-success my-1" to="/resetpass">Reset Password </Link>
