@@ -37,7 +37,10 @@ export default function UploadRecipe() {
 
         const ingredients = cred.ingredients.split("\n");
         const steps = cred.steps.split("\n");
-
+        const time =cred.minutesToCook;
+        if(time<0){
+            showAlert("Please enter valid value of time");
+        }
         const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.image_url, ingredients, steps);
         
         if (res._id !== undefined){
@@ -91,41 +94,38 @@ export default function UploadRecipe() {
                             {/* this is for cuisine */}
                             <div className="form-outline mb-4">
                                 <label htmlFor="cuisine" className="form-label">Enter Cuisine*</label>
-                                    <input className="form-control" 
-                                    list="types" 
+                                    <select className="form-select" 
                                     id="cuisine" 
                                     placeholder="Type to search..."
                                     value={cred.cuisine}
                                     onChange={onChangeHandler}
                                     required
-                                    />
-                                    <datalist id="types">
-                                        <option value="Indian" />
-                                        <option value="French" />
-                                        <option value="Italian" />
-                                        <option value="Mexican" />
-                                        <option value="Chinese" />
-                                        <option value="Mediterranean" />
-                                        <option value="Russian" />
-                                    </datalist>
+                                    >
+                                        <option value="Indian">Indian</option>
+                                        <option value="French">French</option>
+                                        <option value="Italian">Italian</option>
+                                        <option value="Maxican">Mexican</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Russian">Russian</option>
+                                    </select>
                             </div>
                             
                             {/* this is for veg/non-veg */}
                             <div className="form-outline mb-4">
                                 <label htmlFor="cuisinetype" className="form-label">Type*</label>
-                                    <input className="form-control" 
-                                    list="cuisineoptions" 
+                                    <select className="form-select"
                                     id="type"
                                     value={cred.type}
                                     onChange={onChangeHandler} 
                                     placeholder="Type to search...veg/non-veg/vegan"
                                     required
-                                    />
-                                    <datalist id="cuisineoptions">
-                                        <option value="Veg" />
-                                        <option value="Non-Veg" />
-                                        <option value="Vegan" />
-                                    </datalist>
+                                    >
+                                        {/* <option defaultValue="">Type to search...veg/non-veg/vegan</option> */}
+                                        <option value="Veg">Veg</option>
+                                        <option value="Non-Veg">Non-Veg</option>
+                                        <option value="Vegn">Vegan</option>
+                                    </select>
                             </div>
                             {/* this is duration */}
                             <div className="form-outline mb-4">
@@ -137,6 +137,12 @@ export default function UploadRecipe() {
                                     onChange={onChangeHandler} 
                                     placeholder="in minutes.."
                                     required
+                                    min={0}
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                          event.preventDefault();
+                                        }
+                                      }}
                                     />
                             </div>
 
