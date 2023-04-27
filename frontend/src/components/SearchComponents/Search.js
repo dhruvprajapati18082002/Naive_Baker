@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Search.css";
 
 import recipeContext from "../../context/recipe/recipeContext";
@@ -6,14 +6,10 @@ import RecipeItem from "../RecipeItem";
 
 function Search() {
   const [type_state, set_type_state] = useState("");
-  const [cuisine_s, setCuisine_s] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("meals");
   const { recipes, searchRecipe } = useContext(recipeContext);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(!open);
-  };
+  
 
   const handleSubmit = async (event) => {
     console.log('here in handle submit button pe click wala')
@@ -67,14 +63,6 @@ function Search() {
   };
 
   const handleSearchTermChange = (event) => {
-    // console.log(event)
-    console.log("dumb")
-    console.log(event.target.value);
-    // if (searchCategory === "cuisine") {
-    //   // console.log(searchCategory);
-    //   // console.log(cuisine_s)
-    //   setSearchTerm(cuisine_s);
-    //   console.log("searchTerm =" + searchTerm);
     if (searchCategory === "type") {
       setSearchTerm(type_state);
     }
@@ -93,48 +81,8 @@ function Search() {
     set_type_state("veg/nonveg");
     setSearchCategory("time");
   };
-  const setToType = () => {
-    if (type_state === "Veg/Non-veg") {
-      console.log("here");
-      console.log(type_state);
-      set_type_state("Veg");
-    } else if (type_state === "Veg") {
-      set_type_state("Non_veg");
-    } else set_type_state("Veg");
-    // console.log(type_state);
-    setSearchCategory("type");
-  };
-  const setToCuisine = (props) => {
-    // useEffect(()=>{
-    //   setSearchCategory('cuisine');
-    //   setSearchTerm(props);
-    // }, [searchCategory, searchTerm])
-
-    set_type_state("veg/nonveg");
-    console.log("insettoasd");
-    setSearchCategory("cuisine");
-    // setCuisine_s(props)
-    console.log(" cat : " + searchCategory);
-  };
-  const setToCuisine_russian = () => {
-    setSearchTerm("russian");
-    setSearchCategory("cuisine");
-  };
-  const handleDropDown = () => {
-    handleOpen();
-    setToCuisine();
-  };
-  const handleClickMultiple = () => {
-    setCuisine_s("Russian");
-    setToCuisine();
-    console.log(
-      cuisine_s +
-        " searchCategory : " +
-        searchCategory +
-        " searchTerm : " +
-        searchTerm
-    );
-  };
+  
+  
   const changeColor = () => {};
   
   const handleCategoryChangeCuisine = (e) => {
@@ -152,7 +100,6 @@ function Search() {
     return "whiteButton";
   };
 
-  // set_type_state("veg/nonveg");
   return (
     <div>
       <div className="main">
@@ -203,17 +150,16 @@ function Search() {
           >
             Time
           </button>
-          <select className={getClass("type")} id="category-select" onChange={handleCategoryChangeType}>
+          <select className='dropDown' id="category-select" onChange={handleCategoryChangeType}>
               <option value="">Veg/Non-Veg</option>
               <option value="Veg">Veg</option>
               <option value="Non-Veg">Non-veg</option>
             </select>
 
           <div>
-            {/* <label htmlFor="category-select">Choose a category:</label> */}
-            <select className={getClass("cuisine")} id="category-select" onChange={handleCategoryChangeCuisine}>
+            <select className='dropDown' id="category-select" onChange={handleCategoryChangeCuisine}>
               <option value="">Cuisine</option>
-              <option value="Russian" onClick={handleSubmit}>Russian</option>
+              <option value="Russian">Russian</option>
               <option value="Indian">Indian</option>
               <option value="Italian">Italian</option>
               <option value="Mexican">Mexican</option>
@@ -223,36 +169,7 @@ function Search() {
             </select>
           </div>
 
-          {/*                     
-                    <div className="dropdown">
-                      <button className={getClass("cuisine")} onClick={handleDropDown}>Cuisine</button>
-                      {open ? (
-                        <ul className="menu">
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('French'); setToCuisine(); console.log(cuisine_s); console.log(cuisine_s + " searchCategory :" + searchCategory+ "searchTerm : " + searchTerm);}}>French</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('Indian');  setToCuisine();  console.log(cuisine_s + " searchCategory : " + searchCategory+ "searchTerm : " + searchTerm);}}>Indian</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('Italian'); setToCuisine();  console.log(cuisine_s +" searchCategory : " + searchCategory+ "searchTerm : " + searchTerm);}}>Italian</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('Mexican'); setToCuisine();  console.log(cuisine_s +" searchCategory : " + searchCategory+ "searchTerm : " + searchTerm);}}>Mexican</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('Chinese'); setToCuisine();  console.log(cuisine_s + " searchCategory : " + searchCategory+ " searchTerm : " + searchTerm);}}>Chinese</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={()=>{setCuisine_s('Mediterranean'); setToCuisine(); console.log(cuisine_s + " searchCategory : " + searchCategory + " searchTerm : " + searchTerm);}}>Mediterranean</button>
-                          </li>
-                          <li className="menu-item">
-                            <button onClick={handleClickMultiple}>Russian</button>
-                          </li>
-                        </ul>
-                      ) : null}
-                      
-                    </div> */}
+          
           <button
             className={getClass("ingredients")}
             id="ing"

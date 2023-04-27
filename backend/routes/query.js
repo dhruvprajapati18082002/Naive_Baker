@@ -63,7 +63,12 @@ router.post(
                 query += "{\"ratings\" : {\"$gte\" : ";
                 query += "\"" + req.body.ratings + "\" }}";
             }
-            
+            if(req.body.type!== undefined){
+                count++;
+                console.log('in type query')
+                query += "{\"type\" : {\"$all\" : [";
+                query += "\"" + req.body.type + "\" ]}}";
+            }
             query += "]}"
             
             if(count>1)
