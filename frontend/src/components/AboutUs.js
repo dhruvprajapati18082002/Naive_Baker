@@ -111,7 +111,7 @@ export default function AboutUs() {
                             <div className="col-md-5">
                                 <div className="input-group my-2">
                                     <label className="input-group-text" id="inputGroupPrepend">Ratings</label>
-                                    <input type="number" className="form-control"  id="validationCustomUsername" aria-describedby="inputGroupPrepend" required />
+                                    <input type="number" className="form-control" min ={1} max ={5}  id="validationCustomUsername" aria-describedby="inputGroupPrepend" required />
                                 </div>
                             </div>
                             
