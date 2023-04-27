@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import "./Search.css";
+
 import recipeContext from "../../context/recipe/recipeContext";
 import RecipeItem from "../RecipeItem";
 
@@ -15,8 +16,8 @@ function Search() {
   };
 
   const handleSubmit = async (event) => {
-    // console.log('here in handle submit button pe click wala')
-    // console.log(searchTerm)
+    console.log('here in handle submit button pe click wala')
+    console.log(searchTerm)
     event.preventDefault();
     if (searchCategory === "meals") {
       await searchRecipe(
@@ -42,7 +43,9 @@ function Search() {
         undefined,
         undefined
       );
-    } else if (searchCategory === "rating") {
+    } else if (searchCategory === "type") {
+      console.log(searchTerm);
+      console.log("here in type");
       await searchRecipe(
         undefined,
         undefined,
@@ -51,8 +54,8 @@ function Search() {
         searchTerm
       );
     } else if (searchCategory === "cuisine") {
-      // console.log("in cuising");
-      // console.log(searchTerm)
+      console.log("in cuising");
+      console.log(searchTerm)
       await searchRecipe(
         undefined,
         undefined,
@@ -65,8 +68,8 @@ function Search() {
 
   const handleSearchTermChange = (event) => {
     // console.log(event)
-    // console.log("dumb")
-    // console.log(event.target.value);
+    console.log("dumb")
+    console.log(event.target.value);
     // if (searchCategory === "cuisine") {
     //   // console.log(searchCategory);
     //   // console.log(cuisine_s)
@@ -79,27 +82,58 @@ function Search() {
   };
 
   const setToName = () => {
+    set_type_state("veg/nonveg");
     setSearchCategory("meals");
   };
   const setToIngre = () => {
+    set_type_state("veg/nonveg");
     setSearchCategory("ingredients");
   };
   const setTotime = () => {
+    set_type_state("veg/nonveg");
     setSearchCategory("time");
   };
-  const setToRating = () => {
-    setSearchCategory("rating")
-  }
+  const setToType = () => {
+    if (type_state === "Veg/Non-veg") {
+      console.log("here");
+      console.log(type_state);
+      set_type_state("Veg");
+    } else if (type_state === "Veg") {
+      set_type_state("Non_veg");
+    } else set_type_state("Veg");
+    // console.log(type_state);
+    setSearchCategory("type");
+  };
   const setToCuisine = (props) => {
     // useEffect(()=>{
     //   setSearchCategory('cuisine');
     //   setSearchTerm(props);
     // }, [searchCategory, searchTerm])
 
-    // console.log("insettoasd");
+    set_type_state("veg/nonveg");
+    console.log("insettoasd");
     setSearchCategory("cuisine");
     // setCuisine_s(props)
-    // console.log(" cat : " + searchCategory);
+    console.log(" cat : " + searchCategory);
+  };
+  const setToCuisine_russian = () => {
+    setSearchTerm("russian");
+    setSearchCategory("cuisine");
+  };
+  const handleDropDown = () => {
+    handleOpen();
+    setToCuisine();
+  };
+  const handleClickMultiple = () => {
+    setCuisine_s("Russian");
+    setToCuisine();
+    console.log(
+      cuisine_s +
+        " searchCategory : " +
+        searchCategory +
+        " searchTerm : " +
+        searchTerm
+    );
   };
   const changeColor = () => {};
   
@@ -107,6 +141,10 @@ function Search() {
     setSearchCategory('cuisine');
     setSearchTerm(e.target.value);
   };
+  const handleCategoryChangeType = (e) =>{
+    setSearchCategory('type')
+    setSearchTerm(e.target.value);
+  }
   const getClass = (btn_name) => {
     if (btn_name === searchCategory) {
       return "blackButton";
@@ -114,6 +152,7 @@ function Search() {
     return "whiteButton";
   };
 
+  // set_type_state("veg/nonveg");
   return (
     <div>
       <div className="main">
@@ -164,23 +203,17 @@ function Search() {
           >
             Time
           </button>
-          <button
-            className={getClass("rating")}
-            id="rating"
-            value={searchCategory}
-            onClick={() => {
-                setToRating();
-                changeColor(this);
-            }}
-          >
-            Rating
-        </button>
+          <select className={getClass("type")} id="category-select" onChange={handleCategoryChangeType}>
+              <option value="">Veg/Non-Veg</option>
+              <option value="Veg">Veg</option>
+              <option value="Non-Veg">Non-veg</option>
+            </select>
 
           <div>
             {/* <label htmlFor="category-select">Choose a category:</label> */}
             <select className={getClass("cuisine")} id="category-select" onChange={handleCategoryChangeCuisine}>
               <option value="">Cuisine</option>
-              <option value="Russian">Russian</option>
+              <option value="Russian" onClick={handleSubmit}>Russian</option>
               <option value="Indian">Indian</option>
               <option value="Italian">Italian</option>
               <option value="Mexican">Mexican</option>

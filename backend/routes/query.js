@@ -63,7 +63,7 @@ router.post(
                 query += "{\"ratings\" : {\"$gte\" : ";
                 query += "\"" + req.body.ratings + "\" }}";
             }
-
+            
             query += "]}"
             
             if(count>1)
