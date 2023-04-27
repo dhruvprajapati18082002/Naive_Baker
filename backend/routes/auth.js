@@ -276,14 +276,17 @@ router.post(
                     { email: email },
                     { $set: { token: randstring } }
                     );
-                    sendOTP(email, randstring);
-                    return res.status(200).json({ msg: "Please Check inbox of your mail" });
+                    const result = sendOTP(email, randstring);
+                    if (result)
+                        return res.status(200).json({ msg: "Please Check inbox of your mail" });
+                    else
+                        return res.status(500).json({errors: ["Sorry! Mail Not Sent!"]})
             } else {
                 return res.status(400).json({errors: ["This Email doesn't exist"]});
             }
         } catch (error) {
             console.log(error.message);
-            return res.status(500).json({ errors: [error.message] });
+            return res.status(500).json({ errors: ["Internal Server Error!"] });
         }
     }
 );

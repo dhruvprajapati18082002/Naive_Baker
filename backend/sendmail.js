@@ -13,18 +13,24 @@ async function sendOTP(email,otp) {
         },
     });
 
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-        from: 'naivebaker1234@gmail.com', // sender address
-        to: email, // list of receivers
-        subject: "Reset Naive Baker Password", // Subject line
-        text: `Your OTP to reset your password is ${otp}`
-    });
-
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    try {
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: 'naivebaker1234@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: "Reset Naive Baker Password", // Subject line
+            text: `Your OTP to reset your password is ${otp}`
+        });
+        console.log("Message sent: %s", info.messageId);
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        return true;
+    }
+    catch (error){
+        console.log(error.message);
+        return false;
+    }
 }
 
 //main("u20cs026@coed.svnit.ac.in","hello");
