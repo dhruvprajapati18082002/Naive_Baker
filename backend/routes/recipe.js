@@ -84,6 +84,7 @@ router.get(
         try {
             const userRecipes = await Recipe.find({ owner:req.user.id }); 
             res.status(200).json({recipes: userRecipes});
+            
           } catch (err) {
             console.log(err);
             res.status(500).json({ message: "Internal Server error" });
@@ -170,8 +171,16 @@ router.delete(
             if (recipe.owner.toString() !== req.user.id) {
                 return res.status(401).send("Not Allowed");
             }
-    
+            
             recipe = await Recipe.findByIdAndDelete(req.params.recipeId)
+            
+            // updating the list of recipes with user   
+            const user = await User.findById(recipe.owner);
+            let newUser = {}
+            newUser.recipesOwned = user.recipesOwned.filter(recipeId => { return recipeId != req.params.recipeId; })
+            
+            await User.findByIdAndUpdate(user.id, {$set: newUser}, {$new: true});
+
             res.json({ msg: "Recipe has been deleted", recipe: recipe });
         } catch (error) {
             console.log(error.message);
