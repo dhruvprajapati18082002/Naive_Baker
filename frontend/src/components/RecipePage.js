@@ -54,24 +54,19 @@ const RecipePage = () => {
                         />
                         {/* blocks to display time to cook, cuisine and average ratings */}
                         <div className="d-flex justify-content-around my-1" style={{width: "30rem"}}>
-                            <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
+                            <div className="card" style={{backgroundColor: "#6da295", width: "50%"}}>
                                 <div className="card-body">
-                                    <div className="card-title"><strong>Cooking Time:</strong></div>
-                                    <div className="card-text">{recipeDisplayed.minutesToCook} Min</div>
+                                    <div className="card-title"><strong><center>Cooking Time:</center></strong></div>
+                                    <div className="card-text"><center>{recipeDisplayed.minutesToCook} Min</center></div>
                                 </div>
                             </div>
-                            <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
+                            <div className="card" style={{backgroundColor: "#6da295", width: "50%"}}>
                                 <div className="card-body">
-                                    <div className="card-title"><strong>Cuisine Type:</strong></div>
-                                    <div className="card-text">{recipeDisplayed.cuisine}</div>
+                                    <div className="card-title"><strong><center>Cuisine Type:</center></strong></div>
+                                    <div className="card-text"><center>{recipeDisplayed.cuisine}</center></div>
                                 </div>
                             </div>
-                            <div className="card" style={{backgroundColor: "#6da295", width: "33%"}}>
-                                <div className="card-body">
-                                    <div className="card-title"><strong>Avg Ratings:</strong></div>
-                                    <div className="card-text">{recipeDisplayed.ratings}</div>
-                                </div>
-                            </div>
+                        
                         </div>
                         {/* blocks to display time to cook, cuisine and average ratings */}
                     
