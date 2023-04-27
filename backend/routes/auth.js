@@ -188,8 +188,8 @@ router.put(
 // END-POINT 6: UPDATE USER PASSWORD END-POINT: PUT /api/auth/changepassword. LOGIN NEEDED
 router.put(
     "/changepassword",
-    body("oldPassword").exists(),
-    body("newPassword").exists(),
+    body("oldPassword").isLength({ min: 5 }),
+    body("newPassword").isLength({ min: 5 }),
     fetchuser,
     async (req, res) => {
         try {
@@ -288,7 +288,10 @@ router.post(
     }
 );
 
-router.post("/resetPassword", async (req, res) => {
+router.post(
+    "/resetPassword", 
+    body("password", "Password too Short!!").isLength({ min: 5 }),
+    async (req, res) => {
     try {
         const token = req.query.token;
         const tokenUser = await User.findOne({ token: token });

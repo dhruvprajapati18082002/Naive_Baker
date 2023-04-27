@@ -1,9 +1,9 @@
 [
     {
-        "name": "Vihar Shah",
+        "name": "Vihar Shah (GR)",
         "mail": "202001110@daiict.ac.in",
         "img": "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
-        "roles" : ["Group Leader" , "Frontend Developer", "Backend Developer"]
+        "roles" : [ "Full Stack Developer"]
     },
     {
         "name": "Nikhil Jethanandani",

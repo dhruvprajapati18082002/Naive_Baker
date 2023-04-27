@@ -111,8 +111,17 @@ export default function AboutUs() {
                             <div className="col-md-5">
                                 <div className="input-group my-2">
                                     <label className="input-group-text" id="inputGroupPrepend">Ratings</label>
-                                    <input type="number" className="form-control" min ={1} max ={5}  id="validationCustomUsername" aria-describedby="inputGroupPrepend" required />
+                                    <select className="form-select">
+                                        <option value="Indian">1</option>
+                                        <option value="French">2</option>
+                                        <option value="Italian">3</option>
+                                        <option value="Maxican">4</option>
+                                        <option value="Chinese">5</option>
+                                        {/* <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Russian">Russian</option> */}
+                                    </select>
                                 </div>
+                            
                             </div>
                             
                             <div className="col-12 my-3">

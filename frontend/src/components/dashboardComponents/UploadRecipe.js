@@ -104,7 +104,7 @@ export default function UploadRecipe() {
                                         <option value="Indian">Indian</option>
                                         <option value="French">French</option>
                                         <option value="Italian">Italian</option>
-                                        <option value="Maxican">Mexican</option>
+                                        <option value="Mexican">Mexican</option>
                                         <option value="Chinese">Chinese</option>
                                         <option value="Mediterranean">Mediterranean</option>
                                         <option value="Russian">Russian</option>
@@ -124,7 +124,7 @@ export default function UploadRecipe() {
                                         {/* <option defaultValue="">Type to search...veg/non-veg/vegan</option> */}
                                         <option value="Veg">Veg</option>
                                         <option value="Non-Veg">Non-Veg</option>
-                                        <option value="Vegn">Vegan</option>
+                                        <option value="Vegan">Vegan</option>
                                     </select>
                             </div>
                             {/* this is duration */}
