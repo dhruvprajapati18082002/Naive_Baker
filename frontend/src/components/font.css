@@ -8,11 +8,6 @@
     font-weight: 900;
     src: local('AutumnFlowers-9YVZK'), url(./fonts/AutumnFlowers-9YVZK.otf) format('truetype');
   }
-  /* @font-face {
-    font-family: 'SweetHipster-PzlE';
-    font-weight: 900;
-    src: local('SweetHipster-PzlE'), url(./fonts/SweetHipster-PzlE.ttf) format('truetype');
-  } */
   @font-face {
     font-family: 'WeddingdayPersonalUseRegular-1Gvo0';
     font-weight: 900;
@@ -28,3 +23,11 @@
     font-weight: 900;
     src: local('BunchBlossomsPersonalUse-0nA4'), url(./fonts/BunchBlossomsPersonalUse-0nA4.ttf) format('truetype');
   }
+
+  @media (min-width: 1200px) {
+    h1 {
+      font-size: 4rem;
+    }
+    
+  }
+

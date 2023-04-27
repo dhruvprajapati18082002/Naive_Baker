@@ -3,7 +3,8 @@ const { body, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 const Recipe = require("../models/Recipe");
-const Ingredient = require("../models/Ingredient")
+const Ingredient = require("../models/Ingredient");
+const { Query } = require("mongoose");
 
 const router = express.Router();
 
@@ -23,16 +24,17 @@ router.get(
 
 router.post(
     "/search",
-    // body("satisfyAll").default(false).isBoolean(),
+    body("satisfyAll").default(true).isBoolean(),
     async (req, res) => {
 
-        // const errors = validationResult(req);
-        // if (!errors.isEmpty())
-        //     return res.status(400).json({errors: errors.array()});
+        const errors = validationResult(req);
+        if (!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
 
+        
         try{
             let constraints = []
-
+            
             if (req.body.name !== undefined)
                 constraints.push({name: {$regex: req.body.name, $options: 'i'}});
             
@@ -55,18 +57,20 @@ router.post(
             }
 
             let recipes = null;
-            let query = {$or: constraints}
-            // if (req.body.satisfyAll)
-            //     query.$and = constraints;
-            // else 
-            //     query.$or = constraints;
+            let query = {}
+            
+            
+            if (req.body.satisfyAll)
+                query.$and = constraints;
+            else 
+                query.$or = constraints;
 
             if (constraints.length === 0)
                 recipes = await Recipe.find();
-            else if (constraints.length === 1)
+            else //if (constraints.length === 1)
                 recipes = await Recipe.find(query);
-            else
-                return res.status(400).json({errors: ["Cannot Send More than one query Parameter"]});
+            // else
+            //     return res.status(400).json({errors: ["Cannot Send More than one query Parameter"]});
             
             return res.json({total: recipes.length, recipes: recipes});
         }

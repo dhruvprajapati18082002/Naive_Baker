@@ -143,7 +143,7 @@ function Search() {
               			<option value="Russian">Russian</option>
               			<option value="Indian">Indian</option>
               			<option value="Italian">Italian</option>
-						<option value="Mexican">Mexican</option>
+						        <option value="Mexican">Mexican</option>
               			<option value="Chinese">Chinese</option>
               			<option value="Mediterranean">Mediterranean</option>
               			<option value="French">French</option>
@@ -195,7 +195,7 @@ function Search() {
             			<p>No results found.</p>
           			)}
 				</div>
-	      	</div>
+	    </div>
     	</div>
   	);
 }

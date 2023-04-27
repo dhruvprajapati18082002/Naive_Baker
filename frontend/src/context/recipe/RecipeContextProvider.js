@@ -35,23 +35,22 @@ const RecipeContextProvider = (props) => {
         console.log(response)
         return response.data;
     }
-
-    // Search Recipe 
-    const searchRecipe = async (veg_name, time_to_make, ingredients, cuisine, type) => {
+    const searchRecipe = async (name, time_to_make, ingredients, cuisine, type, satisfyAll) => {
         
         let data = {};
-        if (veg_name !== undefined)
-            data.name = veg_name;
-        else if (time_to_make !== undefined)
+        if (name !== undefined && name.length > 0)
+            data.name = name;
+        if (time_to_make !== undefined && time_to_make.length > 0)
             data.minutesToCook = time_to_make;
-        else if (ingredients !== undefined)
+        if (ingredients !== undefined && ingredients.length > 0)
             data.ingredients = ingredients;
-        else if (cuisine !== undefined)
+        if (cuisine !== undefined && cuisine.length > 0)
             data.cuisine = cuisine;
-        else if (type !== undefined)
+        if (type !== undefined && type.length > 0)
             data.type = type;
+        if (satisfyAll !== undefined)
+            data.satisfyAll = satisfyAll;
         
-        console.log(data)
         const response = await axios.post(
             `${BACKEND}/api/query/search`, data,{
                 headers: {
@@ -61,13 +60,13 @@ const RecipeContextProvider = (props) => {
         ).catch(error => {
             return error.message
         })
-
+      
         if (response.status === 200){
             setRecipes(response.data.recipes);
         }
         else 
             setRecipes([]);
-      }
+    }
 
       // fetch user recipes
       const fetchUserRecipes = async () => {

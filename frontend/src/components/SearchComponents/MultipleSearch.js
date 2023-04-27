@@ -1,28 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react'
 import recipeContext from '../../context/recipe/recipeContext';
 import alertContext from "../../context/alert/alertContext";
+
 import { useNavigate } from "react-router-dom";
 // import './boxstyle.css'
+import RecipeItem from "../RecipeItem";
 
 export default function MultiSearch() {
-
+    const { recipes, searchRecipe } = useContext(recipeContext);
     const  { uploadRecipe } = useContext(recipeContext);
     const { showAlert } = useContext(alertContext);
     const navigate = useNavigate();
 
     const [cred, setCred] = useState({
         name: "",
-        description: "",
         cuisine: "",
         ingredients: "",
         minutesToCook: "",
         type: "",
-        steps: "",
-        image_url: ""
+        satisfyAll: true
     });
 
     const onChangeHandler = (event) => {
         setCred({...cred, [event.target.id]: event.target.value});
+    }
+
+    const handleToggle1 = () => {
+        setCred({...cred, satisfyAll: true})
+    }
+    const handleToggle2 = () => {
+        setCred({...cred, satisfyAll: false})
     }
 
     useEffect(() => {
@@ -34,7 +41,11 @@ export default function MultiSearch() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        const ingredients = cred.ingredients.split("\n").filter(ingredient => {return ingredient.length > 0})
 
+        // veg_name, time_to_make, ingredients, cuisine, type
+        await searchRecipe(cred.name,cred.minutesToCook,ingredients,cred.cuisine,cred.type,cred.satisfyAll)
       };
 
     return (
@@ -44,7 +55,7 @@ export default function MultiSearch() {
                 <div className="col-lg-8 col-xl-6">
                     <div className="card rounded-3">
                     <div className="card-body p-4 p-md-5">
-                        <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2"><center><bold/>Multiple Filter Search</center></h3>
+                        <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2"><center>Multiple Filter Search</center></h3>
 
                         <form onSubmit={handleSubmit} className="px-md-2">
                             
@@ -60,22 +71,9 @@ export default function MultiSearch() {
                                     onChange={onChangeHandler}
                                     value={cred.name}
                                     minLength={5}
-                                    maxLength={20}
+                                    maxLength={100}
                                 />
                             </div>
-
-                            {/* this is for description
-                            <div className="mb-3">
-                                <label htmlFor="description" className="form-label">Description of Recipe*</label>
-                                <textarea className="form-control" 
-                                id="description"
-                                rows="3"
-                                required 
-                                onChange={onChangeHandler}
-                                value={cred.description}
-                                minLength={10} 
-                                maxLength={150} />
-                            </div> */}
 
 
                             {/* this is for cuisine */}
@@ -83,11 +81,10 @@ export default function MultiSearch() {
                                 <label htmlFor="cuisine" className="form-label">Enter Cuisine</label>
                                     <select className="form-select" 
                                     id="cuisine" 
-                                    placeholder="Type to search..."
                                     value={cred.cuisine}
                                     onChange={onChangeHandler}
-                                    
                                     >
+                                        <option value="">Select Cuisine...</option>
                                         <option value="Indian">Indian</option>
                                         <option value="French">French</option>
                                         <option value="Italian">Italian</option>
@@ -105,10 +102,8 @@ export default function MultiSearch() {
                                     id="type"
                                     value={cred.type}
                                     onChange={onChangeHandler} 
-                                    placeholder="Type to search...veg/non-veg/vegan"
-                                    
                                     >
-                                        {/* <option defaultValue="">Type to search...veg/non-veg/vegan</option> */}
+                                        <option value="">Type to search...veg/non-veg/vegan</option>
                                         <option value="Veg">Veg</option>
                                         <option value="Non-Veg">Non-Veg</option>
                                         <option value="Vegn">Vegan</option>
@@ -117,54 +112,39 @@ export default function MultiSearch() {
 
                             {/* this is duration */}
                             <div className="form-outline mb-4">
-                                <label htmlFor="recipeduration" className="form-label">Duration</label>
+                                <label htmlFor="minutesToCook" className="form-label">Duration</label>
+                                <div className='input-group'>
                                     <input className="form-control" 
                                     type="number" 
                                     id="minutesToCook"
                                     value={cred.minutesToCook}
                                     onChange={onChangeHandler} 
                                     placeholder="in minutes.."
-                                    
                                     />
+                                    <label className='input-group-text'>Minutes</label>
+                                </div>
                             </div>
 
                             {/* this is for ingredients */}
                             <div className="mb-3">
-                                <label htmlFor="ingrediant" className="form-label">Ingredients</label>
-                                <textarea className="form-control" 
-                                id="ingredients"
-                                value={cred.ingredients}
-                                onChange={onChangeHandler} 
-                                rows="3" 
-                                placeholder='begin new ingrediant from new line...'
+                                <label htmlFor="ingredients" className="form-label">Ingredients</label>
+                                    <textarea className="form-control" 
+                                    id="ingredients"
+                                    value={cred.ingredients}
+                                    onChange={onChangeHandler} 
+                                    rows="3" 
+                                    placeholder='begin new ingredient from new line...'
                                  />
                             </div>
-  
 
-                            {/* this is for steps of recipe
-                            <div className="mb-3">
-                                <label htmlFor="recipetutorial" className="form-label">Step by step tutorial*</label>
-                                <textarea className="form-control" 
-                                id="steps"
-                                value={cred.steps}
-                                onChange={onChangeHandler} 
-                                rows="3" 
-                                placeholder='begin new step from new line...'
-                                required />
-                            </div> */}
-                            
-                            {/* this is for image upload
-                            <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="recipeimage">Image*</label>
-                                <input
-                                    type="text"
-                                    id="image_url"
-                                    onChange={onChangeHandler}
-                                    value={cred.image_url}
-                                    className="form-control"
-                                    placeholder="enter image URL"
-                                />
-                            </div> */}
+                            {/* this is for satisfyAll */}
+                            <div className='mb-3 d-flex justify-content-around'>
+                                <input type="radio" className="btn-check" name="satisfyAll" id="success-outlined" value={cred.satisfyAll} onChange={handleToggle1} autoComplete="off" defaultChecked={true} />
+                                <label className="btn btn-outline-success" htmlFor="success-outlined">Satisfy All of The Constraints</label>
+
+                                <input type="radio" className="btn-check" name="satisfyAll" id="danger-outlined" value={cred.satisfyAll} onChange={handleToggle2} autoComplete="off" />
+                                <label className="btn btn-outline-danger" htmlFor="danger-outlined">Satisfy Atleast One Constraint</label>
+                            </div>
 
                            <center><button type="submit" className="btn btn-success btn-lg mb-1">Search</button></center>
 
@@ -172,7 +152,31 @@ export default function MultiSearch() {
 
                     </div>
                     </div>
+                    
                 </div>
+                <div
+          			className="d-flex flex-wrap justify-content-around"
+          			style={{ backgroundColor: "#8fc4b7" }}
+        		>
+					{recipes !== undefined && recipes.length > 0 ? (
+						recipes.map((entry) => {
+							return (
+								<RecipeItem
+									key={entry._id}
+									image={entry.image_url}
+									title={entry.name}
+									typearea={entry.type}
+									cuisinearea={entry.cuisine}
+									duration={entry.minutesToCook}
+									text={entry.description}
+									recipeLink={`/recipe/${entry._id}`}
+								/>
+							);
+						})
+					) : (
+            			<p>No results found.</p>
+          			)}
+				</div>
                 </div>
             </div>
         </section>
