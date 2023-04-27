@@ -99,7 +99,7 @@ router.get(
     async (req, res) => {
         try
         {
-            const user = await User.findById(req.user.id);
+            let user = await User.findById(req.user.id);
 
             if(!user)
                 return res.status(401).json({errors: ["Invalid authentication credentials given."]})
@@ -108,7 +108,9 @@ router.get(
             if (!recipe)
                 return res.status(400).json({ error: "No Recipe with that ID found." });
             
-            return res.send({isOwned: recipe.owner == user.id, recipes: recipe});
+            const isOwned = recipe.owner == user.id;
+            user = await User.findById(recipe.owner);
+            return res.send({isOwned: isOwned, recipes: recipe, owner: user.username});
         }
         catch(error){
             console.log(error.message);

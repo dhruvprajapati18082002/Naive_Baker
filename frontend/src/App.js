@@ -14,6 +14,7 @@ import UploadRecipe from "./components/dashboardComponents/UploadRecipe";
 import ForgotPass from "./components/loginComponents/ForgotPass";
 import ResetPass from "./components/loginComponents/ResetPass";
 import Payment from "./components/dashboardComponents/Payment";
+import MultiSearch from "./components/SearchComponents/MultipleSearch";
 
 export default function App() {
 
@@ -33,6 +34,7 @@ export default function App() {
                 <Route path="payment" element={<Payment />} />
                 {/* passing the id "recipeId" of the recipe to be displayed as url parameter */}
                 <Route path="/recipe/:recipeId" element={<RecipePage />} />
+                <Route path="/multisearch" element={<MultiSearch />} />
             </Routes>
 
             <Footer />

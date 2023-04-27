@@ -16,6 +16,7 @@ const RecipePage = () => {
 
     const [ recipeDisplayed, setRecipeDisplayed ] = useState({});
     const [ isRecipeOwner, setIsRecipeOwner ] = useState(false);
+    const [ owner, setOwner ] = useState("");
     
     const capitalize = (statement) => {
         let words = statement.split(" ").filter( (word) => { return word.length > 0 } );
@@ -42,6 +43,7 @@ const RecipePage = () => {
                 ).then(res => {
                     setRecipeDisplayed(res.data.recipes);
                     setIsRecipeOwner(res.data.isOwned);
+                    setOwner(res.data.owner);
                     console.log(isRecipeOwner);
                 }).catch(error => {
                     showAlert("Error Fetching the Required Recipe", "danger");
@@ -82,14 +84,14 @@ const RecipePage = () => {
                             </div>
                             <div className="card" style={{backgroundColor: CONTAINER_COLOR, width: "50%"}}>
                                 <div className="card-body">
-                                    <div className="card-title"><strong><center>Cuisine Type:</center></strong></div>
-                                    <div className="card-text"><center>{recipeDisplayed.cuisine}</center></div>
+                                    <div className="card-title"><strong><center>CHEF:</center></strong></div>
+                                    <div className="card-text"><center>{owner}</center></div>
                                 </div>
                             </div>
-                            <div className="card" style={{backgroundColor: CONTAINER_COLOR, width: "33%"}}>
+                            <div className="card" style={{backgroundColor: CONTAINER_COLOR, width: "50%"}}>
                                 <div className="card-body">
-                                    <div className="card-title"><strong>Avg Ratings:</strong></div>
-                                    <div className="card-text">{recipeDisplayed.ratings}</div>
+                                    <div className="card-title"><strong><center>Cuisine Type:</center></strong></div>
+                                    <div className="card-text"><center>{recipeDisplayed.cuisine}</center></div>
                                 </div>
                             </div>
                         </div>

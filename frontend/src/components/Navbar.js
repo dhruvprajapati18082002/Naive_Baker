@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import alertContext from "../context/alert/alertContext";
 
 export default function Navbar() {
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+    const location = useLocation();
     const { showAlert } = useContext(alertContext);
 
     const handleLogout = () => {
@@ -38,10 +39,10 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         
                         <div className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <Link className="nav-link" to="/">Home</Link>
-                            <Link className="nav-link active" to="/dashboard">Dashboard</Link>
-                            <Link className="nav-link" to="/Search">Search</Link>
-                            <Link className="nav-link" to="/about-us">About Us</Link>
+                            <Link className={`nav-link ${location.pathname == "/" ? "active" : ""}`} to="/">Home</Link>
+                            <Link className={`nav-link ${location.pathname == "/dashboard" ? "active" : ""}`} to="/dashboard">Dashboard</Link>
+                            <Link className={`nav-link ${location.pathname == "/search" ? "active" : ""}`} to="/search">Search</Link>
+                            <Link className={`nav-link ${location.pathname == "/about-us" ? "active" : ""}`} to="/about-us">About Us</Link>
                         </div>
 
                         {

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./Search.css";
+import { Link } from "react-router-dom";
 
 import recipeContext from "../../context/recipe/recipeContext";
 import RecipeItem from "../RecipeItem";
@@ -159,6 +160,15 @@ function Search() {
           			>
 	            		Ingredients
           			</button>
+
+					<Link
+            			className="btn whiteButton"
+            			id="multiFilter"
+            			value={searchCategory}
+            			to="/multisearch"
+          			>
+	            		Multi-Filter Search
+          			</Link>
         		</div>
 			</div>
       		<div>
