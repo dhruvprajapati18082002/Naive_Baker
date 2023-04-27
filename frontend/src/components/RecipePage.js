@@ -5,7 +5,7 @@ import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 import alertContext from "../context/alert/alertContext";
 import axios from "axios";
 
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const CONTAINER_COLOR = "#FDFEFB";
 
 const RecipePage = () => {
@@ -15,7 +15,16 @@ const RecipePage = () => {
     const { showAlert } = useContext(alertContext);
 
     const [ recipeDisplayed, setRecipeDisplayed ] = useState({});
+    const [ isRecipeOwner, setIsRecipeOwner ] = useState(false);
+    
+    const capitalize = (statement) => {
+        let words = statement.split(" ").filter( (word) => { return word.length > 0 } );
 
+        for (let i = 0; i < words.length; i++)
+            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+
+        return words.join(" ");
+    };
 
     useEffect( () => {
         if (!localStorage.getItem("token"))
@@ -32,6 +41,8 @@ const RecipePage = () => {
                     }
                 ).then(res => {
                     setRecipeDisplayed(res.data.recipes);
+                    setIsRecipeOwner(res.data.isOwned);
+                    console.log(isRecipeOwner);
                 }).catch(error => {
                     showAlert("Error Fetching the Required Recipe", "danger");
                     navigate("/");
@@ -43,8 +54,15 @@ const RecipePage = () => {
     return (
         <div style={{backgroundColor: "#8fc4b7"}}>
             <div className="container">
-                <p className="text-center" style={{ fontSize: 50, color:"#083221", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}>{recipeDisplayed.name}</p>
-
+                <div className="d-flex justify-content-center align-items-center">
+                    <p className="h1 text-center mx-2 my-4"
+                        style={{ fontSize: 50, color:"#083221", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}
+                    >
+                        {recipeDisplayed.name !== undefined && capitalize(recipeDisplayed.name)}
+                    </p>
+                    { isRecipeOwner && <i className="bi bi-pen-fill mx-2" style={{opacity:0.7, cursor: "pointer"}} /> }
+                    { isRecipeOwner && <i className="bi bi-trash3-fill" style={{opacity:0.7, cursor: "pointer"}} /> }
+                </div>
                 <div className="d-flex">
                     <div className="container my-5 align-items-center justify-content-center" style={{width: "fit-content"}}>
                         <img
