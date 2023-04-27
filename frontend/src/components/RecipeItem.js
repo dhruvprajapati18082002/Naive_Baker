@@ -12,9 +12,9 @@ export default function RecipeItem(props) {
                         <h5 className="card-title">{props.title}</h5>
                         <hr />
                         <div className="container-fluid d-flex justify-content-between">
-                        <span class="badge bg-secondary">{props.duration} Min</span>
-                        <span class="badge bg-secondary">{props.typearea}</span>
-                        <span class="badge bg-secondary">{props.cuisinearea}</span>
+                        <span className="badge bg-secondary">{props.duration} Min</span>
+                        <span className="badge bg-secondary">{props.typearea}</span>
+                        <span className="badge bg-secondary">{props.cuisinearea}</span>
                         </div>
                         <hr />
                         <p className="card-text" style={{height: "2.5rem" }}>{props.text.length > 60 ? props.text.slice(0,57)+"..." : props.text}</p>

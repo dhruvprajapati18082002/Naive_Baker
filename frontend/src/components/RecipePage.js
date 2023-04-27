@@ -1,18 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 
 import alertContext from "../context/alert/alertContext";
 import axios from "axios";
+import recipeContext from "../context/recipe/recipeContext";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const CONTAINER_COLOR = "#FDFEFB";
 
 const RecipePage = () => {
 
+    const ref = useRef(null);
+    const refClose = useRef(null);
+
     const navigate = useNavigate();
     const { recipeId } = useParams();
     const { showAlert } = useContext(alertContext);
+    const { editRecipe, deleteRecipe } = useContext(recipeContext);
 
     const [ recipeDisplayed, setRecipeDisplayed ] = useState({});
     const [ isRecipeOwner, setIsRecipeOwner ] = useState(false);
@@ -44,7 +49,6 @@ const RecipePage = () => {
                     setRecipeDisplayed(res.data.recipes);
                     setIsRecipeOwner(res.data.isOwned);
                     setOwner(res.data.owner);
-                    console.log(isRecipeOwner);
                 }).catch(error => {
                     showAlert("Error Fetching the Required Recipe", "danger");
                     navigate("/");
@@ -52,9 +56,186 @@ const RecipePage = () => {
         }
     }, [])
 
+    const [ newRecipe, setNewRecipe ] = useState({})
+
+    const onChangeHandler = (event) => {
+        setNewRecipe({ ...newRecipe, [event.target.id]: event.target.value });
+    }
+    
+    const handleSubmit = async (event) => {
+        // name, description, minutesToCook, Ingredients, steps, image_url
+        const newIngredients = newRecipe.editIngred.split("\n").filter(element => { return element.length > 0 });
+        const newSteps = newRecipe.editSteps.split("\n").filter(element => { return element.length > 0 });
+
+        const {status, data} = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl);
+        if (status === 200){
+            showAlert("Updated Successfully", "success");
+            setRecipeDisplayed(data.recipe);
+        }
+        else{
+            showAlert(data, "danger");
+        }
+        refClose.current.click();
+    };
+
+    const updateRecipe = () => {
+        ref.current.click();
+        setNewRecipe({
+            id: recipeDisplayed._id,
+            editName: recipeDisplayed.name, 
+            editDescr: recipeDisplayed.description,
+            editCuisine: recipeDisplayed.cuisine,
+            editType: recipeDisplayed.type,
+            editMinutesToCook: recipeDisplayed.minutesToCook,
+            editIngred: recipeDisplayed.ingredients.join("\n"),
+            editSteps: recipeDisplayed.steps.join("\n"),
+            editImageUrl: recipeDisplayed.image_url
+        });
+    }
+
+    const handleDelete = async () => {
+        const response = await deleteRecipe(recipeDisplayed._id);
+        if (response.msg !== undefined){
+            showAlert(response.msg, "success");
+            navigate("/dashboard");
+        }
+        else
+            showAlert(response, "danger");
+    }
 
     return (
         <div style={{backgroundColor: "#8fc4b7"}}>
+
+            <button
+                type="button"
+                ref={ref}
+                className="btn btn-primary d-none"
+                data-bs-toggle="modal"
+                data-bs-target="#editRecipeModal"
+            >
+                Launch demo modal
+            </button>
+
+            {/* Modal to Display Edit Recipe Pop-up Begins Here */}
+            <div
+                className="modal fade"
+                id="editRecipeModal" tabIndex="-1" aria-hidden="true"
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                Edit Recipe
+                            </h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editTitle" className="input-group-text" >
+                                        Name
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={newRecipe.editName} 
+                                        id="editName"
+                                        onChange={onChangeHandler} 
+                                        minLength={5} required 
+                                    />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editDescr" className="input-group-text" >
+                                        description
+                                    </label>
+                                    <textarea
+                                        type="text"
+                                        className="form-control"
+                                        value={newRecipe.editDescr}
+                                        id="editDescr"
+                                        onChange={onChangeHandler}
+                                        minLength={10} maxLength={150} required
+                                    />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editMinutesToCook" className="input-group-text" >
+                                        Time To Cook
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        value={newRecipe.editMinutesToCook}
+                                        id="editMinutesToCook"
+                                        onChange={onChangeHandler}
+                                        required
+                                        min="1"
+                                    />
+                                    <label htmlFor="editMinutesToCook" className="input-group-text" >Minutes</label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editIngred" className="input-group-text" >
+                                        Ingredients
+                                    </label>
+                                    <textarea
+                                        type="text"
+                                        className="form-control"
+                                        value={newRecipe.editIngred}
+                                        id="editIngred"
+                                        onChange={onChangeHandler}
+                                        row={5} required
+                                    />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editSteps" className="input-group-text" >
+                                        Steps
+                                    </label>
+                                    <textarea
+                                        type="text"
+                                        className="form-control"
+                                        value={newRecipe.editSteps}
+                                        id="editSteps"
+                                        onChange={onChangeHandler}
+                                        row={5} required
+                                    />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label htmlFor="editImageUrl" className="input-group-text" >
+                                        Image URL
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={newRecipe.editImageUrl}
+                                        id="editImageUrl"
+                                        onChange={onChangeHandler}
+                                    />
+                                </div>
+                            </form>
+    
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                ref={refClose}
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={handleSubmit}
+                            >
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Modal to Display Edit Recipe Pop-up Ends Here */}
+
+            {/* Recipe Page Begins Here */}
             <div className="container">
                 <div className="d-flex justify-content-center align-items-center">
                     <p className="h1 text-center mx-2 my-4"
@@ -62,8 +243,8 @@ const RecipePage = () => {
                     >
                         {recipeDisplayed.name !== undefined && capitalize(recipeDisplayed.name)}
                     </p>
-                    { isRecipeOwner && <i className="bi bi-pen-fill mx-2" style={{opacity:0.7, cursor: "pointer"}} /> }
-                    { isRecipeOwner && <i className="bi bi-trash3-fill" style={{opacity:0.7, cursor: "pointer"}} /> }
+                    { isRecipeOwner && <i className="bi bi-pen-fill mx-2" style={{opacity:0.7, cursor: "pointer"}} onClick={() => {updateRecipe()}}/> }
+                    { isRecipeOwner && <i className="bi bi-trash3-fill" style={{opacity:0.7, cursor: "pointer"}} onClick={() => {handleDelete()}} /> }
                 </div>
                 <div className="d-flex">
                     <div className="container my-5 align-items-center justify-content-center" style={{width: "fit-content"}}>
@@ -145,6 +326,8 @@ const RecipePage = () => {
                     {/* Description, Steps and Ingredients end here */}
                 </div>
             </div>
+            {/* Recipe Page Ends Here */}
+
         </div>
     );
 };

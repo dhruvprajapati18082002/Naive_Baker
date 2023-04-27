@@ -29,8 +29,10 @@ const RecipeContextProvider = (props) => {
                 }
             }
         ).catch(error => {
+            console.log(error)
             return error.message;
         })
+        console.log(response)
         return response.data;
     }
 
@@ -97,9 +99,45 @@ const RecipeContextProvider = (props) => {
             setDashboardRecipes([]);
       }
 
+      // edit recipe
+      const editRecipe = async (id, name, description, minutesToCook, ingredients, steps, image_url) => {
+            const response = await axios.put(
+                `${BACKEND}/api/recipe/updaterecipe/${id}`, {
+                    name: name, 
+                    description: description,
+                    minutesToCook: minutesToCook,
+                    ingredients: ingredients,
+                    steps: steps,
+                    image_url: image_url
+                },{
+                    headers: {
+                        "auth-token": localStorage.getItem('token')
+                    }
+                }
+            ).catch(error => {
+                return error.response;
+            })
+            return {status: response.status, data: response.data};
+      }
+
+      // delete Recipe
+      const deleteRecipe = async (id) => {
+        const response = await axios.delete(
+            `${BACKEND}/api/recipe/deleterecipe/${id}`,{
+                headers:{
+                    "auth-token": localStorage.getItem('token')
+                }
+            }
+        ).catch(error => {
+            return error.data;
+        })
+        if (response.status === 200)    
+            return response.data;
+        return response;
+      }
 
     return (
-        <recipeContext.Provider value={{ recipes, userRecipes, dashboardRecipes, uploadRecipe, searchRecipe, fetchUserRecipes, fetchRandom }}>
+        <recipeContext.Provider value={{ recipes, userRecipes, dashboardRecipes, uploadRecipe, searchRecipe, fetchUserRecipes, fetchRandom, editRecipe, deleteRecipe }}>
             {props.children}
         </recipeContext.Provider>
     );

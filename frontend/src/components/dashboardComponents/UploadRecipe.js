@@ -101,6 +101,7 @@ export default function UploadRecipe() {
                                     onChange={onChangeHandler}
                                     required
                                     >
+                                        <option value="">Select Cuisine...</option>
                                         <option value="Indian">Indian</option>
                                         <option value="French">French</option>
                                         <option value="Italian">Italian</option>
@@ -121,7 +122,7 @@ export default function UploadRecipe() {
                                     placeholder="Type to search...veg/non-veg/vegan"
                                     required
                                     >
-                                        {/* <option defaultValue="">Type to search...veg/non-veg/vegan</option> */}
+                                        <option value="">Type to search...veg/non-veg/vegan</option>
                                         <option value="Veg">Veg</option>
                                         <option value="Non-Veg">Non-Veg</option>
                                         <option value="Vegan">Vegan</option>

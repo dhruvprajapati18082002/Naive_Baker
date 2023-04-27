@@ -125,16 +125,18 @@ router.put(
     "/updaterecipe/:recipeId",
     fetchuser,
     async (req, res) => {
-        const { name, description, steps,ingredients, minutesToCook, cuisine } = req.body;
+        const { name, description, steps,ingredients, minutesToCook, cuisine, image_url} = req.body;
         try {
             const newRecipe = {};
-            if (name) { newRecipe.name = name };
-            if (description) { newRecipe.description = description };
-            if (steps) { newRecipe.steps = steps };
-            if (ingredients) { newRecipe.ingredients = ingredients };
-            if (minutesToCook) { newRecipe.minutesToCook = minutesToCook };
-            if (cuisine) { newRecipe.cuisine = cuisine };
+            if (name) { newRecipe.name = name; }
+            if (description) { newRecipe.description = description; }
+            if (steps) { newRecipe.steps = steps; }
+            if (ingredients) { newRecipe.ingredients = ingredients; }
+            if (minutesToCook) { newRecipe.minutesToCook = minutesToCook; }
+            if (cuisine) { newRecipe.cuisine = cuisine; }
+            if (image_url) { newRecipe.image_url = image_url; }
             
+
             let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe) { 
                 return res.status(404).send("Not Found") 
@@ -160,16 +162,17 @@ router.delete(
     async (req, res) => {
         try {
             let recipe = await Recipe.findById(req.params.recipeId);
+            
             if (!recipe) { 
                 return res.status(404).send("Not Found") 
             }
     
-            if (recipe.user.toString() !== req.user.id) {
+            if (recipe.owner.toString() !== req.user.id) {
                 return res.status(401).send("Not Allowed");
             }
     
             recipe = await Recipe.findByIdAndDelete(req.params.recipeId)
-            res.json({ "Success": "Recipe has been deleted", recipe: recipe });
+            res.json({ msg: "Recipe has been deleted", recipe: recipe });
         } catch (error) {
             console.log(error.message);
             res.status(500).send("Internal Server Error");
