@@ -139,11 +139,11 @@ export default function MultiSearch() {
 
                             {/* this is for satisfyAll */}
                             <div className='mb-3 d-flex justify-content-around'>
-                                <input type="radio" className="btn-check" name="satisfyAll" id="success-outlined" value={cred.satisfyAll} onChange={handleToggle1} autoComplete="off" defaultChecked={true} />
-                                <label className="btn btn-outline-success" htmlFor="success-outlined">Satisfy All of The Constraints</label>
+                                <input type="radio" className="btn-check" name="satisfyAll" id="SatisfyAllConstraints" value={cred.satisfyAll} onChange={handleToggle1} autoComplete="off" defaultChecked={true} />
+                                <label className="btn btn-outline-success" htmlFor="SatisfyAllConstraints">Satisfy All of The Constraints</label>
 
-                                <input type="radio" className="btn-check" name="satisfyAll" id="danger-outlined" value={cred.satisfyAll} onChange={handleToggle2} autoComplete="off" />
-                                <label className="btn btn-outline-danger" htmlFor="danger-outlined">Satisfy Atleast One Constraint</label>
+                                <input type="radio" className="btn-check" name="satisfyAll" id="SatisfyAtleastOneConstraint" value={cred.satisfyAll} onChange={handleToggle2} autoComplete="off" />
+                                <label className="btn btn-outline-success" htmlFor="SatisfyAtleastOneConstraint">Satisfy Atleast One Constraint</label>
                             </div>
 
                            <center><button type="submit" className="btn btn-success btn-lg mb-1">Search</button></center>

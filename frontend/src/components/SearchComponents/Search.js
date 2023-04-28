@@ -8,11 +8,11 @@ import RecipeItem from "../RecipeItem";
 function Search() {
   	const [type_state, set_type_state] = useState("");
   	const [searchTerm, setSearchTerm] = useState("");
-  	const [searchCategory, setSearchCategory] = useState("meals");
+  	const [searchCategory, setSearchCategory] = useState("name");
   	const { recipes, searchRecipe } = useContext(recipeContext);
 	
 	const placeholderText = {
-		"meals": "Enter name of the dish...",
+		"name": "Enter name of the dish...",
 		"time": "Enter time in minutes...",
 		"ingredients": "Enter like cheese, butter,...",
 		"cuisine": "Select Cuisine...",
@@ -23,7 +23,7 @@ function Search() {
     	event.preventDefault();
 
     	// veg_name, time_to_make, ingredients, cuisine, type
-		if (searchCategory === "meals") 
+		if (searchCategory === "name") 
 			await searchRecipe(searchTerm); // rest are all undefined
 		else if (searchCategory === "time")
 			await searchRecipe(undefined, searchTerm); // rest are all undefined
@@ -45,7 +45,7 @@ function Search() {
 
   	const setToName = () => {
     	set_type_state("veg/nonveg");
-    	setSearchCategory("meals");
+    	setSearchCategory("name");
 		setSearchTerm("");
   	};
   	const setToIngre = () => {
@@ -107,15 +107,15 @@ function Search() {
         		
 				<div className="searchCat">
           			<button
-            			className={getClass("meals")}
-            			id="meals"
+            			className={getClass("name")}
+            			id="name"
             			value={searchCategory}
             			onClick={() => {
               				setToName();
               				changeColor(this);
             			}}
           			>
-            			Meals
+            			name
           			</button>
           			
 					<button
