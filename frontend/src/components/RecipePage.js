@@ -46,11 +46,12 @@ const RecipePage = () => {
                         }
                     }
                 ).then(res => {
-                    setRecipeDisplayed(res.data.recipes);
+                    setRecipeDisplayed(res.data.recipes[0]);
                     setIsRecipeOwner(res.data.isOwned);
                     setOwner(res.data.owner);
                 }).catch(error => {
-                    showAlert("Error Fetching the Required Recipe", "danger");
+                    const msg = error.response.data.errors.join("\n");
+                    showAlert(msg, "danger");
                     navigate("/");
                 })
         }
@@ -67,13 +68,14 @@ const RecipePage = () => {
         const newIngredients = newRecipe.editIngred.split("\n").filter(element => { return element.length > 0 });
         const newSteps = newRecipe.editSteps.split("\n").filter(element => { return element.length > 0 });
 
-        const {status, data} = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl);
-        if (status === 200){
+        const data = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl);
+
+        if (data.recipes !== undefined){
             showAlert("Updated Successfully", "success");
-            setRecipeDisplayed(data.recipe);
+            setRecipeDisplayed(data.recipes[0]);
         }
         else{
-            showAlert(data, "danger");
+            showAlert(data.errors.join("\n"), "danger");
         }
         refClose.current.click();
     };
@@ -95,12 +97,12 @@ const RecipePage = () => {
 
     const handleDelete = async () => {
         const response = await deleteRecipe(recipeDisplayed._id);
-        if (response.msg !== undefined){
-            showAlert(response.msg, "success");
+        if (response.recipes !== undefined){
+            showAlert("Recipe Deleted Successfully", "success");
             navigate("/dashboard");
         }
         else
-            showAlert(response, "danger");
+            showAlert(response.errors.join("\n"), "danger");
     }
 
     return (

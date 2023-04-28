@@ -9,7 +9,7 @@ const fetchuser = (req, res, next)=>{
     const token = req.header('auth-token');
 
     if (!token){
-        return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+        return res.status(401).send({errors: ["Not Authorized to Perform the Action!"]});
     }
 
     try{
@@ -18,7 +18,7 @@ const fetchuser = (req, res, next)=>{
         next();
     }
     catch(error){
-        return res.status(401).send({error: "Unauthorized - invalid authentication credentials given."});
+        return res.status(401).send({errors: ["Not Authorized to Perform the Action!"]});
     }
 }
 

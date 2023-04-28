@@ -29,10 +29,8 @@ const RecipeContextProvider = (props) => {
                 }
             }
         ).catch(error => {
-            console.log(error)
-            return error.message;
+            return error.response;
         })
-        console.log(response)
         return response.data;
     }
     const searchRecipe = async (name, time_to_make, ingredients, cuisine, type, satisfyAll) => {
@@ -58,12 +56,11 @@ const RecipeContextProvider = (props) => {
                 }
             }
         ).catch(error => {
-            return error.message
+            return error.response;
         })
       
-        if (response.status === 200){
-            setRecipes(response.data.recipes);
-        }
+        if (response.status === 200)
+            setRecipes(response.data.recipes)
         else 
             setRecipes([]);
     }
@@ -76,7 +73,10 @@ const RecipeContextProvider = (props) => {
                     'auth-token': localStorage.getItem('token'),
                 }
             }
-        );
+        ).catch(error => {
+            return error.response;
+        })
+
         if (response.status === 200)
             setUserRecipes(response.data.recipes);
         else
@@ -114,9 +114,9 @@ const RecipeContextProvider = (props) => {
                     }
                 }
             ).catch(error => {
-                return error.response;
+                return error.response.data;
             })
-            return {status: response.status, data: response.data};
+            return response.data;
       }
 
       // delete Recipe
@@ -128,11 +128,9 @@ const RecipeContextProvider = (props) => {
                 }
             }
         ).catch(error => {
-            return error.data;
+            return error.response;
         })
-        if (response.status === 200)    
-            return response.data;
-        return response;
+        return response.data;
       }
 
     return (

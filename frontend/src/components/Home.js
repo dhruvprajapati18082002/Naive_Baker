@@ -15,7 +15,7 @@ const Home = (props) => {
 	const { dashboardRecipes, fetchRandom } = useContext(recipeContext);
 
 	useEffect(()=>{
-		// fetchRandom(10);
+		// fetchRandom(); // fetches 15 recipes by default
 		fetchRandom(10);
 	}, []);
 
@@ -24,20 +24,17 @@ const Home = (props) => {
       		<div
         		className="row bg-image"
         		style={{
-	          		backgroundImage:
-            			"url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg)",          
-          			height: "100vh"
+	          		background:
+            			"url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg) no-repeat center center/cover",
+						height: "100vh"
         		}}
 			>
-				<div style={{ width: "50em" }}>
+				<div className="d-flex justify-content-left align-items-center">
 					<center>
-						<p style={{ fontSize: 86, color: "white", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}>
-							{" "}
-							{" "}	
-							<br />
+						<p className="" style={{ fontSize: 86, color: "white", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}>
 							WELCOME <br />
 							TO <br />
-							NAIVE BAKER{" "}
+							NAIVE BAKER
 						</p>
 					</center>
 				</div>

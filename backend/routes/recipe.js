@@ -50,11 +50,11 @@ router.post(
 
             await User.findByIdAndUpdate(req.user.id, {$set: newUser}, {new:true});
 
-            return res.status(201).json(recipe);
+            return res.status(201).json({recipes: [recipe]});
         } 
         catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
@@ -70,7 +70,7 @@ router.get(
         }
         catch(error){
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -82,12 +82,16 @@ router.get(
     fetchuser,
     async (req, res) => {
         try {
+            const user = await User.findById(req.user.id);
+            if (!user)
+            return res.status(401).send({errors: ["Not Authorized to Perform the Action!"]});
+
             const userRecipes = await Recipe.find({ owner:req.user.id }); 
             res.status(200).json({recipes: userRecipes});
             
-          } catch (err) {
-            console.log(err);
-            res.status(500).json({ message: "Internal Server error" });
+          } catch (error) {
+            console.log(error.message);
+            return res.status(500).json({errors: ["Internal Server Error!"]});
           }
     }
 )
@@ -107,15 +111,15 @@ router.get(
 
             let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe)
-                return res.status(400).json({ error: "No Recipe with that ID found." });
+                return res.status(400).json({ errors: ["No Recipe with that ID found."] });
             
             const isOwned = recipe.owner == user.id;
             user = await User.findById(recipe.owner);
-            return res.send({isOwned: isOwned, recipes: recipe, owner: user.username});
+            return res.send({isOwned: isOwned, recipes: [recipe], owner: user.username});
         }
         catch(error){
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
@@ -140,17 +144,17 @@ router.put(
 
             let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe) { 
-                return res.status(404).send("Not Found") 
+                return res.status(400).json({errors: ["Invalid Recipe Id!"]}) 
             }
     
             if (recipe.owner.toString() !== req.user.id) {
-                return res.status(401).send("Not Allowed");
+                return res.status(401).send({errors: ["Not Authorized to Perform the Action!"]});
             }
             recipe = await Recipe.findByIdAndUpdate(req.params.recipeId, { $set: newRecipe }, { new: true })
-            res.json({ recipe });
+            res.json({ recipes: [recipe] });
         } catch (error) {
             console.log(error.message);
-            res.status(500).send("Internal Server Error");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
@@ -164,13 +168,13 @@ router.delete(
         try {
             let recipe = await Recipe.findById(req.params.recipeId);
             
-            if (!recipe) { 
-                return res.status(404).send("Not Found") 
+            if (!recipe) {
+                return res.status(400).json({errors: ["Invalid Recipe Id!"]}) 
             }
     
-            if (recipe.owner.toString() !== req.user.id) {
-                return res.status(401).send("Not Allowed");
-            }
+            if (recipe.owner.toString() !== req.user.id) 
+                return res.status(401).send({errors: ["Not Authorized to Perform the Action!"]});
+            
             
             recipe = await Recipe.findByIdAndDelete(req.params.recipeId)
             
@@ -181,10 +185,10 @@ router.delete(
             
             await User.findByIdAndUpdate(user.id, {$set: newUser}, {$new: true});
 
-            res.json({ msg: "Recipe has been deleted", recipes: recipe });
+            res.json({recipes: [recipe]});
         } catch (error) {
             console.log(error.message);
-            res.status(500).send("Internal Server Error");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
