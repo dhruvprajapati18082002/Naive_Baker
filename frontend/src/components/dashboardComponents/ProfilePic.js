@@ -19,19 +19,16 @@ const ProfilePic = () => {
                     />
                     <div className="mt-3">
                         <h4>{user.name}</h4>
-                        <ul className="list-group list-group-horizontal flex-fill">
-                            <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                
+                        <ul className="list-group list-group-horizontal justify-content-around align-items-center flex-wrap">
+                            <li className="list-group-item my-2">
                                 <Link className="btn btn-success my-1" to="/uploadrecipe">Upload Recipe</Link>
-                                
                             </li>
                             
-                            <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <li className="list-group-item my-2">
                                 <Link className="btn btn-success my-1" to="/payment">Upgrade to Premium</Link>
-                            
                             </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <Link className="btn btn-success my-1" to="/resetpass">Reset Password </Link>
+                            <li className="list-group-item my-2">
+                                <Link className="btn btn-success my-1" to="/resetpass">Reset Password </Link>
                             </li>
                         </ul>
                         {/* <button className="btn btn-primary mx-1">Follow</button> */}

@@ -6,10 +6,10 @@ export default function RecipeItem(props) {
 
         // <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
 
-                <div className="card my-3 mx-3 shadow-lg" style={{width: "18rem" ,backgroundColor:"#FDFEFB"}}>
+                <div className="card my-3 mx-3 shadow-lg" style={{width: "16rem" ,backgroundColor:"#FDFEFB"}}>
                     <img src={props.image} className="card-img-top" alt="..." style={{height:"13rem"}}/>
                     <div className="card-body">
-                        <h5 className="card-title">{props.title}</h5>
+                        <h5 className="text-center card-title">{props.title}</h5>
                         <hr />
                         <div className="container-fluid d-flex justify-content-between">
                         <span className="badge bg-secondary">{props.duration} Min</span>
@@ -17,16 +17,9 @@ export default function RecipeItem(props) {
                         <span className="badge bg-secondary">{props.cuisinearea}</span>
                         </div>
                         <hr />
-                        <p className="card-text" style={{height: "2.5rem" }}>{props.text.length > 60 ? props.text.slice(0,57)+"..." : props.text}</p>
+                        <p className="card-text" style={{height: "2rem" }}>{props.text.length > 60 ? props.text.slice(0,57)+"..." : props.text}</p>
                     </div>
 
-                    
-
-                    {/* <ul className="list-group list-group-flush">
-                        <li className="list-group-item">{props.cuisinearea}</li>
-                        <li className="list-group-item">{props.typearea}</li>
-                        <li className="list-group-item">{props.duration} Min</li>
-                    </ul> */}
                     <div className="card-body">
                         <center><Link to={props.recipeLink} className="btn btn-dark">See Recipe in Detail</Link></center>
                     </div>

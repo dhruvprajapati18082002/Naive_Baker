@@ -16,7 +16,7 @@ const Home = (props) => {
 
 	useEffect(()=>{
 		// fetchRandom(10);
-		fetchRandom(8);
+		fetchRandom(10);
 	}, []);
 
  	return (
