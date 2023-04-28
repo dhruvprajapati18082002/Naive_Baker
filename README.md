@@ -1,58 +1,94 @@
-# IT 314 Software Engineering Group Project
+# Naive Baker
 
-## *Group 08 Members*
+[![DeepScan grade](https://deepscan.io/api/teams/21039/projects/24450/branches/754106/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=21039&pid=24450&bid=754106)
 
-- 202001062 - Boricha Vinal
-- 202001089 - Priyank Pitliya
-- 202001094 - Deep Rakhasiya
-- 202001099 - Aditya Raj
-- 202001100 - Shobhit Verma
-- 202001103 - Dhruv Prajapati
-- 202001108 - Nikhil Jethanandani
-- 202001110 - Vihar Shah
-- 202001116 - Gaurav Shah
+An online recipe sharing platform for cooking lovers...
 
-## *Repository Structure*
+## Team Members
 
-- The repository consists of two folders, *lab_assignments* and *project*.
+- Vihar Shah (G.R.)
+- Nikhil Jethanandani
+- Gaurav Shah
+- Dhruv Prajapati
+- Aditya Raj
+- Priyank Pitliya
+- Shobhit Verma
+- Deep Rakhasiya
+- Boricha Vinal
 
-- *lab_assignment* consists of all the group lab assignment reports to be submitted.
+## Repository Structure
 
-- *project* folder consists of the project code.
+- The repository contains the documentations related to the project in `documentations` folder.
+- The Frontend, implemented in React.JS is inside `frontend` folder, and backend, implemented using Express - Node.JS us in `backend` folder.
 
-## *Project folder Structure*
+## Environment Files
 
-- The project code is structured in two folders, namely, *public* and *src*.
-- The *public* folder consists of all the **images** and **html** file for the website.
-- The *src* folder consists of the **javascript** and **CSS** files.
-- The *React code* for frontend and the *Node.JS* code for the backend are both included in this files.
-- *package-lock.json* and *package.json* files consist of the node-modules needed to run the project and their corresponding versions. The node modules can easily be installed on any system using  following command in the same directory as *package.json*
+- Both frontend and backend have their own respective environment files which are required to run the project.
+- The files must be manually defined as they are not included in the repository to protect the secrets.
+- One must create a *.env* file in the root of frontend and backend to run the project.
+
+### Frontend Environment File
+
+the frontend environment file backend url in following format
 
 ```bash
-npm install -r package.json
+REACT_APP_BACKEND=<backend-url-here>
 ```
 
-## *Components implemented*
+### Backend Environment File
 
-All the reuseable components created in React are present in the *components* folder inside *src*.
+the frontend environment file backend url in following format
 
-The components implemented are described briefly as follows:
+```bash
 
-### **Navbar**
+MONGODB_URI=<uri-here> # URI to connect to mongodb Database
 
-**Navbar.js** file consists of the navigation bar code of the website. The navbar component will be common in all the pages of the website.
+FRONTEND_URL=<frontend-url-here>  # to allow only frontend to access backend
+PORT=<backend-port-here>  # port on which backend will run
+JWT_SECRET=<jwt_secret_here>  # used to hash passwords before storing
 
-### **RecipeItem**
+# email and password to send otp mails from
+SMTP_EMAIL=<email-here>
+SMTP_PASSWORD=<password-here>
+```
 
-The **RecipeItem.js** implements a card to display an recipe item in short. The *RecipeItem* component will be used to display the recipes when a user performs search operation or while displaying the daily specials recipe. One can redirect to the recipe page to view it in detail by clicking on the ***see recipe in detail*** button.
+## Running Project
 
-### **Footer**
+### *Pre-requirements*
 
-Contains the implementation of the site footer. (The semi-transparent black bar that is shown at the bottom of the site).
+Must have following tools installed on your system
 
-### **AboutUs**
+- MongoDB
+- Node.JS
 
-Contains the about us page implementation. The page includes a small overview of the site alongwith a brief introduction of the team of developers involved in developing the site.
+Once cloned, make sure to execute following command(s) in frontend and backend folders before running them
 
-- The page renders the developers' information from the developers.js file which contains a JSON array of all developers.
-- The array contains their *name*, *age*, *mail*, and an indicator for the group representative(s).
+```bash
+npm install
+```
+
+### *Starting Frontend*
+
+- go to frontend folder, and install the packages through `npm install`.
+- setup the environment file as `.env` and execute the following command
+
+```bash
+npm run start
+```
+
+### *Starting Backend*
+
+- go to backend folder, and install the packages through `npm install`.
+- setup the environment file as `.env` and execute the following command
+
+```bash
+nodemon index.js
+```
+
+In some case the above command mauy not run. In that case, try
+
+```bash
+npx nodemon index.js
+```
+
+Now Enjoy Running NaiveBaker on your local server!!
