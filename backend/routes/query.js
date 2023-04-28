@@ -4,23 +4,8 @@ const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Recipe = require("../models/Recipe");
 const Ingredient = require("../models/Ingredient");
-const { Query } = require("mongoose");
 
 const router = express.Router();
-
-router.get(
-    "/", 
-    async (req, res) => {
-        const data = {
-            params: req.params,
-            body: req.body,
-            query: req.query,
-            headers: req.headers,
-        };
-        return res.send({ data });
-    }
-);
-
 
 router.post(
     "/search",
@@ -67,16 +52,14 @@ router.post(
 
             if (constraints.length === 0)
                 recipes = await Recipe.find();
-            else //if (constraints.length === 1)
+            else
                 recipes = await Recipe.find(query);
-            // else
-            //     return res.status(400).json({errors: ["Cannot Send More than one query Parameter"]});
             
             return res.json({total: recipes.length, recipes: recipes});
         }
         catch(error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -102,7 +85,7 @@ router.get(
         }
         catch(error){
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
@@ -113,11 +96,11 @@ router.post(
     async (req, res) => {
         try{
             const chefs = await User.find().select("username");
-            return res.json(chefs)
+            return res.json({chefs: chefs})
         }
         catch (error){
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )
@@ -132,7 +115,7 @@ router.get(
         }
         catch(error){
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 )

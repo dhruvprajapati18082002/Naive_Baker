@@ -1,22 +1,28 @@
 import React, { useContext, useEffect } from "react";
 import RecipeItem from "./RecipeItem";
+
 import "./font.css";
 import "./fonts/GreatVibes-Regular.ttf";
 import "./fonts/AutumnFlowers-9YVZK.otf";
-// import "./fonts/SweetHipster-PzlE.tff";
 import "./fonts/WeddingdayPersonalUseRegular-1Gvo0.ttf";
 import "./fonts/AngelicaPersonalUseItalic-MVmZB.ttf";
 import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
+
 import recipeContext from "../context/recipe/recipeContext";
+import alertContext from "../context/alert/alertContext";
 
 
-const Home = (props) => {
+const Home = () => {
 
 	const { dashboardRecipes, fetchRandom } = useContext(recipeContext);
+	const { showAlert } = useContext(alertContext);
 
 	useEffect(()=>{
 		// fetchRandom(); // fetches 15 recipes by default
-		fetchRandom(10);
+		const response = fetchRandom(10);
+
+		if (response.errors !== undefined)
+			showAlert(response.errors.join("\n"), "danger");
 	}, []);
 
  	return (

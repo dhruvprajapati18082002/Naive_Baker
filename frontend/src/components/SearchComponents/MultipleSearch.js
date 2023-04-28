@@ -8,7 +8,6 @@ import RecipeItem from "../RecipeItem";
 
 export default function MultiSearch() {
     const { recipes, searchRecipe } = useContext(recipeContext);
-    const  { uploadRecipe } = useContext(recipeContext);
     const { showAlert } = useContext(alertContext);
     const navigate = useNavigate();
 
@@ -45,7 +44,11 @@ export default function MultiSearch() {
         const ingredients = cred.ingredients.split("\n").filter(ingredient => {return ingredient.length > 0})
 
         // veg_name, time_to_make, ingredients, cuisine, type
-        await searchRecipe(cred.name,cred.minutesToCook,ingredients,cred.cuisine,cred.type,cred.satisfyAll)
+        const response = await searchRecipe(cred.name,cred.minutesToCook,ingredients,cred.cuisine,cred.type,cred.satisfyAll)
+        if (response.total !== undefined)
+            showAlert(`Found ${response.total} new recipe(s)`, "info");
+        else    
+            showAlert(response.errors.join("\n"), "danger");
       };
 
     return (

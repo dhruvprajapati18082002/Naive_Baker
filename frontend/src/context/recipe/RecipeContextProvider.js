@@ -59,10 +59,13 @@ const RecipeContextProvider = (props) => {
             return error.response;
         })
       
-        if (response.status === 200)
-            setRecipes(response.data.recipes)
+        if (response.data.recipes !== undefined){
+            setRecipes(response.data.recipes);
+            return {total: response.data.total};
+        }
         else 
             setRecipes([]);
+        return response.data;
     }
 
       // fetch user recipes
@@ -90,12 +93,16 @@ const RecipeContextProvider = (props) => {
         if (count !== undefined)
             URL += `/?size=${count}`;
 
-        const response = await axios.get(URL);
+        const response = await axios.get(URL).catch(error => {return error.response});
         
-        if (response.status === 200)
+        if (response.data.recipes !== undefined){
             setDashboardRecipes(response.data.recipes);
-        else
+            return {total: response.data.total};
+        }
+        else{
             setDashboardRecipes([]);
+            return response.data;
+        }
       }
 
       // edit recipe

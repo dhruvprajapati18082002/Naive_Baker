@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
 import "./Search.css";
 import { Link } from "react-router-dom";
+import RecipeItem from "../RecipeItem";
 
 import recipeContext from "../../context/recipe/recipeContext";
-import RecipeItem from "../RecipeItem";
+import alertContext from "../../context/alert/alertContext";
 
 function Search() {
   	const [type_state, set_type_state] = useState("");
   	const [searchTerm, setSearchTerm] = useState("");
   	const [searchCategory, setSearchCategory] = useState("name");
+	const { showAlert } = useContext(alertContext);
   	const { recipes, searchRecipe } = useContext(recipeContext);
 	
 	const placeholderText = {
@@ -22,17 +24,23 @@ function Search() {
   	const handleSubmit = async (event) => {
     	event.preventDefault();
 
+		let response = null
     	// veg_name, time_to_make, ingredients, cuisine, type
 		if (searchCategory === "name") 
-			await searchRecipe(searchTerm); // rest are all undefined
+			response = await searchRecipe(searchTerm); // rest are all undefined
 		else if (searchCategory === "time")
-			await searchRecipe(undefined, searchTerm); // rest are all undefined
+			response = await searchRecipe(undefined, searchTerm); // rest are all undefined
 		else if (searchCategory === "ingredients")
-			await searchRecipe( undefined, undefined, searchTerm.split(",")); // rest are all undefined
+			response = await searchRecipe( undefined, undefined, searchTerm.split(",")); // rest are all undefined
 		else if (searchCategory === "cuisine")
-			await searchRecipe(undefined, undefined, undefined, searchTerm);
-		else if (searchCategory === "type")
-			await searchRecipe(undefined, undefined, undefined, undefined, searchTerm);
+			response = await searchRecipe(undefined, undefined, undefined, searchTerm);
+		else //if (searchCategory === "type")
+			response = await searchRecipe(undefined, undefined, undefined, undefined, searchTerm);
+
+		if (response.total !== undefined)
+            showAlert(`Found ${response.total} new recipe(s)`, "info");
+        else    
+            showAlert(response.errors.join("\n"), "danger");
   	};
 
   	const handleSearchTermChange = (event) => {
