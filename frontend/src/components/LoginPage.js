@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom'
 import SignIn from './loginComponents/Signin';
 import SignUp from './loginComponents/Signup';
 import { useNavigate } from 'react-router-dom';
+
 import alertContext from '../context/alert/alertContext';
+import spinnerContext from "../context/spinner/spinnerContext";
 
 export default function LoginPage() {
 
     const [isLogin, setIsLogin] = useState(true);
     const { showAlert } = useContext(alertContext);
+    const { setLoading } = useContext(spinnerContext);
+
     const navigate = useNavigate();
     const openLogin = () =>{
         setIsLogin(true);
@@ -18,14 +22,16 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (localStorage.getItem("token")) {
             navigate("/dashboard");
             showAlert("You are already logged-in !", "warning");
         }
+        setLoading(false);
     }, []);
 
     return (
-        <div className="container shadow-lg my-3 bg-body-tertiary rounded" style={{width: "fit-content"}}>
+        <div className="container shadow-lg my-3 bg-body-tertiary rounded" style={{minWidth: "fit-content", maxWidth: "400px"}}>
             
             {/* Tab navs start*/}
             <ul className="nav nav-tabs nav-justified mb-3" id="tabs" role="tablist">
@@ -42,7 +48,7 @@ export default function LoginPage() {
 
             {/* Tab content start*/}
             <div className="tab-content d-flex justify-content-center align-items-center" 
-                style={{height: "37rem", width: "28rem"}}>
+                style={{height: "37rem"}}>
                 <SignIn active={isLogin} linkToRegister={openRegister}/>
                 <SignUp active={!isLogin} linkToLogin={openLogin}/>
             </div>

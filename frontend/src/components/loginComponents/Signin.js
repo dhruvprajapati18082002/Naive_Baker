@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import spinnerContext from "../../context/spinner/spinnerContext";
 import alertContext from '../../context/alert/alertContext';
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
@@ -12,6 +13,7 @@ const Signin = (props) => {
 
     const [credentials, setCredentials] = useState({loginEmail: "", loginPassword: ""});
     const { showAlert } = useContext(alertContext);
+    const { setLoading } = useContext(spinnerContext);
 
     const onChangeHandler = (event) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
@@ -19,7 +21,8 @@ const Signin = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        setLoading(true);
+        
         axios.post(`${BACKEND}/api/auth/login`, {
             email: credentials.loginEmail,
             password: credentials.loginPassword
@@ -36,6 +39,7 @@ const Signin = (props) => {
         .catch(error => {
             showAlert(error.response.data.errors.join("\n"), "danger");
         });
+        setLoading(false);
     }
 
     return (

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
+import axios from "axios";
 
 import alertContext from "../context/alert/alertContext";
-import axios from "axios";
 import recipeContext from "../context/recipe/recipeContext";
-
+import spinnerContext from "../context/spinner/spinnerContext";
+ 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const CONTAINER_COLOR = "#FDFEFB";
 
@@ -18,6 +19,7 @@ const RecipePage = () => {
     const { recipeId } = useParams();
     const { showAlert } = useContext(alertContext);
     const { editRecipe, deleteRecipe } = useContext(recipeContext);
+    const { setLoading } = useContext(spinnerContext);
 
     const [ recipeDisplayed, setRecipeDisplayed ] = useState({});
     const [ isRecipeOwner, setIsRecipeOwner ] = useState(false);
@@ -33,6 +35,7 @@ const RecipePage = () => {
     };
 
     useEffect( () => {
+        setLoading(true);
         if (!localStorage.getItem("token"))
         {
             showAlert("Login First to View the Recipe", "warning");
@@ -55,6 +58,7 @@ const RecipePage = () => {
                     navigate("/");
                 })
         }
+        setLoading(false);
     }, [])
 
     const [ newRecipe, setNewRecipe ] = useState({})

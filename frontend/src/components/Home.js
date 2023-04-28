@@ -10,19 +10,23 @@ import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 
 import recipeContext from "../context/recipe/recipeContext";
 import alertContext from "../context/alert/alertContext";
+import spinnerContext from "../context/spinner/spinnerContext";
 
 
 const Home = () => {
 
-	const { dashboardRecipes, fetchRandom } = useContext(recipeContext);
 	const { showAlert } = useContext(alertContext);
+	const { setLoading } = useContext(spinnerContext);
+	const { dashboardRecipes, fetchRandom } = useContext(recipeContext);
 
 	useEffect(()=>{
+		setLoading(true);
 		// fetchRandom(); // fetches 15 recipes by default
 		const response = fetchRandom(10);
 
 		if (response.errors !== undefined)
 			showAlert(response.errors.join("\n"), "danger");
+		setLoading(false);
 	}, []);
 
  	return (

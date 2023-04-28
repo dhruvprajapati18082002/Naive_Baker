@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import alertContext  from "../../context/alert/alertContext";
+import spinnerContext from "../../context/spinner/spinnerContext";
 import userContext from '../../context/user/userContext';
 
 const ResetPass = () => {
@@ -9,14 +10,17 @@ const ResetPass = () => {
     const navigate = useNavigate();
     const { showAlert } = useContext(alertContext);
     const { changePassword } = useContext(userContext);
+    const { setLoading } = useContext(spinnerContext);
     const [cred, setCred] = useState({currentPassword: "", newPassword: "", confirmNewPassword: ""});
 
     useEffect(() => {
+        setLoading(true);
         if (! localStorage.getItem('token'))
         {
             navigate("/login");
             showAlert("Please Login First or try Forgot Password!", "warning");
         }
+        setLoading(false);
     }, []);
 
     const onChangeHandler = async (event) => {
@@ -25,7 +29,7 @@ const ResetPass = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
         if (cred.newPassword !== cred.confirmNewPassword)
             showAlert("Passwords don't match","danger");
         else{
@@ -38,6 +42,7 @@ const ResetPass = () => {
                 showAlert(response.errors.join("\n"), "danger");
             }
         }
+        setLoading(false);
     }
 
   return (

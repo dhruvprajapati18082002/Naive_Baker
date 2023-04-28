@@ -8,21 +8,25 @@ import UserRecipes from "./dashboardComponents/UserRecipes";
 
 import userContext from "../context/user/userContext";
 import alertContext from "../context/alert/alertContext";
+import spinnerContext from "../context/spinner/spinnerContext";
 
 const Profile = () => {
-  const navigate = useNavigate();
+  	const navigate = useNavigate();
 
-  const { getProfile } = useContext(userContext);
-  const { showAlert } = useContext(alertContext);
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-      showAlert("please login first", "warning");
-    } else {
-      getProfile();
-    }
-  }, []);
+  	const { getProfile } = useContext(userContext);
+  	const { showAlert } = useContext(alertContext);
+	const { setLoading } = useContext(spinnerContext);
+  
+  	useEffect(() => {
+		setLoading(true);
+    	if (!localStorage.getItem("token")) {
+      		navigate("/login");
+      		showAlert("please login first", "warning");
+	    } else {
+      		getProfile();
+    	}
+		setLoading(false);
+  	}, []);
 
   return (
     <div style={{ backgroundColor: "#8fc4b7" }}>

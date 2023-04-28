@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import alertContext from '../../context/alert/alertContext';
+import spinnerContext from "../../context/spinner/spinnerContext";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
@@ -11,6 +12,7 @@ const SignUp = (props) => {
     let navigate = useNavigate();
     const [credentials, setCredentials] = useState({name: "", username: "", email: "", password: "", confirmPassword: ""});
     const { showAlert } = useContext(alertContext);
+    const { setLoading } = useContext(spinnerContext);
 
     const onChangeHandler = (event) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
@@ -18,7 +20,7 @@ const SignUp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+        setLoading(true);
         if (credentials.password !== credentials.confirmPassword)
         {
             showAlert("Password and Confirm Password Must Match", "warning");
@@ -43,6 +45,7 @@ const SignUp = (props) => {
         .catch(error => {
             showAlert(error.response.data.errors.join("\n"), "danger");
         });
+        setLoading(false);
     }
 
     return (

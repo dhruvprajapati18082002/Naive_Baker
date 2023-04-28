@@ -3,28 +3,33 @@ import { useNavigate } from "react-router-dom";
 
 import alertContext from "../../context/alert/alertContext";
 import userContext from "../../context/user/userContext";
+import spinnerContext from "../../context/spinner/spinnerContext";
 
 const forgotpass = () => {
 
     const navigate = useNavigate();
     const { showAlert } = useContext(alertContext);
     const { getOTP, verifyOTP } = useContext(userContext);
+    const { setLoading } = useContext(spinnerContext);
 
     useEffect(() => {
+        setLoading(true);
         if (localStorage.getItem('token')){
             showAlert("You are already Logged-in! Try Reset Password Instead !", "warning");
             navigate("/resetpass");
         }
+        setLoading(false);
     },[])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         
+        setLoading(true);
         const otp = document.getElementById('otp').value;
         const password = document.getElementById("password").value;
 
         const response = await verifyOTP(otp, password);
-
+        setLoading(false);
         if (response.message !== undefined){
             showAlert(response.message, "success");
             navigate("/login");
@@ -35,8 +40,10 @@ const forgotpass = () => {
 
     const getOTPHandler = async (event) => {
         event.preventDefault();
+        setLoading(true);
         const response = await getOTP(document.getElementById("email").value);
 
+        setLoading(false);
         if (response.message !== undefined)
             showAlert(response.message, "success");
         else
@@ -59,8 +66,8 @@ const forgotpass = () => {
 
                                 <form className="px-md-2" onSubmit={getOTPHandler}>
                                     {/* this is for email input */}
-                                    <div className="input-group my-4">
-                                        <label className="input-group-text" htmlFor="email">
+                                    <div className="form-control my-4">
+                                        <label className="from-control-text" htmlFor="email">
                                             Registered Email*
                                         </label>
                                         <input type="email" className="form-control" id="email" placeholder="enter your email..." required />
@@ -74,16 +81,16 @@ const forgotpass = () => {
 
                                 <form className="px-md-2" onSubmit={handleSubmit}>
                                     {/* Enter OTP */}
-                                    <div className="input-group my-4">
-                                        <label className="input-group-text" htmlFor="otp">
+                                    <div className="form-control my-4">
+                                        <label className="form-control-text" htmlFor="otp">
                                             OTP*
                                         </label>
                                         <input type="number" className="form-control" id="otp" placeholder="enter OTP..." required />
                                     </div>
 
                                     {/* Enter new Password */}
-                                    <div className="input-group my-4">
-                                        <label className="input-group-text" htmlFor="password">
+                                    <div className="form-control my-4">
+                                        <label className="form-control-text" htmlFor="password">
                                             New Password*
                                         </label>
                                         <input type="password" className="form-control" id="password" placeholder="enter new password..." required />

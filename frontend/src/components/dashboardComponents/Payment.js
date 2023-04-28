@@ -1,12 +1,11 @@
 import React from 'react'
-// import "./Payment.css";
 
 const Payment = () => {
     return (
         <section className="h-100 h-custom" style={{ backgroundColor: '#8fc4b7' }}>
             <div className="container py-5 h-100 ">
             <center>
-                <div className="card px-4 py-1 container shadow-lg p-3 mb-5 bg-body-tertiary rounded" style={{ height: "30rem", width: "50%"}}>
+                <div className="card px-4 py-1 container shadow-lg p-3 mb-5 bg-body-tertiary rounded" style={{maxWidth: "600px"}}>
                     <center><p className="h2 py-3">Payment Details</p></center>
                     <center>
                     <p className="text mb-1">(Only at 100/- monthly)</p>

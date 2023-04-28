@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import AboutUs from "./components/AboutUs";
@@ -15,13 +15,19 @@ import ForgotPass from "./components/loginComponents/ForgotPass";
 import ResetPass from "./components/loginComponents/ResetPass";
 import Payment from "./components/dashboardComponents/Payment";
 import MultiSearch from "./components/SearchComponents/MultipleSearch";
+import Spinner from "./components/Spinner";
+
+import spinnerContext from "./context/spinner/spinnerContext";
 
 export default function App() {
+
+    const { loading } = useState(spinnerContext);
 
     return (
         <Router className="App">
             <Navbar />
             <Alert />
+            {loading && <Spinner />}
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about-us" element={<AboutUs />} />

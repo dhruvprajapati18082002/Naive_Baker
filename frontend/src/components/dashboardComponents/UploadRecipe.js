@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+
 import recipeContext from '../../context/recipe/recipeContext';
 import alertContext from "../../context/alert/alertContext";
-import { useNavigate } from "react-router-dom";
-// import './boxstyle.css'
+import spinnerContext from "../../context/spinner/spinnerContext";
 
 export default function UploadRecipe() {
 
     const  { uploadRecipe } = useContext(recipeContext);
     const { showAlert } = useContext(alertContext);
+    const { setLoading } = useContext(spinnerContext);
+
     const navigate = useNavigate();
 
     const [cred, setCred] = useState({
@@ -26,15 +29,18 @@ export default function UploadRecipe() {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (!localStorage.getItem("token")){
             showAlert("Please Login First !", "warning");
             navigate("/login");
         }
+        setLoading(false);
     }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        setLoading(true);
         const ingredients = cred.ingredients.split("\n");
         const steps = cred.steps.split("\n");
         const time =cred.minutesToCook;
@@ -42,7 +48,8 @@ export default function UploadRecipe() {
             showAlert("Please enter valid value of time");
         }
         const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.image_url, ingredients, steps);
-        
+        setLoading(false);
+
         if (res._id !== undefined){
             showAlert("Recipe Succesfully Added", "success")
             navigate(`/recipe/${res._id}`);

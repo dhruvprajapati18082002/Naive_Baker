@@ -1,12 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import RecipeItem from "../RecipeItem";
+
+import spinnerContext from "../../context/spinner/spinnerContext";
 import recipeContext from '../../context/recipe/recipeContext';
 
 const UserRecipes = () => {
   	const { userRecipes, fetchUserRecipes } = useContext(recipeContext);
+	const { setLoading } = useContext(spinnerContext);
 
 	useEffect(()=>{
+		setLoading(true);
 		fetchUserRecipes();
+		setLoading(false);
 	},[]);
 
   	return (

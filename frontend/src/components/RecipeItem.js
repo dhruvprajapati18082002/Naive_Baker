@@ -7,7 +7,7 @@ export default function RecipeItem(props) {
         // <div className="container mx-auto mt-4" style={{maxWidth:"fit-content"}}>
 
                 <div className="card my-3 mx-3 shadow-lg" style={{width: "16rem" ,backgroundColor:"#FDFEFB"}}>
-                    <img src={props.image} className="card-img-top" alt="..." style={{height:"13rem"}}/>
+                    <img src={props.image} className="card-img-top" alt="..." style={{height:"10rem"}}/>
                     <div className="card-body">
                         <h5 className="text-center card-title">{props.title}</h5>
                         <hr />

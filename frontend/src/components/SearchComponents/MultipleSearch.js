@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+
 import recipeContext from '../../context/recipe/recipeContext';
 import alertContext from "../../context/alert/alertContext";
+import spinnerContext from '../../context/spinner/spinnerContext';
 
-import { useNavigate } from "react-router-dom";
-// import './boxstyle.css'
 import RecipeItem from "../RecipeItem";
 
 export default function MultiSearch() {
     const { recipes, searchRecipe } = useContext(recipeContext);
     const { showAlert } = useContext(alertContext);
+    const { setLoading } = useContext(spinnerContext);
     const navigate = useNavigate();
 
     const [cred, setCred] = useState({
@@ -32,19 +34,24 @@ export default function MultiSearch() {
     }
 
     useEffect(() => {
+        setLoading(true);
         if (!localStorage.getItem("token")){
             showAlert("Please Login First !", "warning");
             navigate("/login");
         }
+        setLoading(false);
     }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+        setLoading(true);
+
         const ingredients = cred.ingredients.split("\n").filter(ingredient => {return ingredient.length > 0})
 
         // veg_name, time_to_make, ingredients, cuisine, type
         const response = await searchRecipe(cred.name,cred.minutesToCook,ingredients,cred.cuisine,cred.type,cred.satisfyAll)
+        setLoading(false);
+        
         if (response.total !== undefined)
             showAlert(`Found ${response.total} new recipe(s)`, "info");
         else    
@@ -109,7 +116,7 @@ export default function MultiSearch() {
                                         <option value="">Type to search...veg/non-veg/vegan</option>
                                         <option value="Veg">Veg</option>
                                         <option value="Non-Veg">Non-Veg</option>
-                                        <option value="Vegn">Vegan</option>
+                                        <option value="Vegan">Vegan</option>
                                     </select>
                             </div>
 
