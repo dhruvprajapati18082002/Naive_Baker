@@ -33,15 +33,15 @@ const SignUp = (props) => {
             hasPremium: false
         })
         .then(response => {
-            if (response.status === 201){
+            if (response.data.authToken !== undefined){
                 localStorage.setItem('token', response.data.authToken);
                 navigate('/');
             }
             else
-                showAlert(response.data, "warning");
+                showAlert(response.data.errors.join("\n"), "warning");
         })
         .catch(error => {
-            showAlert(error.message, "danger");
+            showAlert(error.response.data.errors.join("\n"), "danger");
         });
     }
 

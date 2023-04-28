@@ -25,22 +25,22 @@ const forgotpass = () => {
 
         const response = await verifyOTP(otp, password);
 
-        if (response.msg !== undefined){
-            showAlert(response.msg, "success");
+        if (response.message !== undefined){
+            showAlert(response.message, "success");
             navigate("/login");
         }
         else
-            showAlert(JSON.stringify(response), "danger");
+            showAlert(response.errors.join("\n"), "danger");
     }
 
     const getOTPHandler = async (event) => {
         event.preventDefault();
         const response = await getOTP(document.getElementById("email").value);
 
-        if (response.msg !== undefined)
-            showAlert(response.msg, "success");
+        if (response.message !== undefined)
+            showAlert(response.message, "success");
         else
-            showAlert(JSON.stringify(response.data), "danger");
+            showAlert(response.errors.join("\n"), "danger");
     }
 
     return (

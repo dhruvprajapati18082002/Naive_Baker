@@ -10,14 +10,16 @@ const UserContextProvider = (props) => {
     // fetch logged in user's profile
     const getProfile = async () => {
 
-        const res = await axios.get(
+        const response = await axios.get(
             `${BACKEND}/api/auth/getProfile`, {
                 headers: {
                     "auth-token": localStorage.getItem("token"),
                 },
+            }).catch(error => {
+                return error.response;
             });
-        const json = res.data;
-        setUser(json);
+        if (response.data.user !== undefined)
+            setUser(response.data.user)
     };
 
     const changePassword = async (oldPassword, newPassword) => {
@@ -34,7 +36,7 @@ const UserContextProvider = (props) => {
         ).catch(error=> {
             return error.response;
         })
-        return response;
+        return response.data;
     }
 
     const getOTP = async (email) => {
@@ -53,12 +55,10 @@ const UserContextProvider = (props) => {
             `${BACKEND}/api/auth/resetpassword?token=${otp}`, {
                 password: password
             }
-        ).then(res => {
-            return res.data;
-        }).catch(error => {
+        ).catch(error => {
             return error.response;
         })
-        return response;
+        return response.data;
     }
 
     return (

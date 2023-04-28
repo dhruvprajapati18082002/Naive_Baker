@@ -57,6 +57,7 @@ describe("POST /api/auth/createuser", () => {
             .send(user);
 
         expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
     });
 
     it("should fail due to invalid user-details format", async () => {
@@ -73,6 +74,7 @@ describe("POST /api/auth/createuser", () => {
             .send(user);
 
         expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
     });
 
     it("should fail due to missing user-details", async () => {
@@ -83,6 +85,7 @@ describe("POST /api/auth/createuser", () => {
             .send(user);
 
         expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
     });
 });
 
@@ -129,15 +132,15 @@ describe("GET /api/auth/getprofile", () => {
             .set({ "auth-token": AUTH_TOKEN });
 
         expect(response.status).toBe(200);
-        expect(response.body.email).toBe(EMAIL);
+        expect(response.body.user.email).toBe(EMAIL);
     });
     it("should return error due to invalid data in auth-token", async () => {
         const response = await supertest(app)
             .get("/api/auth/getprofile")
             .set({ "auth-token": INVALID_DATA_TOKEN });
 
-        expect(response.status).toBe(400);
-        expect(response.body.email).toBe(undefined);
+        expect(response.status).toBe(401);
+        expect(response.body.user).toBe(undefined);
     });
     it("should return error due to invalid auth-token", async () => {
         const response = await supertest(app)
@@ -145,11 +148,11 @@ describe("GET /api/auth/getprofile", () => {
             .set({ "auth-token": INVALID_TOKEN });
 
         expect(response.status).toBe(401);
-        expect(response.body.email).toBe(undefined);
+        expect(response.body.user).toBe(undefined);
     });
 });
 
-// END-POINT 7: TEST-CASES
+// END-POINT 7: TEST-CASES 11-14
 describe("DELETE /api/auth/delete", () => {
     it("should delete a user from auth-token", async () => {
         const response = await supertest(app)
@@ -163,6 +166,7 @@ describe("DELETE /api/auth/delete", () => {
         const response = await supertest(app).delete("/api/auth/delete");
 
         expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
     });
 
     it("should return error due to invalid user-id inside auth-token", async () => {
@@ -171,6 +175,7 @@ describe("DELETE /api/auth/delete", () => {
             .set({ "auth-token": INVALID_DATA_TOKEN });
 
         expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
     });
 
     it("should return error due to invalid auth-token", async () => {
@@ -179,5 +184,6 @@ describe("DELETE /api/auth/delete", () => {
             .set({ "auth-token": INVALID_TOKEN });
 
         expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
     });
 });

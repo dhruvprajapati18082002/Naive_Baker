@@ -31,24 +31,12 @@ router.post(
         try {
             // Check whether the user with this email exists already
             let user = await User.findOne({ email: req.body.email });
-            if (user) {
-                return res
-                    .status(400)
-                    .json({
-                        errors: ["Sorry a user with this email already exists"],
-                    });
-            }
+            if (user)
+                return res.status(400).json({ errors: ["Sorry a user with this email already exists"] });
 
             user = await User.findOne({ username: req.body.username });
-            if (user) {
-                return res
-                    .status(400)
-                    .json({
-                        errors: [
-                            "Sorry a user with this username already exists",
-                        ],
-                    });
-            }
+            if (user)
+                return res.status(400).json({errors: ["Sorry a user with this username already exists"]});
 
             const salt = await bcrypt.genSalt(10);
             const securePassword = await bcrypt.hash(req.body.password, salt);
@@ -61,18 +49,16 @@ router.post(
                 email: req.body.email,
                 hasPremium: false,
             });
-            const data = {
-                user: {
-                    id: user.id,
-                },
-            };
+            const data = { user: {id: user.id } };
+
             const authToken = jwt.sign(data, JWT_SECRET);
 
             // status code 201 indicates successfull creation of a resource
             return res.status(201).json({ authToken: authToken });
+            
         } catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -94,9 +80,7 @@ router.post(
         try {
             let user = await User.findOne({ email });
             if (!user)
-                return res
-                    .status(400)
-                    .json({ errors: ["Please provide valid credentials."] });
+                return res.status(400).json({ errors: ["Please provide valid credentials."] });
 
             // compare the password from URL with the user's password hash fetched from the database
             const passwordCompare = await bcrypt.compare(
@@ -104,9 +88,7 @@ router.post(
                 user.password
             );
             if (!passwordCompare)
-                return res
-                    .status(400)
-                    .json({ errors: ["Please provide valid credentials."] });
+                return res.status(400).json({ errors: ["Please provide valid credentials."] });
 
             const data = {
                 user: {
@@ -117,7 +99,7 @@ router.post(
             return res.json({ authToken: authToken });
         } catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -131,14 +113,14 @@ router.get(
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
 
-        if (user) return res.send(user);
+        if (user)
+            return res.json({user: user});
         else
-            return res
-                .status(400)
-                .send({ errors: ["Auth-Token Contains Non-existent User"] });
+            return res.status(401).json({errors: ["Invalid authentication credentials given."]})
+
     } catch (error) {
         console.log(error.message);
-        return res.status(500).send("Internal Server Error!");
+        return res.status(500).json({errors: ["Internal Server Error!"]});
     }
 });
 
@@ -150,10 +132,14 @@ router.post(
         const user = await User.findOne({
             username: req.params.username,
         }).select("name username email recipesOwned");
-        return res.send(user);
+
+        if (!user)
+            return res.status(400).json({ errors: ["Please provide valid credentials."] });
+
+        return res.json({user: user});
     } catch (error) {
         console.log(error.message);
-        return res.status(500).send("Internal Server Error!");
+        return res.status(500).json({errors: ["Internal Server Error!"]});
     }
 });
 
@@ -163,24 +149,27 @@ router.put(
     fetchuser,
     async (req, res) => {
         try {
-            const { name, email } = req.body;
+            const { name, username, email } = req.body;
 
             const newUser = {};
             if (name) newUser.name = name;
+            if (username) newUser.username = username;
             if (email) newUser.email = email;
 
             let user = User.findById(req.user.id);
-            if (!user) return res.status(401).send("Operation Not Allowed");
+            
+            if (!user)
+                return res.status(401).json({errors: ["Invalid authentication credentials given."]})
 
             user = await User.findByIdAndUpdate(
                 req.user.id,
                 { $set: newUser },
                 { new: true }
             );
-            return res.json(user);
+            return res.json({user: user});
         } catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -199,26 +188,25 @@ router.put(
 
             let user = await User.findById(req.user.id);
             if (!user)
-                return res.status(401).send("Operation Not Allowed");
+                return res.status(401).json({errors: ["Invalid authentication credentials given."]})
             
             const { oldPassword, newPassword } = req.body;
 
             const newUser = {};
-            console.log(req.body);
 
             const passwordCompare = await bcrypt.compare(oldPassword, user.password);
             if (! passwordCompare)
-                return res.status(401).send("Invalid Password");
+                return res.status(400).json({errors: ["Password Invalid."]})
 
             newUser.password = await bcrypt.hash( newPassword, await bcrypt.genSalt(10));
 
             user = await User.findByIdAndUpdate(req.user.id, { $set: newUser }, { new: true } ).select("-password");
 
-            return res.json(user);
+            return res.json({user: user});
 
         } catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
@@ -234,13 +222,7 @@ router.delete(
             const data = await User.findByIdAndDelete(userId);
 
             if (!data)
-                return res
-                    .status(401)
-                    .send({
-                        errors: [
-                            "Unauthorized - invalid authentication credentials given.",
-                        ],
-                    });
+                return res.status(401).json({errors: ["Invalid authentication credentials given."]})
 
             // deleting all the recipes owned by that user
             data.recipesOwned.forEach(async (recipeId) => {
@@ -250,11 +232,12 @@ router.delete(
             return res.sendStatus(204);
         } catch (error) {
             console.log(error.message);
-            return res.status(500).send("Internal Server Error!");
+            return res.status(500).json({errors: ["Internal Server Error!"]});
         }
     }
 );
 
+// END-POINT 8: POST FORGOT-PASSWORD END-POINT: POST /api/auth/forgotpassword. LOGIN NOT NEEDED
 router.post(
     "/forgotPassword",
     body("email", "Valid Email Required").isEmail(),
@@ -277,12 +260,13 @@ router.post(
                     { $set: { token: randstring } }
                     );
                     const result = sendOTP(email, randstring);
+
                     if (result)
-                        return res.status(200).json({ msg: "Please Check inbox of your mail" });
+                        return res.status(200).json({ message: "Please Check Your Inbox" });
                     else
                         return res.status(500).json({errors: ["Sorry! Mail Not Sent!"]})
             } else {
-                return res.status(400).json({errors: ["This Email doesn't exist"]});
+                return res.status(400).json({errors: ["Email not Registered !"]});
             }
         } catch (error) {
             console.log(error.message);
@@ -291,6 +275,7 @@ router.post(
     }
 );
 
+// END-POINT 9: POST RESET-PASSWORD END-POINT: POST /api/auth/resetpassword. LOGIN NOT NEEDED
 router.post(
     "/resetPassword", 
     body("password", "Password too Short!!").isLength({ min: 5 }),
@@ -308,9 +293,9 @@ router.post(
                 { $set: { password: hashedPassword, token: "" } },
                 { new: true }
             );
-            return res.json({ msg: "Password Changed Successfully" });
+            return res.json({ message: "Password Changed Successfully !" });
         } else {
-            return res.status(400).json({ errors: ["The  link has expired"] });
+            return res.status(400).json({ errors: ["Invalid Token Given! Generate New Token."] });
         }
     } catch (error) {
         console.log(error.message);

@@ -30,12 +30,12 @@ const ResetPass = () => {
             showAlert("Passwords don't match","danger");
         else{
             const response = await changePassword(cred.currentPassword, cred.newPassword);
-            if (response.status === 200){
-                showAlert("Password Successfully Changed", "success");
+            if (response.user !== undefined){
+                showAlert("Password Changed successfully", "success");
                 navigate("/dashboard");
             }
             else{
-                showAlert(JSON.stringify(response.data), "danger");git
+                showAlert(response.errors.join("\n"), "danger");
             }
         }
     }

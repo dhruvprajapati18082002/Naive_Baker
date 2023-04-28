@@ -19,23 +19,22 @@ const Signin = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(BACKEND)
-        console.log(`${BACKEND}/api/auth/login`)
+
         axios.post(`${BACKEND}/api/auth/login`, {
             email: credentials.loginEmail,
             password: credentials.loginPassword
         })
         .then(response => {
-            if (response.status === 200){
+            if (response.data.authToken){
                 localStorage.setItem('token', response.data.authToken);
                 showAlert("Logged-in successfully", "success");
                 navigate('/');
             }
             else
-                showAlert(response.data, "warning");
+                showAlert(response.data.errors.join("\n"), "danger");
         })
         .catch(error => {
-            showAlert(error.message, "danger");
+            showAlert(error.response.data.errors.join("\n"), "danger");
         });
     }
 
