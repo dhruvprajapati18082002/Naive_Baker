@@ -22,7 +22,7 @@ beforeAll(async () => {
             email: EMAIL,
             password: PASSWORD,
         });
-    
+        
         AUTH_TOKEN = await token.body.authToken;
     }
     else{
@@ -48,6 +48,44 @@ afterAll(async () => {
 
 // END-POINT 1: TEST CASES 1-4
 describe("POST /api/recipe/addrecipe", () => {
+    it("should add the recipe to the database", async () => {
+        const response = await supertest(app)
+            .post("/api/recipe/addrecipe")
+            .send({
+                name: "boiled water",
+                description: "hot water used for various purposes",
+                steps: ["heat water on gas"],
+                ingredients: ["water"],
+                minutesToCook: 45,
+                cuisine: "Italian",
+                type: "veg"
+            })
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        expect(response.statusCode).toBe(201);
+    });
+    it("should add the recipe to the database", async () => {
+        const response = await supertest(app)
+            .post("/api/recipe/addrecipe")
+            .send({
+                name: "boiled water",
+                description: "hot water used for various purposes",
+                steps: ["heat water on gas"],
+                ingredients: ["water"],
+                minutesToCook: 45,
+                cuisine: "Italian",
+                type: "veg"
+            })
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        expect(response.statusCode).toBe(201);
+    });
     it("should add the recipe to the database", async () => {
         const response = await supertest(app)
             .post("/api/recipe/addrecipe")
@@ -199,4 +237,49 @@ describe("GET /api/recipe/fetchrecipe/:recipeId", () => {
 
         expect(response.statusCode).toBe(400);
     });
+});
+
+// END POINT-6 TEST CASE 9-10
+describe("GET /api/recipe/deleterecipe/:recipeId", () => {
+    it("should get delete a single recipe based on the ID", async () => {
+        // get all recipes, take the first recipe's ID and then use it to fetch all other recipes
+        let response = await supertest(app)
+            .get("/api/recipe/fetchuserrecipe")
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        const recipeId = response.body.recipes[0]._id;
+
+        response = await supertest(app)
+            .delete(`/api/recipe/deleterecipe/${recipeId}`)
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.recipes).toBeDefined();
+    });
+    it("should not delete a single recipe based on the ID", async () => {
+        // get all recipes, take the first recipe's ID and then use it to fetch all other recipes
+        let response = await supertest(app)
+            .get("/api/recipe/fetchuserrecipe")
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN,
+            });
+
+        const recipeId = response.body.recipes[0]._id;
+
+        response = await supertest(app)
+            .delete(`/api/recipe/deleterecipe/${recipeId}`)
+            .set({
+                "Content-Type": "application/json",
+                "auth-token": AUTH_TOKEN+'123',
+            });
+
+        expect(response.statusCode).toBe(401);
+    });    
 });

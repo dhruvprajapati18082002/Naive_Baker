@@ -181,7 +181,7 @@ router.delete(
             
             await User.findByIdAndUpdate(user.id, {$set: newUser}, {$new: true});
 
-            res.json({ msg: "Recipe has been deleted", recipe: recipe });
+            res.json({ msg: "Recipe has been deleted", recipes: recipe });
         } catch (error) {
             console.log(error.message);
             res.status(500).send("Internal Server Error");
