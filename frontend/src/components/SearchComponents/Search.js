@@ -102,21 +102,20 @@ function Search() {
         		</div>
         		
 				<div className="body_search">
-          			<div className="box_s">
-            			<form name="search">
-              				<input
-                				type="text"
-                				className="input"
-                				name="txt"
-                				value={searchTerm}
-                				onChange={handleSearchTermChange}
-								placeholder={placeholderText[searchCategory]}
-              				/>
-              				<button type="submit" onClick={handleSubmit} id="submitButton">
-                				Search
-							</button>
-            			</form>
-          			</div>
+					<form className="d-flex justify-content-center align-items-center flex-wrap" name="search">
+						<input
+							type="text"
+							className="input"
+							name="txt"
+							value={searchTerm}
+							onChange={handleSearchTermChange}
+							placeholder={placeholderText[searchCategory]}
+							minLength={3} maxLength={200}
+						/>
+						<button type="submit" onClick={handleSubmit} id="submitButton">
+							Search
+						</button>
+					</form>
         		</div>
         		
 				<div className="searchCat">

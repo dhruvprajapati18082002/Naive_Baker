@@ -106,7 +106,7 @@ const RecipeContextProvider = (props) => {
       }
 
       // edit recipe
-      const editRecipe = async (id, name, description, minutesToCook, ingredients, steps, image_url) => {
+      const editRecipe = async (id, name, description, minutesToCook, ingredients, steps, image_url, cuisine, type) => {
             const response = await axios.put(
                 `${BACKEND}/api/recipe/updaterecipe/${id}`, {
                     name: name, 
@@ -114,7 +114,9 @@ const RecipeContextProvider = (props) => {
                     minutesToCook: minutesToCook,
                     ingredients: ingredients,
                     steps: steps,
-                    image_url: image_url
+                    image_url: image_url,
+                    cuisine: cuisine,
+                    type: type,
                 },{
                     headers: {
                         "auth-token": localStorage.getItem('token')

@@ -11,7 +11,7 @@ export default function Footer() {
                     <div className="col-6">
                         <h6>ABOUT</h6>                    
                         <p className="text-justify text-secondary">
-                            <b>NAIVE BAKER</b> is an platorm to make cooking easy and joyful. This attracts the newbies to the webiste and experience cooking. 
+                            <b>NAIVE BAKER</b> is a platform to make cooking easy and joyful. This attracts the newbies to the webiste and experience cooking. 
                             The platform provides various filters to list our recipes based on the user demand. The platfrom is a free to use platform. 
                             We are proud to announce that we are planning to extend this services on mobile apps.
                         </p>

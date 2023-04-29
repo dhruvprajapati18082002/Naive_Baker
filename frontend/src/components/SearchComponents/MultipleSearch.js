@@ -130,6 +130,8 @@ export default function MultiSearch() {
                                     value={cred.minutesToCook}
                                     onChange={onChangeHandler} 
                                     placeholder="in minutes.."
+                                    min="1"
+                                    max="240"
                                     />
                                     <label className='input-group-text'>Minutes</label>
                                 </div>
@@ -144,6 +146,8 @@ export default function MultiSearch() {
                                     onChange={onChangeHandler} 
                                     rows="3" 
                                     placeholder='begin new ingredient from new line...'
+                                    minLength={3}
+                                    maxLength={200}
                                  />
                             </div>
 

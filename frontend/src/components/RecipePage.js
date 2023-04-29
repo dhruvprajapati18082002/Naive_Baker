@@ -72,7 +72,7 @@ const RecipePage = () => {
         const newIngredients = newRecipe.editIngred.split("\n").filter(element => { return element.length > 0 });
         const newSteps = newRecipe.editSteps.split("\n").filter(element => { return element.length > 0 });
 
-        const data = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl);
+        const data = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl, newRecipe.editCuisine, newRecipe.editType);
 
         if (data.recipes !== undefined){
             showAlert("Updated Successfully", "success");
@@ -95,7 +95,9 @@ const RecipePage = () => {
             editMinutesToCook: recipeDisplayed.minutesToCook,
             editIngred: recipeDisplayed.ingredients.join("\n"),
             editSteps: recipeDisplayed.steps.join("\n"),
-            editImageUrl: recipeDisplayed.image_url
+            editImageUrl: recipeDisplayed.image_url,
+            editCuisine: recipeDisplayed.cuisine,
+            editType: recipeDisplayed.type
         });
     }
 
@@ -147,7 +149,8 @@ const RecipePage = () => {
                                         value={newRecipe.editName} 
                                         id="editName"
                                         onChange={onChangeHandler} 
-                                        minLength={5} required 
+                                        minLength={5} required
+                                        maxLength={100}
                                     />
                                 </div>
                                 <div className="input-group mb-3">
@@ -160,8 +163,40 @@ const RecipePage = () => {
                                         value={newRecipe.editDescr}
                                         id="editDescr"
                                         onChange={onChangeHandler}
-                                        minLength={10} maxLength={150} required
+                                        minLength={10} maxLength={250} required
                                     />
+                                </div>
+                                <div className="input-group mb-4">
+                                    <label htmlFor="editCuisine" className="input-group-text">Cuisine</label>
+                                    <select className="form-select" 
+                                    id="editCuisine" 
+                                    placeholder="Type to search..."
+                                    value={newRecipe.editCuisine}
+                                    onChange={onChangeHandler}
+                                    required
+                                    >
+                                        <option value="Indian">Indian</option>
+                                        <option value="French">French</option>
+                                        <option value="Italian">Italian</option>
+                                        <option value="Mexican">Mexican</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="Mediterranean">Mediterranean</option>
+                                        <option value="Russian">Russian</option>
+                                    </select>
+                                </div>
+                                <div className="input-group mb-4">
+                                    <label htmlFor="editType" className="input-group-text">Type</label>
+                                    <select className="form-select"
+                                    id="editType"
+                                    value={newRecipe.editType}
+                                    onChange={onChangeHandler} 
+                                    placeholder="Type to search...veg/non-veg/vegan"
+                                    required
+                                    >
+                                        <option value="Veg">Veg</option>
+                                        <option value="Non-Veg">Non-Veg</option>
+                                        <option value="Vegan">Vegan</option>
+                                    </select>
                                 </div>
                                 <div className="input-group mb-3">
                                     <label htmlFor="editMinutesToCook" className="input-group-text" >
@@ -175,6 +210,7 @@ const RecipePage = () => {
                                         onChange={onChangeHandler}
                                         required
                                         min="1"
+                                        max="240"
                                     />
                                     <label htmlFor="editMinutesToCook" className="input-group-text" >Minutes</label>
                                 </div>
@@ -188,7 +224,8 @@ const RecipePage = () => {
                                         value={newRecipe.editIngred}
                                         id="editIngred"
                                         onChange={onChangeHandler}
-                                        row={5} required
+                                        row="5" required
+                                        minLength={10} maxLength={200}
                                     />
                                 </div>
                                 <div className="input-group mb-3">
@@ -202,6 +239,7 @@ const RecipePage = () => {
                                         id="editSteps"
                                         onChange={onChangeHandler}
                                         row={5} required
+                                        minLength={10} maxLength={500}
                                     />
                                 </div>
                                 <div className="input-group mb-3">
@@ -242,8 +280,8 @@ const RecipePage = () => {
             {/* Modal to Display Edit Recipe Pop-up Ends Here */}
 
             {/* Recipe Page Begins Here */}
-            <div className="container">
-                <div className="d-flex justify-content-center align-items-center">
+            <div >
+                <div className="d-flex justify-content-center align-items-center mx-5">
                     <p className="h1 text-center mx-2 my-4"
                         style={{ fontSize: 50, color:"#083221", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}
                     >
@@ -252,17 +290,18 @@ const RecipePage = () => {
                     { isRecipeOwner && <i className="bi bi-pen-fill mx-2" style={{opacity:0.7, cursor: "pointer"}} onClick={() => {updateRecipe()}}/> }
                     { isRecipeOwner && <i className="bi bi-trash3-fill" style={{opacity:0.7, cursor: "pointer"}} onClick={() => {handleDelete()}} /> }
                 </div>
-                <div className="d-flex">
-                    <div className="container my-5 align-items-center justify-content-center" style={{width: "fit-content"}}>
+                <div className="d-flex flex-wrap">
+                    {/* Image and CookingTime/ChefName/CuisineType cards */}
+                    <div className="container my-5 align-items-center justify-content-center" style={{width: "inherit"}}>
                         <img
                             src={recipeDisplayed.image_url}
                             // src="https://cookingwithbry.com/wp-content/uploads/Paneer-Tikka-Masala-Recipe-1-735x735.jpg?_t=1678593746"
-                            className="card-img-top rounded"
+                            className="card-img-top rounded img-fluid"
                             alt="..."
-                            style={{ width: "30rem", height: "20rem" }}
+                            style={{ width: "inherit", maxHeight: "20rem" }}
                         />
                         {/* blocks to display time to cook, cuisine and average ratings */}
-                        <div className="d-flex justify-content-around my-1" style={{width: "30rem"}}>
+                        <div className="d-flex justify-content-around my-1" style={{width: "inherit"}}>
                             <div className="card" style={{backgroundColor: CONTAINER_COLOR, width: "50%"}}>
                                 <div className="card-body">
                                     <div className="card-title"><strong><center>Cooking Time:</center></strong></div>
@@ -285,8 +324,10 @@ const RecipePage = () => {
                         {/* blocks to display time to cook, cuisine and average ratings */}
                     
                     </div>
+                    {/* Image and CookingTime/ChefName/CuisineType cards */}
+
                     {/* Description, Steps and Ingredients start here */}
-                    <div className="container shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                    <div className="container shadow-lg p-3 mb-5 bg-body-tertiary rounded" style={{maxWidth: "750px"}}>
 
                         {/* description */}
                         <div className="container my-3">

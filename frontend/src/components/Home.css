@@ -1,0 +1,17 @@
+.WelcomeText{
+    font-size: 86px;
+    color: white;
+    font-weight: bold;
+}
+.BackgroundImage{
+    height: 100vh;
+}
+
+@media only screen and (max-width: 450px) {
+    .WelcomeText{
+        font-size: 55px;
+    }
+    .BackgroundImage{
+        height: inherit;
+    }
+}

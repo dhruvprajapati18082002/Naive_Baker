@@ -70,7 +70,12 @@ const forgotpass = () => {
                                         <label className="from-control-text" htmlFor="email">
                                             Registered Email*
                                         </label>
-                                        <input type="email" className="form-control" id="email" placeholder="enter your email..." required />
+                                        <input type="email" 
+                                            className="form-control" 
+                                            id="email" 
+                                            placeholder="enter your email..." 
+                                            required
+                                            minLength={5} maxLength={100} />
                                     </div>
 
                                     <button type="submit" className="btn btn-success btn mb-1" >
@@ -85,7 +90,14 @@ const forgotpass = () => {
                                         <label className="form-control-text" htmlFor="otp">
                                             OTP*
                                         </label>
-                                        <input type="number" className="form-control" id="otp" placeholder="enter OTP..." required />
+                                        <input type="number" 
+                                            className="form-control" 
+                                            id="otp" 
+                                            placeholder="enter OTP..." 
+                                            required
+                                            min="100000"
+                                            max="999999"
+                                        />
                                     </div>
 
                                     {/* Enter new Password */}
@@ -93,7 +105,12 @@ const forgotpass = () => {
                                         <label className="form-control-text" htmlFor="password">
                                             New Password*
                                         </label>
-                                        <input type="password" className="form-control" id="password" placeholder="enter new password..." required />
+                                        <input type="password" 
+                                            className="form-control" 
+                                            id="password"
+                                            placeholder="enter new password..." 
+                                            required
+                                            minLength={5} maxLength={20} />
                                     </div>
 
                                     <button type="submit" className="btn btn-success btn-lg mb-1" >

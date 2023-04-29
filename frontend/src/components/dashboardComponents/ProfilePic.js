@@ -26,7 +26,7 @@ const ProfilePic = () => {
                             </li>
                             
                             <li className="list-group-item my-2">
-                                <Link className="btn btn-success my-1" to="/payment">Upgrade to Premium</Link>
+                                <Link className={`btn btn-success my-1 ${user.hasPremium ? "disabled":""}`} to="/payment">Upgrade to Premium</Link>
                             </li>
                             <li className="list-group-item my-2">
                                 <Link className="btn btn-success my-1" to="/resetpass">Reset Password </Link>

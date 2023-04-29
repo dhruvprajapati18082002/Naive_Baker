@@ -68,6 +68,7 @@ const ResetPass = () => {
                                     placeholder="Enter current Password..."
                                     required
                                     autoComplete='on'
+                                    minLength={5} maxLength={20}
                                 />
                             </div>
                             
@@ -83,6 +84,7 @@ const ResetPass = () => {
                                     placeholder="Enter New Password..."
                                     required
                                     autoComplete='on'
+                                    minLength={5} maxLength={20}
                                 />
                             </div>
 
@@ -98,6 +100,7 @@ const ResetPass = () => {
                                     placeholder="Confirm New Password..."
                                     required
                                     autoComplete='on'
+                                    minLength={5} maxLength={20}
                                 />
                             </div>
                             <button type="submit" className="btn btn-success btn-lg mb-1">Submit</button>

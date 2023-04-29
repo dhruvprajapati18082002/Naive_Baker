@@ -49,10 +49,10 @@ export default function UploadRecipe() {
         }
         const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.image_url, ingredients, steps);
         setLoading(false);
-
-        if (res._id !== undefined){
+        console.log(res)
+        if (res.recipes !== undefined){
             showAlert("Recipe Succesfully Added", "success")
-            navigate(`/recipe/${res._id}`);
+            navigate(`/recipe/${res.recipes[0]._id}`);
         }
         else
             showAlert("Failed to add recipe !", "danger");
@@ -143,9 +143,11 @@ export default function UploadRecipe() {
                                     type="number" 
                                     id="minutesToCook"
                                     value={cred.minutesToCook}
+                                    placeholder='enter time in minutes (1 min to 240 min)'
                                     onChange={onChangeHandler}
                                     required
                                     min="1"
+                                    max="240"
                                     />
                                     <label htmlFor="minutesToCook" className='input-group-text'>Minutes</label>
                                 </div>
@@ -160,7 +162,9 @@ export default function UploadRecipe() {
                                 onChange={onChangeHandler} 
                                 rows="3" 
                                 placeholder='begin new ingrediant from new line...'
-                                required />
+                                required 
+                                minLength={5} maxLength={200}
+                                />
                             </div>
   
 
@@ -173,12 +177,14 @@ export default function UploadRecipe() {
                                 onChange={onChangeHandler} 
                                 rows="3" 
                                 placeholder='begin new step from new line...'
-                                required />
+                                required
+                                minLength={5} maxLength={500}
+                                />
                             </div>
                             
                             {/* this is for image upload */}
                             <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="recipeimage">Image*</label>
+                                <label className="form-label" htmlFor="recipeimage">Image</label>
                                 <input
                                     type="text"
                                     id="image_url"

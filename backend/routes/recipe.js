@@ -130,7 +130,7 @@ router.put(
     "/updaterecipe/:recipeId",
     fetchuser,
     async (req, res) => {
-        const { name, description, steps,ingredients, minutesToCook, cuisine, image_url} = req.body;
+        const { name, description, steps,ingredients, minutesToCook, cuisine, image_url, type} = req.body;
         try {
             const newRecipe = {};
             if (name) { newRecipe.name = name; }
@@ -140,6 +140,7 @@ router.put(
             if (minutesToCook) { newRecipe.minutesToCook = minutesToCook; }
             if (cuisine) { newRecipe.cuisine = cuisine; }
             if (image_url) { newRecipe.image_url = image_url; }
+            if (type) { newRecipe.type = type; }
             
 
             let recipe = await Recipe.findById(req.params.recipeId);

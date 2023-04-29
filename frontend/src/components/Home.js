@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import RecipeItem from "./RecipeItem";
 
 import "./font.css";
+import "./Home.css";
 import "./fonts/GreatVibes-Regular.ttf";
 import "./fonts/AutumnFlowers-9YVZK.otf";
 import "./fonts/WeddingdayPersonalUseRegular-1Gvo0.ttf";
@@ -11,7 +12,6 @@ import "./fonts/BunchBlossomsPersonalUse-0nA4.ttf";
 import recipeContext from "../context/recipe/recipeContext";
 import alertContext from "../context/alert/alertContext";
 import spinnerContext from "../context/spinner/spinnerContext";
-
 
 const Home = () => {
 
@@ -32,22 +32,19 @@ const Home = () => {
  	return (
     	<div className="container-fluid" style={{ backgroundColor: "#8fc4b7" }}>
       		<div
-        		className="row bg-image"
+        		className="BackgroundImage row bg-image d-flex justify-content-left align-items-center"
         		style={{
 	          		background:
-            			"url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg) no-repeat center center/cover",
-						height: "100vh"
+            			"url(https://thumbs.dreamstime.com/b/baking-cooking-wood-background-various-ingredients-utensils-warm-61441357.jpg) no-repeat center center/cover"
         		}}
 			>
-				<div className="d-flex justify-content-left align-items-center">
-					<center>
-						<p className="" style={{ fontSize: 86, color: "white", fontWeight: "bold", fontFamily: "BunchBlossomsPersonalUse-0nA4"}}>
-							WELCOME <br />
-							TO <br />
-							NAIVE BAKER
-						</p>
-					</center>
-				</div>
+				<center style={{width: "fit-content"}}>
+					<p className="WelcomeText" style={{fontFamily: "BunchBlossomsPersonalUse-0nA4"}}>
+						WELCOME <br />
+						TO <br />
+						NAIVE BAKER
+					</p>
+				</center>
 			<div></div>
 			<div></div>
 			</div>

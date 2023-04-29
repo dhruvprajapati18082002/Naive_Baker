@@ -1,23 +1,16 @@
 .body_search{
   margin: 0; 
   padding: 0;
-  /* background: #ffffff; */
-  height: 100vh;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  align-content: center;
-  height: 15vh;
-}
-.box_s{
-  position: relative;
+  align-items: center;
+  
 }
 
 .input {
   padding: 10px;
-  /* width: 80px; */
-  /* height: 80px; */
   background: black;
   border: 4px solid rgb(223, 223, 14);
   border-radius: 50px;
@@ -28,6 +21,8 @@
   outline: none;
   transition: .5s;
 }
+
+
 .box_s:hover input{
   /* width: 350px; */
   background: rgb(14, 14, 14);
@@ -52,10 +47,8 @@
 }
 
 .searchCat {
-  margin-left: 185px;
   margin-top: 60px;
   display:flex;
-  width: 75%;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -70,7 +63,7 @@
   font-weight: 1000;
 
   height: 95px;
-  width: 240px;
+  width: 270px;
   margin: 0 40px;
   margin-bottom: 20px;
   font-size: 30px;
@@ -92,7 +85,7 @@
   font-weight: 1000;
   opacity: 75%;
   height: 85px;
-  width: 230px;
+  width: 260px;
   margin: 0 40px;
   margin-bottom: 20px;
   font-size: 26px;
@@ -107,28 +100,6 @@
   overflow: hidden;
   transition: 0.6s;
 }
-
-/* .dropdown {
-  position:relative;
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: 1000;
-  opacity: 75%;
-  height: 85px;
-  width: 230px;
-  margin: 0 40px;
-  margin-bottom: 20px;
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  border-radius: 5px;
-  text-transform: uppercase;
-  border: 1px solid transparent;
-  outline: none;
-  cursor: pointer;
-  background: #f9f9a9  ;
-  overflow: hidden;
-  transition: 0.6s;
-} */
 
 h1 {
   position: relative;
@@ -264,11 +235,7 @@ background-color:#e8fba2;
 #submitButton:active:before {
   opacity: 0.5;
 }
-/* 
-.menu {
-  background-color: black;
-  color: white ; */
-/* } */
+
 select { width: 400px; text-align: center; }
 select .lt { text-align: center; }
 
@@ -278,7 +245,7 @@ select .lt { text-align: center; }
   font-weight: 1000;
   opacity: 75%;
   height: 85px;
-  width: 230px;
+  width: 260px;
   margin: 0 40px;
   margin-bottom: 20px;
   font-size: 26px;
@@ -292,4 +259,29 @@ select .lt { text-align: center; }
   background: #f9f9a9  ;
   overflow: hidden;
   transition: 0.6s;
+}
+
+
+@media only screen and (max-width: 425px){
+  .input {
+    font-size: 17px
+  }
+  #submitButton{
+    font-size: 12px
+  }
+  .whiteButton{
+    font-size: 18px;
+    height: 55px;
+    width: 200px;
+  }
+  .dropDown{
+    font-size: 18px;
+    height: 55px;
+    width: 200px;
+  }
+  .blackButton{
+    font-size: 24px;
+    height: 65px;
+    width: 210px;
+  }
 }

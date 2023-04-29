@@ -37,6 +37,7 @@ const Profile = () => {
             <UserDetails />
           </div>
 
+          <h2 className="text-center">Your Recipes</h2>
           <div className="d-flex flex-wrap justify-content-around">
             <UserRecipes />
           </div>

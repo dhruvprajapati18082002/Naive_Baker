@@ -50,7 +50,15 @@ const Signin = (props) => {
                 {/* Email input */}
                 <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" name="loginEmail" className="form-control" value={credentials.email} onChange={onChangeHandler} required />
+                    <input 
+                        type="email" 
+                        id="loginEmail" 
+                        name="loginEmail" 
+                        className="form-control" 
+                        value={credentials.email} 
+                        onChange={onChangeHandler} required 
+                        minLength={5} maxLength={100}
+                        />
                 </div>
 
                 {/* Password input */}
@@ -65,6 +73,7 @@ const Signin = (props) => {
                         onChange={onChangeHandler} 
                         required 
                         autoComplete='on'
+                        minLength={5} maxLength={20}
                     />
                 </div>
 

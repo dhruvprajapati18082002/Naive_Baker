@@ -62,6 +62,7 @@ const SignUp = (props) => {
                         value={credentials.name}
                         onChange={onChangeHandler}
                         required
+                        minLength={5} maxLength={100}
                     />
                 </div>
 
@@ -76,6 +77,7 @@ const SignUp = (props) => {
                         value={credentials.username}
                         onChange={onChangeHandler}
                         required
+                        minLength={5} maxLength={100}
                     />
                 </div>
 
@@ -90,6 +92,7 @@ const SignUp = (props) => {
                         value={credentials.email}
                         onChange={onChangeHandler}
                         required
+                        minLength={5} maxLength={100}
                     />
                 </div>
 
@@ -105,6 +108,7 @@ const SignUp = (props) => {
                         onChange={onChangeHandler}
                         required
                         autoComplete='on'
+                        minLength={10} maxLength={20}
                     />
                 </div>
 
@@ -120,6 +124,7 @@ const SignUp = (props) => {
                         onChange={onChangeHandler}
                         required
                         autoComplete='on'
+                        minLength={5} maxLength={20}
                     />
                 </div>
 
