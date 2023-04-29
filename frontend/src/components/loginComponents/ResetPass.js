@@ -30,6 +30,13 @@ const ResetPass = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        var pattern = new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
+          );
+        if(!pattern.test(cred.newPassword)){
+            showAlert("Please enter the password with uppercase,lowercase,numeric and special character", "warning");
+            return;
+        }
         if (cred.newPassword !== cred.confirmNewPassword)
             showAlert("Passwords don't match","danger");
         else{
@@ -42,6 +49,7 @@ const ResetPass = () => {
                 showAlert(response.errors.join("\n"), "danger");
             }
         }
+        
         setLoading(false);
     }
 

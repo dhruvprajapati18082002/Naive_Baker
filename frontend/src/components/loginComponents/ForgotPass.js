@@ -27,7 +27,13 @@ const forgotpass = () => {
         setLoading(true);
         const otp = document.getElementById('otp').value;
         const password = document.getElementById("password").value;
-
+        var pattern = new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
+          );
+        if(!pattern.test(password)){
+            showAlert("Please enter the password with uppercase,lowercase,numeric and special character", "warning");
+            return;
+        } 
         const response = await verifyOTP(otp, password);
         setLoading(false);
         if (response.message !== undefined){

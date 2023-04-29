@@ -18,12 +18,28 @@ const SignUp = (props) => {
         setCredentials({...credentials, [event.target.name]: event.target.value})
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         if (credentials.password !== credentials.confirmPassword)
         {
             showAlert("Password and Confirm Password Must Match", "warning");
+            return;
+        }
+        var pattern = new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-+_!@#$%^&*.,?]).+$"
+          );
+        if(!pattern.test(credentials.password)){
+            showAlert("Please enter the password with uppercase,lowercase,numeric and special character", "warning");
+            return;
+        } 
+        const response = await axios.get(`https://api.zerobounce.net/v2/validate?api_key=${process.env.REACT_APP_API}&email=${credentials.email}`)
+        .catch(error => {
+            console.log(error.response);
+        })
+
+        if (response.data.status !== "valid"){
+            showAlert("Email Does Not Exist !", "danger");
             return;
         }
 
@@ -108,10 +124,10 @@ const SignUp = (props) => {
                         onChange={onChangeHandler}
                         required
                         autoComplete='on'
-                        minLength={10} maxLength={20}
+                        minLength={5} maxLength={20}
                     />
                 </div>
-
+                
                 {/* Repeat Password input */}
                 <div className="+form-outline mb-4">
                     <label className="form-label" htmlFor="confirmPassword">Repeat password*</label>

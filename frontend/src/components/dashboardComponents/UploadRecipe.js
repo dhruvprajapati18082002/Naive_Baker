@@ -163,7 +163,7 @@ export default function UploadRecipe() {
                                 rows="3" 
                                 placeholder='begin new ingrediant from new line...'
                                 required 
-                                minLength={5} maxLength={200}
+                                minLength={5} maxLength={500}
                                 />
                             </div>
   
@@ -178,7 +178,7 @@ export default function UploadRecipe() {
                                 rows="3" 
                                 placeholder='begin new step from new line...'
                                 required
-                                minLength={5} maxLength={500}
+                                minLength={50} maxLength={1000}
                                 />
                             </div>
                             

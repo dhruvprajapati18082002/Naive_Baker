@@ -96,8 +96,6 @@ const RecipePage = () => {
             editIngred: recipeDisplayed.ingredients.join("\n"),
             editSteps: recipeDisplayed.steps.join("\n"),
             editImageUrl: recipeDisplayed.image_url,
-            editCuisine: recipeDisplayed.cuisine,
-            editType: recipeDisplayed.type
         });
     }
 
@@ -225,7 +223,7 @@ const RecipePage = () => {
                                         id="editIngred"
                                         onChange={onChangeHandler}
                                         row="5" required
-                                        minLength={10} maxLength={200}
+                                        minLength={5} maxLength={500}
                                     />
                                 </div>
                                 <div className="input-group mb-3">
@@ -239,7 +237,7 @@ const RecipePage = () => {
                                         id="editSteps"
                                         onChange={onChangeHandler}
                                         row={5} required
-                                        minLength={10} maxLength={500}
+                                        minLength={50} maxLength={1000}
                                     />
                                 </div>
                                 <div className="input-group mb-3">
