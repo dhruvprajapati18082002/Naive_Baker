@@ -33,15 +33,15 @@ const SignUp = (props) => {
             showAlert("Please enter the password with uppercase,lowercase,numeric and special character", "warning");
             return;
         } 
-        const response = await axios.get(`https://api.zerobounce.net/v2/validate?api_key=${process.env.REACT_APP_API}&email=${credentials.email}`)
-        .catch(error => {
-            console.log(error.response);
-        })
+        // const response = await axios.get(`https://api.zerobounce.net/v2/validate?api_key=${process.env.REACT_APP_API}&email=${credentials.email}`)
+        // .catch(error => {
+        //     console.log(error.response);
+        // })
 
-        if (response.data.status !== "valid"){
-            showAlert("Email Does Not Exist !", "danger");
-            return;
-        }
+        // if (response.data.status !== "valid"){
+        //     showAlert("Email Does Not Exist !", "danger");
+        //     return;
+        // }
 
         axios.post(`${BACKEND}/api/auth/createuser`, {
             name: credentials.name,

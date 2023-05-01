@@ -21,11 +21,14 @@ export default function UploadRecipe() {
         minutesToCook: "",
         type: "",
         steps: "",
-        image_url: ""
+        imageFile: ""
     });
 
     const onChangeHandler = (event) => {
-        setCred({...cred, [event.target.id]: event.target.value});
+        if (event.target.id == "imageFile")
+            setCred({...cred, [event.target.id]: event.target.files[0]})
+        else
+            setCred({...cred, [event.target.id]: event.target.value});
     }
 
     useEffect(() => {
@@ -41,15 +44,15 @@ export default function UploadRecipe() {
         event.preventDefault();
 
         setLoading(true);
-        const ingredients = cred.ingredients.split("\n");
-        const steps = cred.steps.split("\n");
+        // const ingredients = cred.ingredients.split("\n");
+        // const steps = cred.steps.split("\n");
         const time =cred.minutesToCook;
         if(time<0){
             showAlert("Please enter valid value of time");
         }
-        const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.image_url, ingredients, steps);
+        const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.imageFile, cred.ingredients, cred.steps);
         setLoading(false);
-        console.log(res)
+        
         if (res.recipes !== undefined){
             showAlert("Recipe Succesfully Added", "success")
             navigate(`/recipe/${res.recipes[0]._id}`);
@@ -116,6 +119,7 @@ export default function UploadRecipe() {
                                         <option value="Chinese">Chinese</option>
                                         <option value="Mediterranean">Mediterranean</option>
                                         <option value="Russian">Russian</option>
+                                        <option value="Other">Other</option>
                                     </select>
                             </div>
                             
@@ -181,17 +185,18 @@ export default function UploadRecipe() {
                                 minLength={50} maxLength={1000}
                                 />
                             </div>
-                            
-                            {/* this is for image upload */}
+
+                            {/* This is for image upload */}
                             <div className="form-outline mb-4">
-                                <label className="form-label" htmlFor="recipeimage">Image</label>
-                                <input
-                                    type="text"
-                                    id="image_url"
+                                <label htmlFor="imageFile" className="form-label">Upload Image</label>
+                                <input 
+                                    type="file"
+                                    value={cred.imageFile.filename}
                                     onChange={onChangeHandler}
-                                    value={cred.image_url}
+                                    id="imageFile"
                                     className="form-control"
-                                    placeholder="enter image URL"
+                                    placeholder='Upload Image Here...'
+                                    accept='.png, .jpg, .jpeg, .svg, .webp'
                                 />
                             </div>
 

@@ -1,27 +1,47 @@
 const express = require("express");
-const { body, validationResult } = require("express-validator");
+// const { body, validationResult, check } = require("express-validator");
 const fetchuser = require("../middleware/fetchuser");
 
 const Recipe = require('../models/Recipe');
 const User = require("../models/User");
+const upload = require("../middleware/uploadimage");
 const router = express.Router();
 
 
 // END-POINT 1: ADD RECIPE END-POINT: POST /api/recipe/addrecipe. LOGIN REQUIRED
 router.post(
     "/addrecipe",
-    body('name').isLength({min: 5}),
-    body('description').isLength({min: 10}),
-    body('steps').isArray({min: 1}),
-    body('minutesToCook').isNumeric({min :1}),
-    body('cuisine').isLength({min:2}),
-    body('ingredients').isArray({min: 1}),
-    body('type').exists(),
     fetchuser,
+    upload.any(),
     async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty())
-            return res.status(400).json({errors: errors.array()});
+        let errors = [];
+        if (req.body.name === undefined || req.body.name.length < 5)
+            errors.push("Name must be atleast 5 characters long");
+        if (req.body.description === undefined || req.body.description.length < 10)
+            errors.push("description must be atleast 10 characters long");
+        if (req.body.steps === undefined || req.body.steps.length < 50)
+            errors.push("steps must have minimum 50 characters");
+        else{
+            req.body.steps = req.body.steps.split("\n").filter(element => { return element.length > 0 });
+            if (req.body.steps.length < 1)
+                errors.push("steps must have minimum 50 characters");
+        }
+        if (req.body.minutesToCook === undefined || req.body.minutesToCook.match(/^[\d]+$/) === null)
+            errors.push("minutesToCook must be a number");
+        if (req.body.ingredients === undefined || req.body.ingredients.length < 5)
+            errors.push("ingredients must have minimum 5 characters");
+        else{
+            req.body.ingredients = req.body.ingredients.split("\n").filter(element => { return element.length > 0 });
+            if (req.body.ingredients.length < 1)
+                errors.push("ingredients must have minimum 5 characters");
+        }
+        if (req.body.cuisine === undefined)
+            errors.push("cuisine must be defined");
+        if (req.body.type === undefined)
+            errors.push("type must be defined");
+
+        if (errors.length !== 0)
+            return res.status(400).json({errors: errors});
         try
         {
             let user = await User.findById(req.user.id)
@@ -39,9 +59,8 @@ router.post(
                 minutesToCook: req.body.minutesToCook,
                 type: req.body.type,
             }
-            
-            if (req.body.image_url)
-                cred.image_url = req.body.image_url;
+            if (req.files)
+                cred.image_url = req.protocol + "://" + req.get('host') + "/public/" + req.files[0].filename;
 
             let recipe = await Recipe.create(cred);
 
@@ -128,20 +147,22 @@ router.get(
 // END-POINT 5: UPDATE RECIPE END-POINT: POST /api/recipe/updaterecipe. LOGIN REQUIRED
 router.put(
     "/updaterecipe/:recipeId",
+    upload.any(),
     fetchuser,
     async (req, res) => {
-        const { name, description, steps,ingredients, minutesToCook, cuisine, image_url, type} = req.body;
+        const { name, description, steps,ingredients, minutesToCook, cuisine, type} = req.body;
         try {
             const newRecipe = {};
+
             if (name) { newRecipe.name = name; }
             if (description) { newRecipe.description = description; }
-            if (steps) { newRecipe.steps = steps; }
-            if (ingredients) { newRecipe.ingredients = ingredients; }
+            if (steps) { newRecipe.steps = steps.split("\n").filter(element => {return element.length > 0}); }
+            if (ingredients) { newRecipe.ingredients = ingredients.split("\n").filter(element => {return element.length > 0}); }
             if (minutesToCook) { newRecipe.minutesToCook = minutesToCook; }
             if (cuisine) { newRecipe.cuisine = cuisine; }
-            if (image_url) { newRecipe.image_url = image_url; }
             if (type) { newRecipe.type = type; }
             
+            if (req.files.length > 0) { newRecipe.image_url = req.protocol + "://" + req.get('host') + "/public/" + req.files[0].filename; }
 
             let recipe = await Recipe.findById(req.params.recipeId);
             if (!recipe) { 

@@ -61,18 +61,19 @@ const RecipePage = () => {
         setLoading(false);
     }, [])
 
-    const [ newRecipe, setNewRecipe ] = useState({})
+    const [ newRecipe, setNewRecipe ] = useState({editImageFile: ""})
 
     const onChangeHandler = (event) => {
-        setNewRecipe({ ...newRecipe, [event.target.id]: event.target.value });
+        if (event.target.id == "editImageFile")
+            setNewRecipe({...newRecipe, [event.target.id]: event.target.files[0]});
+        else
+            setNewRecipe({ ...newRecipe, [event.target.id]: event.target.value });
     }
     
     const handleSubmit = async (event) => {
         // name, description, minutesToCook, Ingredients, steps, image_url
-        const newIngredients = newRecipe.editIngred.split("\n").filter(element => { return element.length > 0 });
-        const newSteps = newRecipe.editSteps.split("\n").filter(element => { return element.length > 0 });
-
-        const data = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newIngredients, newSteps, newRecipe.editImageUrl, newRecipe.editCuisine, newRecipe.editType);
+        
+        const data = await editRecipe(newRecipe.id, newRecipe.editName, newRecipe.editDescr, newRecipe.editMinutesToCook, newRecipe.editIngred, newRecipe.editSteps, newRecipe.editImageFile, newRecipe.editCuisine, newRecipe.editType);
 
         if (data.recipes !== undefined){
             showAlert("Updated Successfully", "success");
@@ -95,7 +96,7 @@ const RecipePage = () => {
             editMinutesToCook: recipeDisplayed.minutesToCook,
             editIngred: recipeDisplayed.ingredients.join("\n"),
             editSteps: recipeDisplayed.steps.join("\n"),
-            editImageUrl: recipeDisplayed.image_url,
+            editImageFile: ""
         });
     }
 
@@ -180,6 +181,7 @@ const RecipePage = () => {
                                         <option value="Chinese">Chinese</option>
                                         <option value="Mediterranean">Mediterranean</option>
                                         <option value="Russian">Russian</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                                 <div className="input-group mb-4">
@@ -241,15 +243,15 @@ const RecipePage = () => {
                                     />
                                 </div>
                                 <div className="input-group mb-3">
-                                    <label htmlFor="editImageUrl" className="input-group-text" >
-                                        Image URL
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={newRecipe.editImageUrl}
-                                        id="editImageUrl"
+                                    <label htmlFor="editImageFile" className="input-group-text">Upload Image</label>
+                                    <input 
+                                        type="file"
+                                        value={newRecipe.editImageFile.filename}
                                         onChange={onChangeHandler}
+                                        id="editImageFile"
+                                        className="form-control"
+                                        placeholder='Upload Image Here...'
+                                        accept='.png, .jpg, .jpeg, .svg, .webp'
                                     />
                                 </div>
                             </form>

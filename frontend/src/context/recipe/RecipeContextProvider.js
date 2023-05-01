@@ -12,18 +12,19 @@ const RecipeContextProvider = (props) => {
     const [ dashboardRecipes, setDashboardRecipes ] = useState([]);
 
     // add recipe
-    const uploadRecipe = async (name, description, cuisine, type, minutesToCook, image_url, ingredients, steps) => {
+    const uploadRecipe = async (name, description, cuisine, type, minutesToCook, imageFile, ingredients, steps) => {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description',description);
+        formData.append('cuisine', cuisine);
+        formData.append('type', type);
+        formData.append('minutesToCook', minutesToCook);
+        formData.append('image_url', imageFile);
+        formData.append('ingredients', ingredients);
+        formData.append('steps', steps);
+        
         const response = await axios.post(
-            `${BACKEND}/api/recipe/addrecipe`,{
-                name: name,
-                description: description,
-                cuisine: cuisine,
-                minutesToCook: minutesToCook,
-                ingredients: ingredients,
-                steps: steps,
-                type: type,
-                image_url: image_url
-            },{
+            `${BACKEND}/api/recipe/addrecipe`, formData,{
                 headers: {
                     "auth-token": localStorage.getItem("token")
                 }
@@ -33,6 +34,8 @@ const RecipeContextProvider = (props) => {
         })
         return response.data;
     }
+
+
     const searchRecipe = async (name, time_to_make, ingredients, cuisine, type, satisfyAll) => {
         
         let data = {};
@@ -68,9 +71,9 @@ const RecipeContextProvider = (props) => {
         return response.data;
     }
 
-      // fetch user recipes
-      const fetchUserRecipes = async () => {
-        const response = await axios.get(
+        // fetch user recipes
+        const fetchUserRecipes = async () => {
+            const response = await axios.get(
             `${BACKEND}/api/recipe/fetchuserrecipe`,{
                 headers: {
                     'auth-token': localStorage.getItem('token'),
@@ -106,18 +109,20 @@ const RecipeContextProvider = (props) => {
       }
 
       // edit recipe
-      const editRecipe = async (id, name, description, minutesToCook, ingredients, steps, image_url, cuisine, type) => {
+      const editRecipe = async (id, name, description, minutesToCook, ingredients, steps, imageFile, cuisine, type) => {
+            
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description',description);
+            formData.append('cuisine', cuisine);
+            formData.append('type', type);
+            formData.append('minutesToCook', minutesToCook);
+            formData.append('image_url', imageFile);
+            formData.append('ingredients', ingredients);
+            formData.append('steps', steps);
+
             const response = await axios.put(
-                `${BACKEND}/api/recipe/updaterecipe/${id}`, {
-                    name: name, 
-                    description: description,
-                    minutesToCook: minutesToCook,
-                    ingredients: ingredients,
-                    steps: steps,
-                    image_url: image_url,
-                    cuisine: cuisine,
-                    type: type,
-                },{
+                `${BACKEND}/api/recipe/updaterecipe/${id}`, formData,{
                     headers: {
                         "auth-token": localStorage.getItem('token')
                     }
@@ -126,7 +131,7 @@ const RecipeContextProvider = (props) => {
                 return error.response.data;
             })
             return response.data;
-      }
+        }
 
       // delete Recipe
       const deleteRecipe = async (id) => {
