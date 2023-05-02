@@ -46,11 +46,7 @@ export default function UploadRecipe() {
         setLoading(true);
         // const ingredients = cred.ingredients.split("\n");
         // const steps = cred.steps.split("\n");
-        const time =cred.minutesToCook;
-        if(time<0){
-            showAlert("Please enter valid value of time");
-        }
-        const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.imageFile, cred.ingredients, cred.steps);
+        const res = await uploadRecipe(cred.name, cred.description, cred.cuisine, cred.type, cred.minutesToCook, cred.imageFile, cred.ingredients, cred.steps).catch(err => { return err.response});
         setLoading(false);
         
         if (res.recipes !== undefined){
@@ -58,7 +54,7 @@ export default function UploadRecipe() {
             navigate(`/recipe/${res.recipes[0]._id}`);
         }
         else
-            showAlert("Failed to add recipe !", "danger");
+            showAlert(res.body.errors.join("\n"), "danger");
       };
 
     return (
